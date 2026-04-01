@@ -35,13 +35,11 @@ async function processRequest(
   const options = await getOptions()
   if (options.tempDisabled) {
     console.log('%cExtension is Temporarily Disabled!', 'color: Red')
-    asyncCallback({})
-    return
+    return asyncCallback({})
   }
   if (options.ignoreProxy && details.statusCode === 407) {
     console.log('%cIgnoring Proxy Authentication!', 'color: Yellow')
-    asyncCallback({})
-    return
+    return asyncCallback({})
   }
   const url = new URL(details.url)
   // console.debug('url.host:', url.host)
@@ -61,7 +59,7 @@ async function processRequest(
       auth.searchParams.append('fail', 'yes')
     }
     chrome.tabs.update(details.tabId, { url: auth.href })
-    asyncCallback({ cancel: true })
+    return asyncCallback({ cancel: true })
   }
 
   // Check if Request Already Processed
@@ -82,15 +80,13 @@ async function processRequest(
         'color: Yellow',
         'color: Violet',
       )
-      asyncCallback({})
-      return
+      return asyncCallback({})
     }
     console.log(`%cSending Saved Creds for: ${details.requestId}`, 'color: LimeGreen')
     const [username, password] = creds.split(':')
     const authCredentials: chrome.webRequest.AuthCredentials = { username, password }
     // console.debug('authCredentials:', authCredentials)
-    asyncCallback({ authCredentials })
-    return
+    return asyncCallback({ authCredentials })
   }
 
   // Check for Temporary Credentials
@@ -102,8 +98,7 @@ async function processRequest(
     const [username, password] = session[url.host].split(':')
     const authCredentials: chrome.webRequest.AuthCredentials = { username, password }
     // console.debug('authCredentials:', authCredentials)
-    asyncCallback({ authCredentials })
-    return
+    return asyncCallback({ authCredentials })
   }
 
   // New Request Without Credentials

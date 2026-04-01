@@ -7,7 +7,7 @@ export const defaultOptions = {
   defaultSave: true,
   confirmDelete: true,
 
-  radioBackground: 'bgPicture',
+  radioBackground: 'bgPicture' as 'bgNone' | 'bgPicture' | 'bgVideo',
   pictureURL: 'https://picsum.photos/1920/1080',
   videoURL: '',
 }

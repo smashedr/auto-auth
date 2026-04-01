@@ -7,7 +7,7 @@ withDefaults(
     btnClass?: string
   }>(),
   {
-    btnClass: 'btn-primary',
+    btnClass: 'btn-outline-primary',
   },
 )
 
@@ -51,7 +51,7 @@ onUnmounted(() => {
 <style scoped>
 #back-to-top {
   position: fixed;
-  bottom: 50px;
+  bottom: 40px;
   right: 10px;
   display: none;
   z-index: 3;

@@ -2,7 +2,6 @@
 import { i18n } from '#imports'
 import { clickOpen } from '@/utils/extension.ts'
 import { useTitle } from '@/composables/useTitle.ts'
-import { isFirefox } from '@/utils/system.ts'
 import BackToTop from '@/components/BackToTop.vue'
 import PermsCheck from '@/components/PermsCheck.vue'
 import ToastAlerts from '@/components/ToastAlerts.vue'
@@ -56,9 +55,11 @@ useTitle(i18n.t('options.title'))
         <HorizontalRule>{{ i18n.t('options.extension') }}</HorizontalRule>
         <OptionsForm />
 
-        <HostsTable />
+        <PermsCheck :show-info="true" :show-remove="false" class="my-3" />
 
-        <PermsCheck :show-info="true" :show-remove="isFirefox" class="my-3" />
+        <HorizontalRule>Saved Credentials</HorizontalRule>
+        <!--NOTE: Add fallthrough attributes-->
+        <HostsTable />
 
         <CopySupport
           :message="i18n.t('options.copySupportMsg')"

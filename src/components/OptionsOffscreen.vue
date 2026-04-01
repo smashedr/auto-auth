@@ -41,7 +41,7 @@ import ThemeSwitch from '@/components/ThemeSwitch.vue'
 <style scoped>
 #toggle-button {
   position: fixed;
-  bottom: 10px;
+  bottom: 40px;
   /*right: 0;*/
   z-index: 3;
   border-bottom-left-radius: 0;
