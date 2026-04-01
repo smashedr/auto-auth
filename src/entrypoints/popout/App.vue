@@ -40,7 +40,7 @@ useTitle('Panel')
     <div class="d-grid gap-2">
       <PermsCheck />
       <ButtonsList :popup-button="false" :panel-button="false" :side-button="false" />
-      <OptionsForm :close-window="true" :compact="true" :show="['switches']" />
+      <OptionsForm :close-window="true" :compact="true" :show="['switches', 'background']" />
     </div>
   </main>
 

@@ -29,6 +29,7 @@ const options = useOptions()
       </form>
     </div>
     <div v-if="show.includes('background')" class="row m-0">
+      <h6>Auth Page Background</h6>
       <BackgroundForm />
     </div>
   </div>

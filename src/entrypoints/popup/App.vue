@@ -25,7 +25,7 @@ console.log('width:', width.value)
       <ButtonsList :close-window="true" :popup-button="false" />
     </div>
 
-    <OptionsForm :close-window="true" :compact="true" :show="['switches']" />
+    <OptionsForm :close-window="true" :compact="true" :show="['switches'" />
 
     <ToastAlerts />
   </div>

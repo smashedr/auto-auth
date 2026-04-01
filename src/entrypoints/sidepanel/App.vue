@@ -19,7 +19,7 @@ console.debug('%c sidepanel/App.vue', 'color: Lime')
     <div class="d-grid gap-2">
       <PermsCheck />
       <ButtonsList :side-button="false" />
-      <OptionsForm :close-window="true" :compact="true" :show="['switches']" />
+      <OptionsForm :close-window="true" :compact="true" :show="['switches', 'background']" />
     </div>
   </main>
 
