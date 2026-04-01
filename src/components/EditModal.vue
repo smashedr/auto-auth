@@ -1,14 +1,26 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Modal } from 'bootstrap'
+import { copyToast } from '@/utils/index.ts'
 
-const modalEl = ref(null)
+withDefaults(
+  defineProps<{
+    compact?: boolean
+  }>(),
+  {
+    compact: false,
+  },
+)
+
+const modalEl = ref<HTMLElement | null>(null)
 
 const originalHost = ref('')
 const hostRef = ref('')
 const userRef = ref('')
 const passRef = ref('')
+
+const passwordShown = ref(false)
 
 const emit = defineEmits(['edit'])
 
@@ -49,6 +61,33 @@ function onChange(e: Event) {
   }
 }
 
+onMounted(() => {
+  modalEl.value?.addEventListener('hidden.bs.modal', (event) => {
+    console.log('hidden.bs.modal', event)
+    passwordShown.value = false
+  })
+
+  // TODO: Implement other modal listeners...
+
+  // modalEl.value?.addEventListener('shown.bs.modal', () => {
+  //   if (editForm.dataset.action === 'add') {
+  //     editHostname.focus()
+  //   } else {
+  //     editUsername.focus()
+  //   }
+  // })
+
+  // modalEl.value?.addEventListener('hide.bs.modal', () => {
+  //   modalEl.value._config.backdrop = true
+  //   editModalAlert.classList.add('d-none')
+  // })
+
+  // modalEl.value?.addEventListener('hidePrevented.bs.modal', () => {
+  //   console.log('Changes Detected!')
+  //   editModalAlert.classList.remove('d-none')
+  // })
+})
+
 defineExpose({ show })
 </script>
 
@@ -63,7 +102,9 @@ defineExpose({ show })
           </div>
           <div class="modal-body">
             <form id="edit-form" name="edit-form" class="mb-3" autocomplete="off">
-              <label for="hostname" class="form-label"><i class="fa-solid fa-globe me-2"></i> Hostname</label>
+              <label for="hostname" class="form-label" :class="compact ? 'visually-hidden' : ''"
+                ><i class="fa-solid fa-globe me-2"></i> Hostname</label
+              >
               <div class="input-group has-validation col-12 mb-3">
                 <input
                   v-model="hostRef"
@@ -87,6 +128,7 @@ defineExpose({ show })
                   data-bs-trigger="hover"
                   data-bs-title="Copy Hostname"
                   v-bs
+                  @click="copyToast(hostRef, 'Hostname Copied to Clipboard.')"
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
@@ -98,7 +140,9 @@ defineExpose({ show })
               </div>
               <div class="form-text visually-hidden" id="hostnameHelp">Basic Authentication Hostname.</div>
 
-              <label for="username" class="form-label"><i class="fa-solid fa-user me-2"></i> Username</label>
+              <label for="username" class="form-label" :class="compact ? 'visually-hidden' : ''"
+                ><i class="fa-solid fa-user me-2"></i> Username</label
+              >
               <div class="input-group has-validation col-12 mb-3">
                 <input
                   v-model="userRef"
@@ -121,6 +165,7 @@ defineExpose({ show })
                   data-bs-trigger="hover"
                   data-bs-title="Copy Username"
                   v-bs
+                  @click="copyToast(userRef, 'Username Copied to Clipboard.')"
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
@@ -136,20 +181,23 @@ defineExpose({ show })
                 <label class="form-check-label" for="usernameSwitch">No Username</label>
               </div>
 
-              <label for="password" class="form-label"><i class="fa-solid fa-key me-2"></i> Password</label>
+              <label for="password" class="form-label" :class="compact ? 'visually-hidden' : ''"
+                ><i class="fa-solid fa-key me-2"></i> Password</label
+              >
               <div class="input-group has-validation col-12 mb-3">
                 <input
                   v-model="passRef"
                   id="password"
                   placeholder="password"
                   aria-describedby="passwordHelp passwordValidation"
-                  type="password"
+                  :type="passwordShown ? 'text' : 'password'"
                   class="form-control"
                   autocomplete="off"
                   required
                 />
                 <button
-                  class="btn btn-outline-success"
+                  class="btn"
+                  :class="passwordShown ? 'btn-warning' : 'btn-outline-success'"
                   type="button"
                   data-bs-toggle="tooltip"
                   data-show-hide="#password"
@@ -158,6 +206,7 @@ defineExpose({ show })
                   data-bs-trigger="hover"
                   data-bs-title="Show/Hide Password"
                   v-bs
+                  @click.prevent="() => (passwordShown = !passwordShown)"
                 >
                   <i class="fa-regular fa-eye"></i>
                 </button>
@@ -172,6 +221,7 @@ defineExpose({ show })
                   data-bs-trigger="hover"
                   data-bs-title="Copy Password"
                   v-bs
+                  @click="copyToast(passRef, 'Password Copied to Clipboard.')"
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>

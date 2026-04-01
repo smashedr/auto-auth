@@ -11,6 +11,7 @@ import PanelHeader from '@/components/PanelHeader.vue'
 import PermsCheck from '@/components/PermsCheck.vue'
 import OptionsForm from '@/components/OptionsForm.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
+import EditModal from '@/components/EditModal.vue'
 
 console.debug('%c popup/App.vue', 'color: Lime')
 
@@ -19,9 +20,10 @@ const siteInfo = useSiteInfo()
 
 const hostnameRef = ref('') // tab hostname
 const usernameRef = ref('') // saved username
-const savedCreds = ref(false) // has credentials
+const savedCreds = ref('') // has credentials
 
 const deleteModal = ref<InstanceType<typeof DeleteModal> | null>(null)
+const editModal = ref<InstanceType<typeof EditModal> | null>(null)
 
 // DUPLICATION: Copied from HostsTable.vue
 function deleteClick(host: string) {
@@ -35,20 +37,29 @@ function deleteClick(host: string) {
 }
 
 async function deleteHost(host: string) {
-  console.log('HostsTable.vue - deleteHost:', host)
+  console.log('popup/App.vue - deleteHost:', host)
   const creds = await Hosts.get(host)
-  // DUPLICATION: Copied from HostsTable.vue
+  // DUPLICATION: Copied from HostsTable.vue - re-run re-usable setup function...
   console.log('creds:', creds) // NOTE: Handle undefined creds, also, creds are not used
   if (!creds) return showToast('Credentials Not Found')
   try {
     await Hosts.delete(host)
     hostnameRef.value = ''
     usernameRef.value = ''
-    savedCreds.value = false
+    savedCreds.value = ''
     showToast(`Removed: ${host}`, 'success')
   } catch (e) {
     if (e instanceof Error) showToast(`Delete Host Error: ${e.message}`, 'danger')
   }
+}
+
+// DUPLICATION: Copied from HostsTable.vue - re-run re-usable setup function...
+async function editHost(original: string, host: string, user: string, pass: string) {
+  console.log('popup/App.vue - editHost:', original, host, user, pass)
+  await Hosts.edit(original, host, `${user}:${pass}`)
+  savedCreds.value = `${user}:${pass}`
+  usernameRef.value = user
+  showToast(`Edited: ${host}`, 'success')
 }
 
 watch(
@@ -57,22 +68,17 @@ watch(
     console.log('popup/App.vue %c watch: siteInfo:', 'color: OrangeRed', info)
     console.log('info.hostname:', info?.hostname)
     if (!info?.hostname) return
+    // TODO: Add re-usable setup function to run on changes...
     hostnameRef.value = info.hostname
     const creds = await Hosts.get(hostnameRef.value)
     console.log('creds:', creds)
     if (!creds) return
-    savedCreds.value = true
+    savedCreds.value = creds
     usernameRef.value = creds.split(':')[0]
     console.log('usernameRef.value:', usernameRef.value)
   },
   { once: true },
 )
-
-// function deleteCreds() {
-//   console.log('deleteCreds:', hostnameRef.value)
-//   showToast('INOP - Use Options Page', 'warning')
-//   // TODO: check options.confirmDelete and show DeleteModal or Delete Creds...
-// }
 
 const isBrowser = isFirefox ? '360px' : null
 const width = computed(() => (isMobile ? '100%' : isBrowser))
@@ -110,9 +116,15 @@ onMounted(async () => {
             >{{ usernameRef === 'ignored' ? 'Host Ignored' : usernameRef }}</span
           >
         </div>
-        <button class="btn btn-outline-warning" @click="deleteClick(hostnameRef)">
+
+        <button class="btn btn-outline-warning" @click.prevent="editModal?.show(hostnameRef, savedCreds)">
+          <i class="fa-solid fa-pen-to-square me-1"></i>
+          <span>Edit Credentials</span>
+        </button>
+
+        <button class="btn btn-outline-danger" @click="deleteClick(hostnameRef)">
           <i class="fa-regular fa-trash-can me-1"></i>
-          <span>Delete Saved Credentials</span>
+          <span>Delete Credentials</span>
         </button>
       </template>
 
@@ -124,6 +136,7 @@ onMounted(async () => {
     </div>
 
     <DeleteModal ref="deleteModal" @delete="deleteHost" />
+    <EditModal ref="editModal" :compact="true" @edit="editHost" />
     <ToastAlerts />
   </div>
 </template>

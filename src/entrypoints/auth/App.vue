@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
+import { copyToast } from '@/utils/index.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { getSession } from '@/utils/options.ts'
 import { useOptions } from '@/composables/useOptions.ts'
-import { showToast } from '@/composables/useToast.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
@@ -91,14 +91,6 @@ async function ignoreHost(_event: Event) {
 //   if (!ignoreModal.value) return console.error('no ignoreModal') // NOTE: HANDLE ERROR
 //   Modal.getOrCreateInstance(ignoreModal.value).show()
 // }
-
-function copyToast(text: string, message: string, type = 'success') {
-  console.log('copyToast:', text)
-  navigator.clipboard
-    .writeText(text)
-    .then(() => showToast(message, type))
-    .catch((e) => console.log(e))
-}
 
 function setBackground(options: Options) {
   // NOTE: Copied from VanillaJS. Refactor this method...
@@ -227,7 +219,7 @@ onMounted(async () => {
     <div class="container-fluid pt-3 px-0 px-sm-4">
       <div id="auth-outer" class="rounded rounded-4 w-100 mx-auto mb-4 p-3">
         <div class="text-center fs-4">
-          <kbd class="text-ellipsis host" role="button" @click="copyToast(hostRef, 'Host Copied to Clipboard.')">{{
+          <kbd class="text-ellipsis host" role="button" @click="copyToast(hostRef, 'Hostname Copied to Clipboard.')">{{
             hostRef
           }}</kbd>
         </div>
