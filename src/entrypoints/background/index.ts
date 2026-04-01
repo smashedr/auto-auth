@@ -143,7 +143,7 @@ function onMessage(
       .setBadgeBackgroundColor({ tabId: tabId, color: message.badgeColor })
       .catch(console.warn)
   }
-  // TODO: Refactor badgeColor
+  // TODO: Refactor badgeText
   if ('badgeText' in message && tabId) {
     console.debug(`setBadgeText: ${message.badgeText}`)
     chrome.action

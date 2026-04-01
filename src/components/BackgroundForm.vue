@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useOptions } from '@/composables/useOptions.ts'
 import { saveKeyValue } from '@/utils/options.ts'
 
-// NOTE: options are not used, use onMounted instead of watch()
+// TODO: Make this live update on changes...
 const options = useOptions()
 
 const bgRef = ref<'bgNone' | 'bgPicture' | 'bgVideo'>('bgNone')
