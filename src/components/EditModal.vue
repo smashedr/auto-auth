@@ -1,3 +1,5 @@
+<!--TODO: Refactor as HostModal and use for Add and Edit-->
+
 <script setup lang="ts">
 import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
@@ -14,6 +16,10 @@ withDefaults(
 )
 
 const modalEl = ref<HTMLElement | null>(null)
+const modal = ref<Modal | any | null>(null) // NOTE: Lazy Typing...
+
+const hostnameEl = ref<HTMLInputElement | null>(null)
+const usernameEl = ref<HTMLInputElement | null>(null)
 
 const originalHost = ref('')
 const hostRef = ref('')
@@ -21,6 +27,8 @@ const userRef = ref('')
 const passRef = ref('')
 
 const passwordShown = ref(false)
+const unsavedChanges = ref(false)
+const showAlert = ref(false)
 
 const emit = defineEmits(['edit'])
 
@@ -45,9 +53,9 @@ function onSave() {
   hide()
 }
 
-function onChange(e: Event) {
+function hostnameChange() {
   // NOTE: ADD Validation Here... Copied from VanillaJS.
-  console.log('EditModal.vue - onChange:', e)
+  console.log('EditModal.vue - hostnameChange')
   try {
     let host = hostRef.value.toLowerCase().trim()
     console.log('host:', host)
@@ -61,31 +69,44 @@ function onChange(e: Event) {
   }
 }
 
+function onceChange() {
+  console.log('EditModal.vue - onceChange')
+  if (!modal.value) return
+  modal.value._config.backdrop = 'static'
+  unsavedChanges.value = true
+}
+
 onMounted(() => {
-  modalEl.value?.addEventListener('hidden.bs.modal', (event) => {
-    console.log('hidden.bs.modal', event)
-    passwordShown.value = false
+  if (!modalEl.value) return
+
+  modal.value = Modal.getOrCreateInstance(modalEl.value)
+  console.log('modal:', modal.value)
+
+  modalEl.value?.addEventListener('shown.bs.modal', () => {
+    usernameEl.value?.focus()
+    // NOTE: When using as AddModal this should focus the hostnameEl
   })
 
-  // TODO: Implement other modal listeners...
+  modalEl.value?.addEventListener('hidePrevented.bs.modal', () => {
+    console.log('hidePrevented.bs.modal')
+    showAlert.value = true
+  })
 
-  // modalEl.value?.addEventListener('shown.bs.modal', () => {
-  //   if (editForm.dataset.action === 'add') {
-  //     editHostname.focus()
-  //   } else {
-  //     editUsername.focus()
-  //   }
-  // })
+  modalEl.value?.addEventListener('hide.bs.modal', () => {
+    console.log('hide.bs.modal')
+  })
 
-  // modalEl.value?.addEventListener('hide.bs.modal', () => {
-  //   modalEl.value._config.backdrop = true
-  //   editModalAlert.classList.add('d-none')
-  // })
-
-  // modalEl.value?.addEventListener('hidePrevented.bs.modal', () => {
-  //   console.log('Changes Detected!')
-  //   editModalAlert.classList.remove('d-none')
-  // })
+  modalEl.value.addEventListener('hidden.bs.modal', (event) => {
+    console.log('hidden.bs.modal', event)
+    originalHost.value = ''
+    hostRef.value = ''
+    userRef.value = ''
+    passRef.value = ''
+    passwordShown.value = false
+    unsavedChanges.value = false
+    showAlert.value = false
+    modal.value._config.backdrop = true
+  })
 })
 
 defineExpose({ show })
@@ -108,6 +129,7 @@ defineExpose({ show })
               <div class="input-group has-validation col-12 mb-3">
                 <input
                   v-model="hostRef"
+                  ref="hostnameEl"
                   id="hostname"
                   placeholder="hostname"
                   aria-describedby="hostnameHelp hostnameValidation"
@@ -115,7 +137,8 @@ defineExpose({ show })
                   class="form-control"
                   autocomplete="off"
                   required
-                  @change="onChange"
+                  @change="hostnameChange"
+                  @change.once="onceChange"
                 />
                 <button
                   class="btn btn-outline-info"
@@ -146,6 +169,7 @@ defineExpose({ show })
               <div class="input-group has-validation col-12 mb-3">
                 <input
                   v-model="userRef"
+                  ref="usernameEl"
                   id="username"
                   placeholder="username"
                   aria-describedby="usernameHelp usernameValidation"
@@ -153,6 +177,7 @@ defineExpose({ show })
                   class="form-control"
                   autocomplete="off"
                   required
+                  @change.once="onceChange"
                 />
                 <button
                   class="btn btn-outline-info"
@@ -194,6 +219,7 @@ defineExpose({ show })
                   class="form-control"
                   autocomplete="off"
                   required
+                  @change.once="onceChange"
                 />
                 <button
                   class="btn"
@@ -234,8 +260,9 @@ defineExpose({ show })
               <div class="form-text visually-hidden" id="passwordHelp">Basic Authentication Password.</div>
             </form>
 
-            <!--TODO: Implement alert-->
-            <div class="alert alert-warning text-center p-2 mb-2 d-none" role="alert">Unsaved Changes Detected.</div>
+            <div v-if="showAlert" class="alert alert-warning text-center p-2 mb-2" role="alert">
+              Unsaved Changes Detected.
+            </div>
           </div>
 
           <div class="modal-footer">
