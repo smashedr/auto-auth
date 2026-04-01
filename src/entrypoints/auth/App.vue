@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue'
 import { openOptions } from '@/utils/extension.ts'
 import { getSession } from '@/utils/options.ts'
 import { useOptions } from '@/composables/useOptions.ts'
+import { showToast } from '@/composables/useToast.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
@@ -31,7 +32,9 @@ watch(
   options,
   (opts) => {
     // NOTE: This needs to be combined with the tempSave logic below
+    console.log('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
     saveCreds.value = opts.defaultSave
+    setBackground(opts)
   },
   { once: true },
 )
@@ -48,11 +51,7 @@ async function submitAuth(event: Event) {
   console.debug('options.value.defaultSave:', options.value.defaultSave)
   console.debug('saveCreds.value:', saveCreds.value)
 
-  // noinspection JSUnresolvedReference
   if (saveCreds.value) {
-    // const { sites } = await chrome.storage.sync.get(['sites'])
-    // sites[host] = `${user}:${pass}`
-    // await chrome.storage.sync.set({ sites })
     await Hosts.set(hostRef.value, `${userRef.value}:${passRef.value}`)
     console.log('%cCredentials Saved.', 'color: LimeGreen', `Loading: ${hrefRef.value}`)
   } else {
@@ -74,7 +73,7 @@ async function ignoreHost(_event: Event) {
   console.debug('ignoreHost:', hostRef.value)
   await Hosts.set(hostRef.value, 'ignored')
 
-  // document.body.remove()
+  // document.body.remove() // NOTE: Determine why this was called...
   const tab = await chrome.tabs.getCurrent()
   console.debug('tab:', tab)
   if (!tab?.id) return console.error('no tab.id') // NOTE: HANDLE ERROR
@@ -92,6 +91,65 @@ async function ignoreHost(_event: Event) {
 //   if (!ignoreModal.value) return console.error('no ignoreModal') // NOTE: HANDLE ERROR
 //   Modal.getOrCreateInstance(ignoreModal.value).show()
 // }
+
+function copyToast(text: string, message: string, type = 'success') {
+  console.log('copyToast:', text)
+  navigator.clipboard
+    .writeText(text)
+    .then(() => showToast(message, type))
+    .catch((e) => console.log(e))
+}
+
+function setBackground(options: Options) {
+  // NOTE: Copied from VanillaJS. Refactor this method...
+  console.log('setBackground:', options.radioBackground)
+  const video = document.querySelector('video')
+  console.log('video:', video)
+  if (!video) return console.error('no video element') // NOTE: Handle Error
+
+  if (options.radioBackground === 'bgPicture') {
+    const url = options.pictureURL || 'https://picsum.photos/1920/1080'
+    document.body.style.background = `url('${url}') no-repeat center fixed`
+    document.body.style.backgroundSize = 'cover'
+    video.classList.add('d-none')
+  } else if (options.radioBackground === 'bgVideo') {
+    video.src = options.videoURL
+    video.classList.remove('d-none')
+    document.body.style.cssText = ''
+  } else {
+    document.body.style.cssText = ''
+    video.classList.add('d-none')
+  }
+}
+
+// watch(
+//   options,
+//   (opts) => {
+//     console.log('auth/App.vue %c watch2: options:', 'color: Yellow', opts)
+//   },
+//   { deep: true },
+// )
+
+function onChanged(changes: object) {
+  // NOTE: Copied, add a re-usable watchOptions function...
+  console.log('onChanged:', changes)
+  for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
+    if (key === 'options' && oldValue && newValue) {
+      if (
+        oldValue.radioBackground !== newValue.radioBackground ||
+        oldValue.pictureURL !== newValue.pictureURL ||
+        oldValue.videoURL !== newValue.videoURL
+      ) {
+        console.log('%c Background Option Change', 'color: Yellow', newValue.radioBackground)
+        setBackground(newValue)
+      }
+    }
+  }
+}
+
+if (!chrome.storage.sync.onChanged.hasListener(onChanged)) {
+  chrome.storage.sync.onChanged.addListener(onChanged)
+}
 
 // const manifest = chrome.runtime.getManifest()
 // console.debug('manifest:', manifest)
@@ -156,8 +214,11 @@ onMounted(async () => {
     passRef.value = password
   }
 
-  // document.querySelectorAll('.host').forEach((el) => (el.textContent = url.host))
-  // document.getElementById('favicon').href = `${url.origin}/favicon.ico`
+  const link = document.querySelector<HTMLLinkElement>('link[rel*="icon"]')
+  console.debug('link:', link)
+  if (!link) return
+  link.href = `${url.origin}/favicon.ico`
+  console.debug('link.href:', link.href)
 })
 </script>
 
@@ -166,12 +227,12 @@ onMounted(async () => {
     <div class="container-fluid pt-3 px-0 px-sm-4">
       <div id="auth-outer" class="rounded rounded-4 w-100 mx-auto mb-4 p-3">
         <div class="text-center fs-4">
-          <kbd class="text-ellipsis host" role="button" data-clipboard-target=".host" data-toast="Host Copied">{{
+          <kbd class="text-ellipsis host" role="button" @click="copyToast(hostRef, 'Host Copied to Clipboard.')">{{
             hostRef
           }}</kbd>
         </div>
         <div class="text-center mb-2">
-          <i class="fa-regular fa-copy me-2" role="button" data-clipboard-target="#link" data-toast="URL Copied"> </i
+          <i class="fa-regular fa-copy me-2" role="button" @click="copyToast(hrefRef, 'URL Copied to Clipboard.')"> </i
           ><a id="link" class="text-break" :href="hrefRef" target="_blank" rel="noopener">{{ hrefRef }}</a>
         </div>
 
@@ -268,7 +329,7 @@ onMounted(async () => {
             Credentials are already saved for this host and temporary credentials <b>will have no effect</b>!
             <br />
             Until this is fixed you can enable <b>Save Login</b> or
-            <a class="alert-link" href="/options.html">delete the saved credentials</a>.
+            <a class="alert-link" href="/options.html" @click.prevent="openOptions()">delete the saved credentials</a>.
           </div>
 
           <div class="row">
@@ -296,9 +357,12 @@ onMounted(async () => {
         <hr />
 
         <div class="text-center">
-          <a class="link-body-emphasis text-decoration-none d-inline-block" href="/options.html">{{
-            i18n.t('ctx.openOptions')
-          }}</a>
+          <a
+            class="link-body-emphasis text-decoration-none d-inline-block"
+            href="/options.html"
+            @click.prevent="openOptions()"
+            >{{ i18n.t('ctx.openOptions') }}</a
+          >
           <span class="mx-2">&bull;</span>
           <a
             class="link-body-emphasis text-decoration-none d-inline-block"
