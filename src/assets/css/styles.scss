@@ -12,15 +12,3 @@
 //.icon svg path {
 //  fill: currentColor;
 //}
-
-// NOTE: Fix Bootstrap Modal background shift on show
-//  But causes scrolling inside the body on long modals...
-@supports (scrollbar-gutter: stable both-edges) {
-    html {
-        scrollbar-gutter: stable;
-    }
-
-    body {
-        padding-right: 0 !important;
-    }
-}
