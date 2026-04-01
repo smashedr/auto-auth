@@ -1,0 +1,111 @@
+name: Auto Auth
+short_name: Auto Auth
+description: Automatic Basic HTTP Authentication Web Extension with Browser Synchronization, Import/Export Capability and More Options
+
+ui:
+  options: Options
+  homePage: Home Page
+  releaseNotes: Release Notes
+  requestFeature: Request Feature
+  openIssue: Open Issue
+  noTabAccess: No Access to the Current Tab.
+
+  action:
+    cancel: Cancel
+    close: Close
+    delete: Delete
+    edit: Edit
+    go: Go
+    save: Save
+
+    openPopup: Open Popup
+    sidePanel: Side Panel
+    extensionPanel: Extension Panel
+    extensionPage: Extension Page
+    showOptions: Show Options
+    showToast: Show Factual Toast
+
+  keyboard:
+    description: Description
+    manage: Manage Keyboard Shortcuts
+    notSet: Not Set
+    shortcut: Shortcut
+    shortcuts: Keyboard Shortcuts
+    unknown: Unknown
+
+  perms:
+    granted: Permissions Granted.
+    grant:
+      text: Grant Host Permissions
+      tip: This Extension Requires Host Permissions to Function
+    remove:
+      text: Remove Host Permissions
+      tip: You will no longer be able to analyze new images
+    info: More Information on Permissions
+
+  theme:
+    title: Theme Switcher
+    dark: Dark
+    light: Light
+    auto: Auto
+
+option:
+  toggle:
+    siteIcon:
+      label: Site Icon
+      tip: Show Icon on Sites.
+    contextMenu:
+      label: Context Menu
+      tip: Show context menu on right click.
+    showUpdate:
+      label: Show Update
+      tip: Show update notifications.
+    tempDisabled:
+      label: Temporarily Disable
+      tip: Temporarily Disable the Extension for Debugging.
+    ignoreProxy:
+      label: Ignore Proxy Authentication
+      tip: Ignore HTTP 407 Proxy Auth Required Responses.
+    defaultSave:
+      label: Save Authentication by Default
+      tip: Save Login Enabled by Default.
+    confirmDelete:
+      label: Show Confirmation on Delete
+      tip: Show Confirmation Dialog on Delete.
+
+ctx:
+  # background/menus.ts
+  openPopup: Open Popup
+  openSidePanel: Open Side Panel
+  openExtPanel: Open Extension Panel
+  openOptions: Open Options
+
+cmd:
+  # wxt.config.ts
+  executeAction: Open Popup
+  openSidePanel: Open Side Panel
+  openExtPanel: Open Extension Panel
+  openOptions: Open Options
+
+options:
+  # options/App.vue
+  title: Options
+  extension: Extension Options
+  copySupport: Copy Support Information
+  copySupportTip: For issue reporting.
+  copySupportMsg: Support Information Copied.
+
+auth:
+  title: Auth
+  loginFor: Login for
+  getSupport: Get Support
+
+permissions:
+  title: Permissions
+  reason: To demonstrate the permissions check, host permissions are required.
+
+content:
+  press: Press the
+  toggle: key to toggle the icon.
+  key:
+    toggle: T
