@@ -8,18 +8,24 @@ export default defineContentScript({
 
     url = new URL(window.location.href)
 
-    if (!chrome.storage.onChanged.hasListener(onChanged)) {
+    if (!chrome.storage.sync.onChanged.hasListener(onChanged)) {
       console.debug('Adding storage.onChanged Listener')
-      chrome.storage.onChanged.addListener(onChanged)
+      chrome.storage.sync.onChanged.addListener(onChanged)
     }
 
-    run().catch(console.warn)
+    chrome.runtime
+      .sendMessage({ host: url.host })
+      .then(async (creds) => {
+        await processCreds(creds)
+      })
+      .catch((e) => {
+        if (e instanceof Error) console.error(e.message)
+      })
   },
 })
 
-async function run() {
-  const creds = await chrome.runtime.sendMessage({ host: url.host })
-  console.debug('run: creds:', creds)
+async function processCreds(creds: any) {
+  console.debug('%c processCreds:', 'color: SpringGreen', creds)
   if (creds) {
     tabEnabled = true
     if (creds === 'ignored') {
@@ -35,24 +41,29 @@ async function run() {
         badgeColor: 'green',
       })
     }
+  } else if (tabEnabled) {
+    console.debug('%cSite has been removed.', 'color: OrangeRed')
+    tabEnabled = false
+    await chrome.runtime.sendMessage({
+      badgeText: '',
+    })
   }
 }
 
-async function onChanged(changes: object, namespace: string) {
-  console.debug('onChanged:', changes, namespace)
-  for (let [key, { newValue }] of Object.entries(changes)) {
-    console.debug(`key: ${key} - newValue:`, newValue)
-    console.debug('url:', url)
-    // if (!url) continue
-    console.debug('url.host[0]', url.host[0])
-    // if (!url.host[0]) continue
-    if (namespace === 'sync' && key.startsWith(url.host[0])) {
-      const hosts = newValue[url.host[0]] || {}
-      if (tabEnabled && !(url.host in hosts)) {
-        await chrome.runtime.sendMessage({
-          badgeText: '',
-        })
-      }
-    }
+async function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
+  // console.debug('content/index.ts - onChanged:', changes)
+  const records = changes as Record<string, any> // NOTE: Lazy Typing...
+  // console.debug('records:', records)
+  const items = records[url.host[0]]
+  // console.debug('items:', items)
+  if (!items?.oldValue || !items?.newValue) return
+
+  const oldCreds = items.oldValue[url.host]
+  console.debug('oldCreds:', oldCreds)
+  const newCreds = items.newValue[url.host]
+  console.debug('newCreds:', newCreds)
+
+  if (oldCreds !== newCreds) {
+    await processCreds(newCreds)
   }
 }

@@ -112,7 +112,7 @@ async function onStartup() {
 }
 
 function onChanged(changes: object, namespace: string) {
-  // console.debug('onChanged:', changes, namespace)
+  // console.debug('background/index.ts - onChanged:', changes, namespace)
   for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
     if (namespace === 'sync' && key === 'options' && oldValue && newValue) {
       if (oldValue.contextMenu !== newValue.contextMenu) {

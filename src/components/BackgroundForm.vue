@@ -19,7 +19,7 @@ watch(
     pictureURL.value = options.value.pictureURL
     videoURL.value = options.value.videoURL
   },
-  { once: true },
+  { deep: true },
 )
 
 function radioChange(e: Event) {
