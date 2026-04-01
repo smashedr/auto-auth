@@ -132,7 +132,7 @@ function setBackground(options: Options) {
 
 function onChanged(changes: object) {
   // NOTE: Copied, add a re-usable watchOptions function...
-  console.log('onChanged:', changes)
+  console.log('auth/App.vue - onChanged:', changes)
   for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
     if (key === 'options' && oldValue && newValue) {
       if (
