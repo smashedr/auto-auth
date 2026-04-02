@@ -4,6 +4,7 @@ import { defaultOptions, getOptions } from '@/utils/options.ts'
 import { openExtPanel, openPopup, openSidePanel } from '@/utils/extension.ts'
 import { createContextMenus } from './menus.ts'
 import { onAuthRequired, webRequestFinished } from '@/entrypoints/background/auth.ts'
+import { updateIcon } from '@/entrypoints/background/icons.ts'
 
 export default defineBackground(() => {
   console.log(`Loaded: %c${chrome.runtime.id}`, 'Color: Cyan')
@@ -14,6 +15,9 @@ export default defineBackground(() => {
   chrome.runtime.onMessage.addListener(onMessage)
   chrome.commands?.onCommand.addListener(onCommand)
   chrome.contextMenus?.onClicked.addListener(onClicked)
+
+  chrome.permissions.onAdded.addListener(onAdded)
+  chrome.permissions.onRemoved.addListener(onRemoved)
 
   // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webRequest/onAuthRequired
   chrome.webRequest.onAuthRequired.addListener(onAuthRequired, { urls: ['<all_urls>'] }, [
@@ -63,6 +67,8 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
   const options = await setDefaultOptions(defaultOptions)
   console.debug('options:', options)
 
+  updateIcon(options).catch(console.warn)
+
   if (options.contextMenu) createContextMenus()
 
   const config = getAppConfig()
@@ -98,11 +104,14 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
 
 async function onStartup() {
   console.log('onStartup')
+
+  const options = await getOptions()
+  console.debug('options:', options)
+  updateIcon(options).catch(console.warn)
+
   if (isFirefox) {
     console.log('Firefox Startup Workarounds')
     // NOTE: Confirm these checks are still necessary...
-    const options = await getOptions()
-    console.debug('options:', options)
     if (options.contextMenu) createContextMenus()
 
     const manifest = chrome.runtime.getManifest()
@@ -123,6 +132,11 @@ function onChanged(changes: object, namespace: string) {
           console.log('%c Disabled contextMenu...', 'color: OrangeRed')
           chrome.contextMenus?.removeAll().catch(console.warn)
         }
+      }
+
+      if (oldValue.tempDisabled !== newValue.tempDisabled) {
+        console.debug('%c tempDisabled:', 'color: Yellow', newValue.tempDisabled)
+        updateIcon(newValue).catch(console.warn)
       }
     }
   }
@@ -191,4 +205,14 @@ async function onClicked(ctx: chrome.contextMenus.OnClickData, tab?: chrome.tabs
   } catch (e) {
     console.warn(e)
   }
+}
+
+export async function onAdded(permissions: chrome.permissions.Permissions) {
+  console.debug('onAdded', permissions)
+  await updateIcon()
+}
+
+export async function onRemoved(permissions: chrome.permissions.Permissions) {
+  console.debug('onRemoved', permissions)
+  await updateIcon()
 }
