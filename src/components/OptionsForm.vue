@@ -25,6 +25,11 @@ const options = useOptions()
       <form class="p-0">
         <template v-for="id in switches" :key="id">
           <FormSwitch :id="id" v-model="options[id]" />
+          <Transition name="fade">
+            <div v-show="id === 'tempDisabled' && options['tempDisabled']" class="alert alert-warning p-2 mb-2">
+              Extension Temporarily Disabled.
+            </div>
+          </Transition>
         </template>
       </form>
     </div>

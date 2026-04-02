@@ -3,7 +3,7 @@ import { i18n } from '#imports'
 import { ref } from 'vue'
 import { Modal } from 'bootstrap'
 
-const modalEl = ref(null)
+const modalEl = ref<HTMLElement | null>(null)
 
 const hostRef = ref('')
 
