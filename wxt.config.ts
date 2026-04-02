@@ -1,4 +1,43 @@
 import { defineConfig } from 'wxt'
+import { readFileSync, mkdirSync } from 'node:fs'
+import { join } from 'node:path'
+import sharp from 'sharp'
+import * as cheerio from 'cheerio'
+
+// https://github.com/cheeriojs/cheerio
+function recolor(svg: string, stops: [string, string]) {
+  const $ = cheerio.load(svg, { xmlMode: true })
+  // noinspection CssInvalidHtmlTagReference
+  const stop = $('linearGradient#grad stop')
+  stop.eq(0).attr('stop-color', stops[0])
+  stop.eq(1).attr('stop-color', stops[1])
+  return $.xml()
+}
+
+// https://github.com/lovell/sharp
+async function generateIcons(outDir: string) {
+  console.log('generateIcons:', outDir)
+  const iconsDir = join(outDir, 'icons')
+  mkdirSync(iconsDir, { recursive: true })
+
+  const source = 'src/assets/icon.svg'
+  const sizes = [16, 24, 32, 48, 96, 128]
+  const variants: Record<string, [string, string]> = {
+    // green: ['#32fc7d', '#147c39'], // TODO: Replace auto-icon
+    red: ['#ff0000', '#800000'],
+    yellow: ['#ffff00', '#808000'],
+  }
+
+  const svg = readFileSync(source, 'utf-8')
+  for (const [name, stops] of Object.entries(variants)) {
+    const modified = Buffer.from(recolor(svg, stops))
+    for (const size of sizes) {
+      const path = join(iconsDir, `${name}${size}.png`)
+      console.log('path:', path)
+      await sharp(modified).resize(size, size).png().toFile(path)
+    }
+  }
+}
 
 // See https://wxt.dev/api/config.html
 // noinspection JSUnusedGlobalSymbols
@@ -68,6 +107,13 @@ export default defineConfig({
           }
         : { minimum_chrome_version: '127' }), // chrome.action.openPopup
     }
+  },
+
+  // // https://wxt.dev/guide/essentials/config/hooks
+  hooks: {
+    'build:done': async (wxt) => {
+      await generateIcons(wxt.config.outDir)
+    },
   },
 
   // https://wxt.dev/guide/essentials/config/browser-startup.html
