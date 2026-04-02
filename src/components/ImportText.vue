@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Modal } from 'bootstrap'
+import { importCredentials } from '@/utils/creds.ts'
 
 const modalEl = ref<HTMLElement | null>(null)
 const textareaRef = ref<HTMLTextAreaElement | null>(null)
@@ -28,96 +29,12 @@ async function importText(event: Event) {
     // // showToast(`Import Error: ${e.message}`, 'danger')
   }
 }
-
-async function importCredentials(data: any) {
-  // NOTE: Cleanup this function, copied from VanillaJS
-  console.debug('importCredentials:', data)
-  const hosts: Record<string, string> = {}
-  let count = 0
-  let total
-  if ('credentialsArray' in data) {
-    // Basic Authentication (nanfgbiblbcagfodkfeinbbhijihckml)
-    console.debug('Processing - %c Basic Authentication', 'color: SpringGreen')
-    total = data.credentialsArray.length
-    for (const item of data.credentialsArray) {
-      try {
-        // console.debug('item:', item)
-        const key = getHost(item.url)
-        hosts[key] = `${item.login}:${item.password}`
-        count += 1
-      } catch (e) {
-        console.log(`Error processing item:`, 'color: Red', item, e)
-      }
-    }
-  } else {
-    console.debug('Processing - %c AutoAuth/Native', 'color: SpringGreen')
-    total = Object.keys(data).length
-    for (const [key, value] of Object.entries(data)) {
-      // console.debug(`${key}:`, value)
-      try {
-        if (typeof value === 'object') {
-          // AutoAuth (steffanschlein)
-          const { username, password } = value as any
-          console.debug('username, password:', username, password)
-          if (!username || !password) {
-            console.debug(`${key}: missing username or password`)
-            continue
-          }
-          hosts[key] = `${username}:${password}`
-        } else if (typeof value === 'string') {
-          // Auto Auth (this extension)
-          const [username, password] = value.split(':')
-          if (value !== 'ignored' && (!username || !password)) {
-            console.debug(`${key}: missing username or password`)
-            continue
-          }
-          hosts[key] = value
-        }
-        count += 1
-      } catch (e) {
-        console.log(`Error processing: ${key}`, 'color: Red', e)
-      }
-    }
-  }
-  // console.debug('hosts:', hosts)
-  await Hosts.update(hosts)
-  const type = count ? 'success' : 'warning'
-  showToast(`Imported/Updated ${count}/${total} Hosts.`, type)
-}
-
-function getHost(hostname: string) {
-  let host = hostname.toLowerCase().trim()
-  host = host.includes('://') ? host : 'https://' + host
-  console.debug('host:', host)
-  const url = new URL(host)
-  console.debug('url.host:', url.host)
-  if (!url.host) {
-    throw new Error(`Invalid Hostname: ${hostname}`)
-  }
-  return url.host
-}
 </script>
 
 <template>
-  <div class="mb-1 small">
-    <a id="export-hosts" class="link-body-emphasis text-decoration-none d-inline-block" role="button">
-      Export <i class="fa-solid fa-right-from-bracket fa-rotate-90 ms-1"></i
-    ></a>
-    <span class="mx-1">&bull;</span>
-    <input id="hosts-input" type="file" style="display: none" />
-    <a id="import-file" class="link-body-emphasis text-decoration-none d-inline-block" role="button">
-      Import File <i class="fa-solid fa-right-to-bracket fa-rotate-90 ms-1"></i
-    ></a>
-    <span class="mx-1">&bull;</span>
-    <a
-      class="link-body-emphasis text-decoration-none d-inline-block"
-      role="button"
-      data-bs-toggle="modal"
-      data-bs-target="#import-modal"
-    >
-      Import Text <i class="fa-solid fa-align-left ms-1"></i
-    ></a>
-  </div>
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#import-modal">
+    <i class="fa-solid fa-align-left ms-1"></i> Import Text
+  </button>
 
   <Teleport to="body">
     <div

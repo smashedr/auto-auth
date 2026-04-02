@@ -1,0 +1,69 @@
+import { Hosts } from '@/utils/hosts.ts'
+
+export async function importCredentials(data: any) {
+  // NOTE: Cleanup this function, copied from VanillaJS
+  console.debug('importCredentials:', data)
+  const hosts: Record<string, string> = {}
+  let count = 0
+  let total
+  if ('credentialsArray' in data) {
+    // Basic Authentication (nanfgbiblbcagfodkfeinbbhijihckml)
+    console.debug('Processing - %c Basic Authentication', 'color: SpringGreen')
+    total = data.credentialsArray.length
+    for (const item of data.credentialsArray) {
+      try {
+        // console.debug('item:', item)
+        const key = getHost(item.url)
+        hosts[key] = `${item.login}:${item.password}`
+        count += 1
+      } catch (e) {
+        console.log(`Error processing item:`, 'color: Red', item, e)
+      }
+    }
+  } else {
+    console.debug('Processing - %c AutoAuth/Native', 'color: SpringGreen')
+    total = Object.keys(data).length
+    for (const [key, value] of Object.entries(data)) {
+      // console.debug(`${key}:`, value)
+      try {
+        if (typeof value === 'object') {
+          // AutoAuth (steffanschlein)
+          const { username, password } = value as any
+          console.debug('username, password:', username, password)
+          if (!username || !password) {
+            console.debug(`${key}: missing username or password`)
+            continue
+          }
+          hosts[key] = `${username}:${password}`
+        } else if (typeof value === 'string') {
+          // Auto Auth (this extension)
+          const [username, password] = value.split(':')
+          if (value !== 'ignored' && (!username || !password)) {
+            console.debug(`${key}: missing username or password`)
+            continue
+          }
+          hosts[key] = value
+        }
+        count += 1
+      } catch (e) {
+        console.log(`Error processing: ${key}`, 'color: Red', e)
+      }
+    }
+  }
+  // console.debug('hosts:', hosts)
+  await Hosts.update(hosts)
+  const type = count ? 'success' : 'warning'
+  showToast(`Imported/Updated ${count}/${total} Hosts.`, type)
+}
+
+function getHost(hostname: string) {
+  let host = hostname.toLowerCase().trim()
+  host = host.includes('://') ? host : 'https://' + host
+  console.debug('host:', host)
+  const url = new URL(host)
+  console.debug('url.host:', url.host)
+  if (!url.host) {
+    throw new Error(`Invalid Hostname: ${hostname}`)
+  }
+  return url.host
+}
