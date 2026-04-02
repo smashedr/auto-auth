@@ -109,7 +109,7 @@ export default defineConfig({
     }
   },
 
-  // // https://wxt.dev/guide/essentials/config/hooks
+  // https://wxt.dev/guide/essentials/config/hooks
   hooks: {
     'build:done': async (wxt) => {
       await generateIcons(wxt.config.outDir)

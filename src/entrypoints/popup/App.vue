@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { isFirefox, isMobile } from '@/utils/system.ts'
+import { submitHost } from '@/utils/index.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { useOptions } from '@/composables/useOptions.ts'
@@ -12,7 +13,6 @@ import PermsCheck from '@/components/PermsCheck.vue'
 import OptionsForm from '@/components/OptionsForm.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
 import HostModal from '@/components/HostModal.vue'
-import { submitHost } from '@/utils'
 
 console.debug('%c popup/App.vue', 'color: Lime')
 
