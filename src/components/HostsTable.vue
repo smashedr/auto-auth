@@ -6,6 +6,7 @@ import { useHosts } from '@/composables/useHosts.ts'
 import { Hosts } from '@/utils/hosts.ts'
 import DeleteModal from '@/components/DeleteModal.vue'
 import HostModal from '@/components/HostModal.vue'
+import ImportText from '@/components/ImportText.vue'
 
 const options = useOptions()
 const hosts = useHosts()
@@ -42,6 +43,9 @@ async function deleteHost(host: string) {
   <button class="btn btn-success mb-2" @click="hostModal?.show()">
     <i class="fa-solid fa-table-cells-row-lock me-2"></i> Add New Credentials
   </button>
+
+  <!--TODO: Add prop to make optional-->
+  <ImportText />
 
   <table id="history-table" class="table table-sm table-striped" style="table-layout: fixed">
     <thead>

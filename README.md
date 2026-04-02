@@ -30,7 +30,7 @@
 - [Contributing](#contributing)
 
 > [!CAUTION]  
-> Development version of [cssnr/auto-auth](https://github.com/cssnr/auto-auth).
+> Development version of [cssnr/auto-auth](https://github.com/cssnr/auto-auth).  
 > For progress, see the [Roadmap Issue](https://github.com/cssnr/auto-auth/issues/17).
 
 Note, this is functional but missing most options.
