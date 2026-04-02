@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { isFirefox, isMobile } from '@/utils/system.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { showToast } from '@/composables/useToast.ts'
@@ -11,7 +11,8 @@ import PanelHeader from '@/components/PanelHeader.vue'
 import PermsCheck from '@/components/PermsCheck.vue'
 import OptionsForm from '@/components/OptionsForm.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
-import EditModal from '@/components/EditModal.vue'
+import HostModal from '@/components/HostModal.vue'
+import { submitHost } from '@/utils'
 
 console.debug('%c popup/App.vue', 'color: Lime')
 
@@ -23,25 +24,23 @@ const usernameRef = ref('') // saved username
 const savedCreds = ref('') // has credentials
 
 const deleteModal = ref<InstanceType<typeof DeleteModal> | null>(null)
-const editModal = ref<InstanceType<typeof EditModal> | null>(null)
+const hostModal = ref<InstanceType<typeof HostModal> | null>(null)
 
-// DUPLICATION: Copied from HostsTable.vue
+// DUPLICATION: HostsTable.vue
 function deleteClick(host: string) {
   console.log('HostsTable.vue - deleteClick:', host)
   if (options.value.confirmDelete) {
-    console.log('deleteModal.value:', deleteModal.value)
     deleteModal.value?.show(host)
   } else {
     deleteHost(host)
   }
 }
 
+// DUPLICATION: HostsTable.vue
 async function deleteHost(host: string) {
   console.log('popup/App.vue - deleteHost:', host)
   const creds = await Hosts.get(host)
-  // DUPLICATION: Copied from HostsTable.vue - re-run re-usable setup function...
-  console.log('creds:', creds) // NOTE: Handle undefined creds, also, creds are not used
-  if (!creds) return showToast('Credentials Not Found')
+  console.log('creds:', creds) // NOTE: Check if validation is needed...
   try {
     await Hosts.delete(host)
     hostnameRef.value = ''
@@ -53,13 +52,11 @@ async function deleteHost(host: string) {
   }
 }
 
-// DUPLICATION: Copied from HostsTable.vue - re-run re-usable setup function...
-async function editHost(original: string, host: string, user: string, pass: string) {
-  console.log('popup/App.vue - editHost:', original, host, user, pass)
-  await Hosts.edit(original, host, `${user}:${pass}`)
+async function onSubmit(host: string, user: string, pass: string, original?: string) {
+  console.log('popup/App.vue - onSubmit:', host, user, pass, original)
   savedCreds.value = `${user}:${pass}`
   usernameRef.value = user
-  showToast(`Edited: ${host}`, 'success')
+  await submitHost(host, user, pass, original)
 }
 
 watch(
@@ -83,11 +80,6 @@ watch(
 const isBrowser = isFirefox ? '360px' : null
 const width = computed(() => (isMobile ? '100%' : isBrowser))
 console.log('width:', width.value)
-
-onMounted(async () => {
-  const all = await Hosts.all()
-  console.log('all:', all)
-})
 </script>
 
 <template>
@@ -109,7 +101,7 @@ onMounted(async () => {
           class="text-center rounded border border-2 text-ellipsis p-1"
           :class="usernameRef === 'ignored' ? 'border-warning-subtle' : 'border-success-subtle'"
         >
-          Username:
+          {{ i18n.t('ui.text.username') }}:
           <span
             class="fw-bold"
             :class="usernameRef === 'ignored' ? 'text-warning-emphasis' : 'text-success-emphasis'"
@@ -117,7 +109,7 @@ onMounted(async () => {
           >
         </div>
 
-        <button class="btn btn-outline-warning" @click.prevent="editModal?.show(hostnameRef, savedCreds)">
+        <button class="btn btn-outline-warning" @click.prevent="hostModal?.show(hostnameRef, savedCreds)">
           <i class="fa-solid fa-pen-to-square me-1"></i>
           <span>Edit Credentials</span>
         </button>
@@ -136,7 +128,7 @@ onMounted(async () => {
     </div>
 
     <DeleteModal ref="deleteModal" @delete="deleteHost" />
-    <EditModal ref="editModal" :compact="true" @edit="editHost" />
+    <HostModal ref="hostModal" @submit="onSubmit" :compact="true" />
     <ToastAlerts />
   </div>
 </template>

@@ -11,6 +11,7 @@ ui:
   noTabAccess: No Access to the Current Tab.
 
   action:
+    add: Add
     cancel: Cancel
     close: Close
     delete: Delete
@@ -24,6 +25,11 @@ ui:
     extensionPage: Extension Page
     showOptions: Show Options
     showToast: Show Factual Toast
+
+  text:
+    hostname: Hostname
+    username: Username
+    password: Password
 
   keyboard:
     description: Description

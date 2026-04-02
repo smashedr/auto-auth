@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { Hosts } from '@/utils/hosts.ts'
-import { onMounted } from 'vue'
+import { submitHost } from '@/utils/index.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import { useHosts } from '@/composables/useHosts.ts'
+import { Hosts } from '@/utils/hosts.ts'
 import DeleteModal from '@/components/DeleteModal.vue'
-import EditModal from '@/components/EditModal.vue'
+import HostModal from '@/components/HostModal.vue'
 
 const options = useOptions()
 const hosts = useHosts()
 
 const deleteModal = ref<InstanceType<typeof DeleteModal> | null>(null)
-const editModal = ref<InstanceType<typeof EditModal> | null>(null)
+const hostModal = ref<InstanceType<typeof HostModal> | null>(null)
 
+// DUPLICATION: popup/App.vue
 function deleteClick(host: string) {
   console.log('HostsTable.vue - deleteClick:', host)
   if (options.value.confirmDelete) {
@@ -22,11 +23,11 @@ function deleteClick(host: string) {
   }
 }
 
+// DUPLICATION: popup/App.vue
 async function deleteHost(host: string) {
   console.log('HostsTable.vue - deleteHost:', host)
-  console.log('hosts.value:', hosts.value)
   const creds = hosts.value[host]
-  console.log('creds:', creds) // NOTE: Handle undefined creds, also, creds are not used
+  console.log('creds:', creds) // NOTE: Check if validation is needed...
   try {
     await Hosts.delete(host)
     showToast(`Removed: ${host}`, 'success')
@@ -34,28 +35,20 @@ async function deleteHost(host: string) {
     if (e instanceof Error) showToast(`Delete Host Error: ${e.message}`, 'danger')
   }
 }
-
-async function editHost(original: string, host: string, user: string, pass: string) {
-  console.log('HostsTable.vue - editHost:', original, host, user, pass)
-  await Hosts.edit(original, host, `${user}:${pass}`)
-  showToast(`Edited: ${host}`, 'success')
-}
-
-onMounted(async () => {
-  // NOTE: DO NOT USE - use now instead...
-  const all = await Hosts.all()
-  console.log('all:', all)
-  // setTimeout(() => console.log('hosts.value:', hosts.value), 1000)
-})
 </script>
 
 <template>
+  <!--TODO: Add prop to make optional or make a component-->
+  <button class="btn btn-success mb-2" @click="hostModal?.show()">
+    <i class="fa-solid fa-table-cells-row-lock me-2"></i> Add New Credentials
+  </button>
+
   <table id="history-table" class="table table-sm table-striped" style="table-layout: fixed">
     <thead>
       <tr>
         <th class="text-center" style="width: 36px"><i class="fa-solid fa-trash-can"></i></th>
-        <th>Host</th>
-        <th>Username</th>
+        <th>{{ i18n.t('ui.text.hostname') }}</th>
+        <th>{{ i18n.t('ui.text.username') }}</th>
         <th class="text-center" style="width: 36px"><i class="fa-solid fa-pen-to-square"></i></th>
       </tr>
     </thead>
@@ -75,7 +68,7 @@ onMounted(async () => {
             :title="i18n.t('ui.action.edit')"
             class="link-warning"
             role="button"
-            @click.prevent="editModal?.show(host, creds)"
+            @click.prevent="hostModal?.show(host, creds)"
             ><i class="fa-solid fa-pen-to-square"></i
           ></a>
         </td>
@@ -84,7 +77,7 @@ onMounted(async () => {
   </table>
 
   <DeleteModal ref="deleteModal" @delete="deleteHost" />
-  <EditModal ref="editModal" @edit="editHost" />
+  <HostModal ref="hostModal" @submit="submitHost" />
 </template>
 
 <!--<style scoped></style>-->
