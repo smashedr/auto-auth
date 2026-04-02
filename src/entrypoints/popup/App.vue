@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { isFirefox, isMobile } from '@/utils/system.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { showToast } from '@/composables/useToast.ts'
@@ -12,6 +12,7 @@ import PermsCheck from '@/components/PermsCheck.vue'
 import OptionsForm from '@/components/OptionsForm.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
 import HostModal from '@/components/HostModal.vue'
+import { submitHost } from '@/utils'
 
 console.debug('%c popup/App.vue', 'color: Lime')
 
@@ -25,11 +26,10 @@ const savedCreds = ref('') // has credentials
 const deleteModal = ref<InstanceType<typeof DeleteModal> | null>(null)
 const hostModal = ref<InstanceType<typeof HostModal> | null>(null)
 
-// DUPLICATION: Copied from HostsTable.vue
+// DUPLICATION: HostsTable.vue
 function deleteClick(host: string) {
   console.log('HostsTable.vue - deleteClick:', host)
   if (options.value.confirmDelete) {
-    console.log('deleteModal.value:', deleteModal.value)
     deleteModal.value?.show(host)
   } else {
     deleteHost(host)
@@ -52,23 +52,11 @@ async function deleteHost(host: string) {
   }
 }
 
-// DUPLICATION: HostsTable.vue
-async function submitHost(original: string | false, host: string, user: string, pass: string) {
-  console.log('popup/App.vue - submitHost:', original, host, user, pass)
-  try {
-    // NOTE: Update Hosts.set to handle this logic...
-    if (original === false) {
-      await Hosts.set(host, `${user}:${pass}`)
-    } else {
-      await Hosts.edit(original, host, `${user}:${pass}`)
-    }
-
-    savedCreds.value = `${user}:${pass}`
-    usernameRef.value = user
-    showToast(`Add/Edited: ${host}`, 'success')
-  } catch (e) {
-    if (e instanceof Error) showToast(`Add/Edit Error: ${e.message}`, 'danger')
-  }
+async function onSubmit(host: string, user: string, pass: string, original?: string) {
+  console.log('popup/App.vue - onSubmit:', host, user, pass, original)
+  savedCreds.value = `${user}:${pass}`
+  usernameRef.value = user
+  await submitHost(host, user, pass, original)
 }
 
 watch(
@@ -92,11 +80,6 @@ watch(
 const isBrowser = isFirefox ? '360px' : null
 const width = computed(() => (isMobile ? '100%' : isBrowser))
 console.log('width:', width.value)
-
-onMounted(async () => {
-  const all = await Hosts.all()
-  console.log('all:', all)
-})
 </script>
 
 <template>
@@ -145,7 +128,7 @@ onMounted(async () => {
     </div>
 
     <DeleteModal ref="deleteModal" @delete="deleteHost" />
-    <HostModal ref="hostModal" @submit="submitHost" :compact="true" />
+    <HostModal ref="hostModal" @submit="onSubmit" :compact="true" />
     <ToastAlerts />
   </div>
 </template>

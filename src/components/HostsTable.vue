@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { submitHost } from '@/utils/index.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import { useHosts } from '@/composables/useHosts.ts'
@@ -12,6 +13,7 @@ const hosts = useHosts()
 const deleteModal = ref<InstanceType<typeof DeleteModal> | null>(null)
 const hostModal = ref<InstanceType<typeof HostModal> | null>(null)
 
+// DUPLICATION: popup/App.vue
 function deleteClick(host: string) {
   console.log('HostsTable.vue - deleteClick:', host)
   if (options.value.confirmDelete) {
@@ -31,23 +33,6 @@ async function deleteHost(host: string) {
     showToast(`Removed: ${host}`, 'success')
   } catch (e) {
     if (e instanceof Error) showToast(`Delete Host Error: ${e.message}`, 'danger')
-  }
-}
-
-// DUPLICATION: popup/App.vue
-async function submitHost(original: string | false, host: string, user: string, pass: string) {
-  console.log('HostsTable.vue - submitHost:', original, host, user, pass)
-  try {
-    // NOTE: Update Hosts.set to handle this logic...
-    if (original === false) {
-      await Hosts.set(host, `${user}:${pass}`)
-    } else {
-      await Hosts.edit(original, host, `${user}:${pass}`)
-    }
-
-    showToast(`Add/Edited: ${host}`, 'success')
-  } catch (e) {
-    if (e instanceof Error) showToast(`Add/Edit Error: ${e.message}`, 'danger')
   }
 }
 </script>

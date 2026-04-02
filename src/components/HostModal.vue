@@ -53,8 +53,8 @@ function hide() {
 }
 
 function onSubmit() {
-  console.log('HostModal.vue - onSubmit:', hostRef.value, userRef.value, passRef.value)
-  emit('submit', isAdding.value ? false : originalHost.value, hostRef.value, userRef.value, passRef.value)
+  console.log('HostModal.vue - onSubmit:', hostRef.value, userRef.value, passRef.value, originalHost.value)
+  emit('submit', hostRef.value, userRef.value, passRef.value, originalHost.value)
   hide()
 }
 
