@@ -134,7 +134,7 @@ defineExpose({ show })
           <div class="modal-body">
             <form id="edit-form" name="edit-form" class="mb-3" autocomplete="off" @submit.prevent="onSubmit">
               <label for="hostname" class="form-label" :class="compact ? 'visually-hidden' : ''"
-                ><i class="fa-solid fa-globe me-2"></i> Hostname</label
+                ><i class="fa-solid fa-globe me-2"></i> {{ i18n.t('ui.text.hostname') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
@@ -174,7 +174,7 @@ defineExpose({ show })
               <div class="form-text visually-hidden" id="hostnameHelp">Basic Authentication Hostname.</div>
 
               <label for="username" class="form-label" :class="compact ? 'visually-hidden' : ''"
-                ><i class="fa-solid fa-user me-2"></i> Username</label
+                ><i class="fa-solid fa-user me-2"></i> {{ i18n.t('ui.text.username') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
@@ -217,7 +217,7 @@ defineExpose({ show })
               </div>
 
               <label for="password" class="form-label" :class="compact ? 'visually-hidden' : ''"
-                ><i class="fa-solid fa-key me-2"></i> Password</label
+                ><i class="fa-solid fa-key me-2"></i> {{ i18n.t('ui.text.password') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
@@ -277,7 +277,8 @@ defineExpose({ show })
 
           <div class="modal-footer">
             <button type="submit" form="edit-form" class="btn btn-success me-auto">
-              {{ isAdding ? 'Add' : i18n.t('ui.action.save') }}<i class="fa-regular fa-floppy-disk ms-2"></i>
+              <i :class="isAdding ? 'fa-solid fa-square-plus' : 'fa-regular fa-floppy-disk me-2'"></i>
+              {{ isAdding ? i18n.t('ui.action.add') : i18n.t('ui.action.save') }}
             </button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               {{ i18n.t('ui.action.close') }}

@@ -38,14 +38,17 @@ async function deleteHost(host: string) {
 </script>
 
 <template>
-  <button class="btn btn-success" @click="hostModal?.show()">Add Host</button>
+  <!--TODO: Add prop to make optional or make a component-->
+  <button class="btn btn-success mb-2" @click="hostModal?.show()">
+    <i class="fa-solid fa-table-cells-row-lock me-2"></i> Add New Credentials
+  </button>
 
   <table id="history-table" class="table table-sm table-striped" style="table-layout: fixed">
     <thead>
       <tr>
         <th class="text-center" style="width: 36px"><i class="fa-solid fa-trash-can"></i></th>
-        <th>Host</th>
-        <th>Username</th>
+        <th>{{ i18n.t('ui.text.hostname') }}</th>
+        <th>{{ i18n.t('ui.text.username') }}</th>
         <th class="text-center" style="width: 36px"><i class="fa-solid fa-pen-to-square"></i></th>
       </tr>
     </thead>
