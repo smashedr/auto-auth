@@ -11,7 +11,7 @@ import PanelHeader from '@/components/PanelHeader.vue'
 import PermsCheck from '@/components/PermsCheck.vue'
 import OptionsForm from '@/components/OptionsForm.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
-import EditModal from '@/components/EditModal.vue'
+import HostModal from '@/components/HostModal.vue'
 
 console.debug('%c popup/App.vue', 'color: Lime')
 
@@ -23,7 +23,7 @@ const usernameRef = ref('') // saved username
 const savedCreds = ref('') // has credentials
 
 const deleteModal = ref<InstanceType<typeof DeleteModal> | null>(null)
-const editModal = ref<InstanceType<typeof EditModal> | null>(null)
+const hostModal = ref<InstanceType<typeof HostModal> | null>(null)
 
 // DUPLICATION: Copied from HostsTable.vue
 function deleteClick(host: string) {
@@ -36,12 +36,11 @@ function deleteClick(host: string) {
   }
 }
 
+// DUPLICATION: HostsTable.vue
 async function deleteHost(host: string) {
   console.log('popup/App.vue - deleteHost:', host)
   const creds = await Hosts.get(host)
-  // DUPLICATION: Copied from HostsTable.vue - re-run re-usable setup function...
-  console.log('creds:', creds) // NOTE: Handle undefined creds, also, creds are not used
-  if (!creds) return showToast('Credentials Not Found')
+  console.log('creds:', creds) // NOTE: Check if validation is needed...
   try {
     await Hosts.delete(host)
     hostnameRef.value = ''
@@ -53,13 +52,23 @@ async function deleteHost(host: string) {
   }
 }
 
-// DUPLICATION: Copied from HostsTable.vue - re-run re-usable setup function...
-async function editHost(original: string, host: string, user: string, pass: string) {
-  console.log('popup/App.vue - editHost:', original, host, user, pass)
-  await Hosts.edit(original, host, `${user}:${pass}`)
-  savedCreds.value = `${user}:${pass}`
-  usernameRef.value = user
-  showToast(`Edited: ${host}`, 'success')
+// DUPLICATION: HostsTable.vue
+async function submitHost(original: string | false, host: string, user: string, pass: string) {
+  console.log('popup/App.vue - submitHost:', original, host, user, pass)
+  try {
+    // NOTE: Update Hosts.set to handle this logic...
+    if (original === false) {
+      await Hosts.set(host, `${user}:${pass}`)
+    } else {
+      await Hosts.edit(original, host, `${user}:${pass}`)
+    }
+
+    savedCreds.value = `${user}:${pass}`
+    usernameRef.value = user
+    showToast(`Add/Edited: ${host}`, 'success')
+  } catch (e) {
+    if (e instanceof Error) showToast(`Add/Edit Error: ${e.message}`, 'danger')
+  }
 }
 
 watch(
@@ -117,7 +126,7 @@ onMounted(async () => {
           >
         </div>
 
-        <button class="btn btn-outline-warning" @click.prevent="editModal?.show(hostnameRef, savedCreds)">
+        <button class="btn btn-outline-warning" @click.prevent="hostModal?.show(hostnameRef, savedCreds)">
           <i class="fa-solid fa-pen-to-square me-1"></i>
           <span>Edit Credentials</span>
         </button>
@@ -136,7 +145,7 @@ onMounted(async () => {
     </div>
 
     <DeleteModal ref="deleteModal" @delete="deleteHost" />
-    <EditModal ref="editModal" :compact="true" @edit="editHost" />
+    <HostModal ref="hostModal" @submit="submitHost" :compact="true" />
     <ToastAlerts />
   </div>
 </template>

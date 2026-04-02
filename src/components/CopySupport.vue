@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Hosts } from '@/utils/hosts.ts'
 import { isFirefox, isMobile } from '@/utils/system.ts'
 import { getOptions } from '@/utils/options.ts'
 import { showToast } from '@/composables/useToast.ts'
+import { Hosts } from '@/utils/hosts.ts'
 
 const props = withDefaults(
   defineProps<{

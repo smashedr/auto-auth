@@ -1,5 +1,3 @@
-<!--TODO: Refactor as HostModal and use for Add and Edit-->
-
 <script setup lang="ts">
 import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
@@ -29,16 +27,23 @@ const passRef = ref('')
 const passwordShown = ref(false)
 const unsavedChanges = ref(false)
 const showAlert = ref(false)
+const isAdding = ref(false)
 
-const emit = defineEmits(['edit'])
+const emit = defineEmits(['submit'])
 
-function show(host: string, creds: string) {
+function show(host?: string, creds?: string) {
   if (!modalEl.value) return console.error('no modalEl')
-  originalHost.value = host
-  hostRef.value = host
-  const [username, password] = creds.split(':')
-  userRef.value = username
-  passRef.value = password
+
+  if (host && creds) {
+    originalHost.value = host
+    hostRef.value = host
+    const [username, password] = creds.split(':')
+    userRef.value = username
+    passRef.value = password
+  } else {
+    isAdding.value = true
+  }
+
   Modal.getOrCreateInstance(modalEl.value).show()
 }
 
@@ -47,15 +52,15 @@ function hide() {
   Modal.getInstance(modalEl.value)?.hide()
 }
 
-function onSave() {
-  console.log('EditModal.vue - onSave:', hostRef.value, userRef.value, passRef.value)
-  emit('edit', originalHost.value, hostRef.value, userRef.value, passRef.value)
+function onSubmit() {
+  console.log('HostModal.vue - onSubmit:', hostRef.value, userRef.value, passRef.value)
+  emit('submit', isAdding.value ? false : originalHost.value, hostRef.value, userRef.value, passRef.value)
   hide()
 }
 
 function hostnameChange() {
   // NOTE: ADD Validation Here... Copied from VanillaJS.
-  console.log('EditModal.vue - hostnameChange')
+  console.log('HostModal.vue - hostnameChange')
   try {
     let host = hostRef.value.toLowerCase().trim()
     console.log('host:', host)
@@ -70,7 +75,7 @@ function hostnameChange() {
 }
 
 function onceChange() {
-  console.log('EditModal.vue - onceChange')
+  console.log('HostModal.vue - onceChange')
   if (!modal.value) return
   modal.value._config.backdrop = 'static'
   unsavedChanges.value = true
@@ -83,7 +88,11 @@ onMounted(() => {
   console.log('modal:', modal.value)
 
   modalEl.value?.addEventListener('shown.bs.modal', () => {
-    usernameEl.value?.focus()
+    if (isAdding.value) {
+      hostnameEl.value?.focus()
+    } else {
+      usernameEl.value?.focus()
+    }
     // NOTE: When using as AddModal this should focus the hostnameEl
   })
 
@@ -105,6 +114,7 @@ onMounted(() => {
     passwordShown.value = false
     unsavedChanges.value = false
     showAlert.value = false
+    isAdding.value = false
     modal.value._config.backdrop = true
   })
 })
@@ -118,11 +128,11 @@ defineExpose({ show })
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="edit-modal-label">Edit Host</h1>
+            <h1 class="modal-title fs-5" id="edit-modal-label">{{ isAdding ? 'Add' : 'Edit' }} Host</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" tabindex="-1"></button>
           </div>
           <div class="modal-body">
-            <form id="edit-form" name="edit-form" class="mb-3" autocomplete="off">
+            <form id="edit-form" name="edit-form" class="mb-3" autocomplete="off" @submit.prevent="onSubmit">
               <label for="hostname" class="form-label" :class="compact ? 'visually-hidden' : ''"
                 ><i class="fa-solid fa-globe me-2"></i> Hostname</label
               >
@@ -266,8 +276,8 @@ defineExpose({ show })
           </div>
 
           <div class="modal-footer">
-            <button type="submit" form="edit-form" class="btn btn-success me-auto" @click.prevent="onSave">
-              {{ i18n.t('ui.action.save') }} <i class="fa-regular fa-floppy-disk ms-2"></i>
+            <button type="submit" form="edit-form" class="btn btn-success me-auto">
+              {{ isAdding ? 'Add' : i18n.t('ui.action.save') }}<i class="fa-regular fa-floppy-disk ms-2"></i>
             </button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               {{ i18n.t('ui.action.close') }}
