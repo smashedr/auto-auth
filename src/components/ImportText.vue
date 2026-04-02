@@ -4,29 +4,27 @@ import { Modal } from 'bootstrap'
 import { importCredentials } from '@/utils/creds.ts'
 
 const modalEl = ref<HTMLElement | null>(null)
-const textareaRef = ref<HTMLTextAreaElement | null>(null)
+const textareaEl = ref<HTMLTextAreaElement | null>(null)
+const invalidText = ref('')
 
 async function importText(event: Event) {
   console.debug('importText:', event)
-  if (!textareaRef.value) return
-  console.debug('textareaRef.value.value:', textareaRef.value.value)
-  if (!textareaRef.value.value) {
-    textareaRef.value.focus()
+  if (!textareaEl.value) return
+  console.debug('textareaEl.value.value:', textareaEl.value.value)
+  if (!textareaEl.value.value) {
+    textareaEl.value.focus()
     return
   }
   try {
-    const data = JSON.parse(textareaRef.value.value)
+    const data = JSON.parse(textareaEl.value.value)
     // console.debug('data:', data)
     await importCredentials(data)
     if (modalEl.value) Modal.getInstance(modalEl.value)?.hide()
-    textareaRef.value.value = ''
+    textareaEl.value.value = ''
   } catch (e) {
     console.debug('Import Error:', e)
-    // TODO: Handle this error...
-    // importModalEl.querySelector('.invalid-feedback').textContent =
-    //   `Import Error: ${e.message}`
-    // textareaRef.value.classList.add('is-invalid')
-    // // showToast(`Import Error: ${e.message}`, 'danger')
+
+    if (e instanceof Error) invalidText.value = e.message
   }
 }
 </script>
@@ -55,13 +53,15 @@ async function importText(event: Event) {
             <div class="">
               <label for="import-textarea" class="mb-1"> JSON Import <i class="fa-solid fa-code"></i> </label>
               <textarea
-                ref="textareaRef"
+                ref="textareaEl"
                 class="form-control"
+                :class="invalidText ? 'is-invalid' : ''"
                 placeholder="Paste text to import here..."
                 id="import-textarea"
                 style="height: 100px"
+                @input="invalidText = ''"
               ></textarea>
-              <div class="invalid-feedback"></div>
+              <div class="invalid-feedback">{{ invalidText }}</div>
               <div>
                 For data format, see the
                 <a
