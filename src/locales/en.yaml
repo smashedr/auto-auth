@@ -106,7 +106,7 @@ options:
   copySupportMsg: Support Information Copied.
   savedCredentials: Saved Credentials
   # components/OptionsForm.vue
-  authPageBackground: Auth Page Background
+  authPageBackground: Auth/Options Background
 
 content:
   # content/index.ts

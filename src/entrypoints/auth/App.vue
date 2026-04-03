@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue'
 import { copyToast } from '@/utils/index.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { getSession, saveKeyValue } from '@/utils/options.ts'
+import { useBackground } from '@/composables/useBackground.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import { showToast } from '@/composables/useToast.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
@@ -11,6 +12,8 @@ import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
 
 console.debug('%c auth/App.vue', 'color: SpringGreen')
+
+useBackground()
 
 const options = useOptions()
 
@@ -35,8 +38,6 @@ watch(
   options,
   (opts) => {
     console.log('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
-    setBackground(opts)
-
     const tempSave = sessionStorage.getItem(hostRef.value)
     console.log('tempSave:', tempSave)
     if (tempSave) {
@@ -47,11 +48,6 @@ watch(
   },
   { once: true },
 )
-
-function saveCredsChange(event: Event) {
-  console.debug('saveCredsChange:', event)
-  sessionStorage.setItem(hostRef.value, saveCreds.value ? '1' : '0')
-}
 
 async function submitAuth(event: Event) {
   console.debug('submitAuth:', event)
@@ -97,67 +93,9 @@ async function ignoreHost(_event: Event) {
   await chrome.tabs.update(tab.id, { url: hrefRef.value })
 }
 
-// function showHidePassword(el: HTMLInputElement | null) {
-//   console.debug('showHidePassword:', el)
-//   if (!el) return
-//   el.type = el.type === 'password' ? 'text' : 'password'
-//   passwordShown.value = !passwordShown.value
-// }
-
-// function showModal() {
-//   if (!ignoreModal.value) return console.error('no ignoreModal') // NOTE: HANDLE ERROR
-//   Modal.getOrCreateInstance(ignoreModal.value).show()
-// }
-
-function setBackground(options: Options) {
-  // NOTE: Copied from VanillaJS. Refactor this method...
-  console.log('setBackground:', options.radioBackground)
-  const video = document.querySelector('video')
-  console.log('video:', video)
-  if (!video) return console.error('no video element') // NOTE: Handle Error
-
-  if (options.radioBackground === 'bgPicture') {
-    const url = options.pictureURL || 'https://picsum.photos/1920/1080'
-    document.body.style.background = `url('${url}') no-repeat center fixed`
-    document.body.style.backgroundSize = 'cover'
-    video.classList.add('d-none')
-  } else if (options.radioBackground === 'bgVideo') {
-    video.src = options.videoURL
-    video.classList.remove('d-none')
-    document.body.style.cssText = ''
-  } else {
-    document.body.style.cssText = ''
-    video.classList.add('d-none')
-  }
-}
-
-// watch(
-//   options,
-//   (opts) => {
-//     console.log('auth/App.vue %c watch2: options:', 'color: Yellow', opts)
-//   },
-//   { deep: true },
-// )
-
-function onChanged(changes: object) {
-  // NOTE: Copied, add a re-usable watchOptions function...
-  console.log('auth/App.vue - onChanged:', changes)
-  for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
-    if (key === 'options' && oldValue && newValue) {
-      if (
-        oldValue.radioBackground !== newValue.radioBackground ||
-        oldValue.pictureURL !== newValue.pictureURL ||
-        oldValue.videoURL !== newValue.videoURL
-      ) {
-        console.log('%c Background Option Change', 'color: Yellow', newValue.radioBackground)
-        setBackground(newValue)
-      }
-    }
-  }
-}
-
-if (!chrome.storage.sync.onChanged.hasListener(onChanged)) {
-  chrome.storage.sync.onChanged.addListener(onChanged)
+function saveCredsChange(event: Event) {
+  console.debug('saveCredsChange:', event)
+  sessionStorage.setItem(hostRef.value, saveCreds.value ? '1' : '0')
 }
 
 // const manifest = chrome.runtime.getManifest()
