@@ -22,8 +22,8 @@ watch(
   { deep: true },
 )
 
-function radioChange(e: Event) {
-  console.log('radioChange', e)
+function radioChange(event: Event) {
+  console.log('radioChange', event)
   console.log('bgRef', bgRef.value)
   saveKeyValue('radioBackground', bgRef.value)
 }

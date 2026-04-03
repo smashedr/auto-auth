@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { isFirefox, isMobile } from '@/utils/system.ts'
 import { submitHost } from '@/utils/index.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { useOptions } from '@/composables/useOptions.ts'
-import { useSiteInfo } from '@/composables/useSiteInfo.ts'
 import { Hosts } from '@/utils/hosts.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import PanelHeader from '@/components/PanelHeader.vue'
@@ -18,7 +17,6 @@ import HostModal from '@/components/HostModal.vue'
 console.debug('%c popup/App.vue', 'color: Lime')
 
 const options = useOptions()
-const siteInfo = useSiteInfo()
 
 const hostnameRef = ref('') // tab hostname
 const usernameRef = ref('') // saved username
@@ -60,27 +58,27 @@ async function onSubmit(host: string, user: string, pass: string, original?: str
   await submitHost(host, user, pass, original)
 }
 
-watch(
-  siteInfo,
-  async (info) => {
-    console.log('popup/App.vue %c watch: siteInfo:', 'color: OrangeRed', info)
-    console.log('info.hostname:', info?.hostname)
-    if (!info?.hostname) return
-    // TODO: Add re-usable setup function to run on changes...
-    hostnameRef.value = info.hostname
-    const creds = await Hosts.get(hostnameRef.value)
-    console.log('creds:', creds)
-    if (!creds) return
-    savedCreds.value = creds
-    usernameRef.value = creds.split(':')[0]
-    console.log('usernameRef.value:', usernameRef.value)
-  },
-  { once: true },
-)
-
 const isBrowser = isFirefox ? '360px' : null
 const width = computed(() => (isMobile ? '100%' : isBrowser))
 console.log('width:', width.value)
+
+onMounted(async () => {
+  console.log('%cMOUNTED: popup/App.vue', 'color: Lime')
+  const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
+  console.debug('tab:', tab)
+  if (!tab.url) return
+  const url = new URL(tab.url)
+  console.debug('url.host:', url.host)
+  hostnameRef.value = url.host
+  const creds = await Hosts.get(url.host)
+  console.debug('creds:', creds)
+  if (!creds) return
+  savedCreds.value = creds
+  usernameRef.value = creds.split(':')[0]
+
+  console.log('hostnameRef.value:', hostnameRef.value)
+  console.log('usernameRef.value:', usernameRef.value)
+})
 </script>
 
 <template>
@@ -90,27 +88,29 @@ console.log('width:', width.value)
     <div class="d-grid gap-2 p-1">
       <PermsCheck :close-window="true" />
 
-      <div v-if="!siteInfo" class="text-center rounded border border-2 border-danger-subtle text-ellipsis p-1">
+      <div v-if="!hostnameRef" class="text-center rounded border border-2 border-danger-subtle text-ellipsis p-1">
         {{ i18n.t('popup.noAccess') }}
       </div>
-      <div v-if="siteInfo && !savedCreds" class="text-center rounded border border-2 text-ellipsis p-1">
+      <div v-if="hostnameRef && !savedCreds" class="text-center rounded border border-2 text-ellipsis p-1">
         {{ i18n.t('popup.noSaved') }}
       </div>
       <template v-if="savedCreds">
         <div
           id="username"
           class="text-center rounded border border-2 text-ellipsis p-1"
-          :class="usernameRef === 'ignored' ? 'border-warning-subtle' : 'border-success-subtle'"
+          :class="savedCreds === 'ignored' ? 'border-warning-subtle' : 'border-success-subtle'"
         >
           {{ i18n.t('ui.text.username') }}:
-          <span
-            class="fw-bold"
-            :class="usernameRef === 'ignored' ? 'text-warning-emphasis' : 'text-success-emphasis'"
-            >{{ usernameRef === 'ignored' ? 'Host Ignored' : usernameRef }}</span
-          >
+          <span class="fw-bold" :class="savedCreds === 'ignored' ? 'text-warning-emphasis' : 'text-success-emphasis'">{{
+            savedCreds === 'ignored' ? 'Host Ignored' : usernameRef
+          }}</span>
         </div>
 
-        <button class="btn btn-outline-warning" @click.prevent="hostModal?.show(hostnameRef, savedCreds)">
+        <button
+          v-if="savedCreds !== 'ignored'"
+          class="btn btn-outline-warning"
+          @click.prevent="hostModal?.show(hostnameRef, savedCreds)"
+        >
           <i class="fa-solid fa-pen-to-square me-1"></i>
           <span>{{ i18n.t('popup.editCreds') }}</span>
         </button>

@@ -5,27 +5,31 @@ import { importCredentials } from '@/utils/creds.ts'
 
 const modalEl = ref<HTMLElement | null>(null)
 const textareaEl = ref<HTMLTextAreaElement | null>(null)
+const textRef = ref('')
 const invalidText = ref('')
 
-async function importText(event: Event) {
-  console.debug('importText:', event)
-  if (!textareaEl.value) return
-  console.debug('textareaEl.value.value:', textareaEl.value.value)
-  if (!textareaEl.value.value) {
-    textareaEl.value.focus()
+async function importClick(event: Event) {
+  console.debug('importClick:', event)
+  console.debug('textRef:', textRef.value)
+  if (!textRef.value) {
+    textareaEl.value?.focus()
     return
   }
   try {
-    const data = JSON.parse(textareaEl.value.value)
-    // console.debug('data:', data)
+    const data = JSON.parse(textRef.value)
     await importCredentials(data)
     if (modalEl.value) Modal.getInstance(modalEl.value)?.hide()
-    textareaEl.value.value = ''
+    textRef.value = ''
   } catch (e) {
     console.debug('Import Error:', e)
-
     if (e instanceof Error) invalidText.value = e.message
   }
+}
+
+function clearClick() {
+  textRef.value = ''
+  invalidText.value = ''
+  textareaEl.value?.focus()
 }
 
 onMounted(() => {
@@ -34,6 +38,11 @@ onMounted(() => {
   // console.log('modal:', modal)
   modalEl.value?.addEventListener('shown.bs.modal', () => {
     textareaEl.value?.focus()
+    textareaEl.value?.select()
+  })
+  modalEl.value.addEventListener('hidden.bs.modal', () => {
+    console.log('hidden.bs.modal')
+    invalidText.value = ''
   })
 })
 </script>
@@ -70,6 +79,7 @@ onMounted(() => {
                 {{ i18n.t('import.jsonImport') }} <i class="fa-solid fa-code"></i>
               </label>
               <textarea
+                v-model="textRef"
                 ref="textareaEl"
                 class="form-control"
                 :class="{ 'is-invalid': invalidText }"
@@ -93,10 +103,10 @@ onMounted(() => {
             </div>
           </div>
           <div class="modal-footer">
-            <button id="import-text" type="button" class="btn btn-success me-auto" @click.prevent="importText">
+            <button id="import-text" type="button" class="btn btn-success me-auto" @click.prevent="importClick">
               {{ i18n.t('import.import') }} <i class="fa-solid fa-cloud-arrow-down ms-2"></i>
             </button>
-            <button id="clear-import" type="button" class="btn btn-outline-warning">
+            <button id="clear-import" type="button" class="btn btn-outline-warning" @click="clearClick">
               {{ i18n.t('ui.action.clear') }}
             </button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

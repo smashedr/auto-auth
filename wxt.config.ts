@@ -72,13 +72,7 @@ export default defineConfig({
       description: '__MSG_description__',
 
       homepage_url: 'https://github.com/cssnr/auto-auth',
-      permissions: [
-        'contextMenus',
-        'storage',
-        'scripting',
-        'webRequest',
-        'webRequestAuthProvider',
-      ],
+      permissions: ['contextMenus', 'storage', 'webRequest', 'webRequestAuthProvider'],
       host_permissions: ['*://*/*'],
 
       commands: {
