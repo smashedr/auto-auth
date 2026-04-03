@@ -75,21 +75,21 @@ onUnmounted(() => {
         data-bs-toggle="tooltip"
         data-bs-placement="top"
         data-bs-trigger="hover"
-        :data-bs-title="i18n.t('ui.perms.grant.tip')"
+        :data-bs-title="i18n.t('perms.grant.tip')"
         @click="grantPerms"
         v-bs
       >
-        <i class="fa-solid fa-check-double me-1"></i> {{ i18n.t('ui.perms.grant.text') }}
+        <i class="fa-solid fa-check-double me-1"></i> {{ i18n.t('perms.grant.text') }}
       </button>
       <p v-if="showInfo" class="text-center mb-0">
         <a href="/permissions.html" target="_blank" @click.prevent="clickOpen($event, closeWindow)">{{
-          i18n.t('ui.perms.info')
+          i18n.t('perms.info')
         }}</a>
       </p>
     </div>
 
     <div v-if="hasPerms && showAlert" class="alert alert-success mt-3 mb-0" role="alert">
-      {{ i18n.t('ui.perms.granted') }}
+      {{ i18n.t('perms.granted') }}
     </div>
 
     <div v-if="hasPerms && showRemove && isFirefox">
@@ -99,11 +99,11 @@ onUnmounted(() => {
         data-bs-toggle="tooltip"
         data-bs-placement="top"
         data-bs-trigger="hover"
-        :data-bs-title="i18n.t('ui.perms.remove.tip')"
+        :data-bs-title="i18n.t('perms.remove.tip')"
         @click="revokePerms"
         v-bs
       >
-        {{ i18n.t('ui.perms.remove.text') }}
+        {{ i18n.t('perms.remove.text') }}
       </button>
     </div>
   </div>

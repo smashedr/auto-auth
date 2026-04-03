@@ -1,3 +1,5 @@
+import { i18n } from '#imports'
+
 let url: URL
 let tabEnabled = false
 
@@ -31,13 +33,13 @@ async function processCreds(creds: any) {
     if (creds === 'ignored') {
       console.debug('%cSite is currently ignored.', 'color: Yellow')
       await chrome.runtime.sendMessage({
-        badgeText: 'Off',
+        badgeText: i18n.t('content.off'),
         badgeColor: 'yellow',
       })
     } else {
       console.debug('%cFound credentials for site.', 'color: LimeGreen')
       await chrome.runtime.sendMessage({
-        badgeText: 'On',
+        badgeText: i18n.t('content.on'),
         badgeColor: 'green',
       })
     }

@@ -7,7 +7,7 @@ import { i18n } from '#imports'
     <a
       class="link-body-emphasis text-decoration-none"
       id="bs-theme-dropdown"
-      :title="i18n.t('ui.theme.title')"
+      :title="i18n.t('theme.title')"
       role="button"
       data-bs-toggle="dropdown"
       aria-expanded="false"
@@ -19,19 +19,19 @@ import { i18n } from '#imports'
       <li>
         <button class="dropdown-item" data-bs-theme-value="dark" aria-pressed="false">
           <i class="fa-regular fa-moon" style="min-width: 16px"></i>
-          <span class="ms-3">{{ i18n.t('ui.theme.dark') }}</span>
+          <span class="ms-3">{{ i18n.t('theme.dark') }}</span>
         </button>
       </li>
       <li>
         <button class="dropdown-item" data-bs-theme-value="light" aria-pressed="false">
           <i class="fa-solid fa-sun" style="min-width: 16px"></i>
-          <span class="ms-3">{{ i18n.t('ui.theme.light') }}</span>
+          <span class="ms-3">{{ i18n.t('theme.light') }}</span>
         </button>
       </li>
       <li>
         <button class="dropdown-item" data-bs-theme-value="auto" aria-pressed="false">
           <i class="fa-solid fa-circle-half-stroke" style="min-width: 16px"></i>
-          <span class="ms-3">{{ i18n.t('ui.theme.auto') }}</span>
+          <span class="ms-3">{{ i18n.t('theme.auto') }}</span>
         </button>
       </li>
     </ul>

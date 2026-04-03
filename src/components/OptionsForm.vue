@@ -27,14 +27,14 @@ const options = useOptions()
           <FormSwitch :id="id" v-model="options[id]" />
           <Transition name="fade">
             <div v-show="id === 'tempDisabled' && options['tempDisabled']" class="alert alert-warning p-2 mb-2">
-              <i class="fa-solid fa-triangle-exclamation me-2"></i> Extension Currently Disabled!
+              <i class="fa-solid fa-triangle-exclamation me-2"></i> {{ i18n.t('ui.text.extensionDisabled') }}!
             </div>
           </Transition>
         </template>
       </form>
     </div>
     <div v-if="show.includes('background')" class="row m-0">
-      <h6>Auth Page Background</h6>
+      <h6>{{ i18n.t('options.authPageBackground') }}</h6>
       <BackgroundForm />
     </div>
   </div>

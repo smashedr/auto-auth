@@ -35,53 +35,65 @@ function radioChange(e: Event) {
       <div class="d-flex flex-column flex-sm-row ms-1 ms-sm-3">
         <div class="form-check form-check-inline mb-2 mb-sm-0">
           <input
+            v-model="bgRef"
             class="form-check-input"
             type="radio"
             name="radioBackground"
             id="bgNone"
             value="bgNone"
-            v-model="bgRef"
           />
-          <label class="form-check-label" for="bgNone"> <i class="fa-regular fa-square"></i> None </label>
+          <label class="form-check-label" for="bgNone">
+            <i class="fa-regular fa-square"></i> {{ i18n.t('background.none') }}
+          </label>
         </div>
 
         <div class="form-check form-check-inline mb-2 mb-sm-0">
           <input
+            v-model="bgRef"
             class="form-check-input"
             type="radio"
             name="radioBackground"
             id="bgPicture"
             value="bgPicture"
-            v-model="bgRef"
           />
-          <label class="form-check-label" for="bgPicture"> <i class="fa-regular fa-image"></i> Picture </label>
+          <label class="form-check-label" for="bgPicture">
+            <i class="fa-regular fa-image"></i> {{ i18n.t('background.picture') }}
+          </label>
         </div>
 
         <div class="form-check form-check-inline mb-2">
           <input
+            v-model="bgRef"
             class="form-check-input"
             type="radio"
             name="radioBackground"
             id="bgVideo"
             value="bgVideo"
-            v-model="bgRef"
           />
-          <label class="form-check-label" for="bgVideo"> <i class="fa-solid fa-video"></i> Video </label>
+          <label class="form-check-label" for="bgVideo">
+            <i class="fa-solid fa-video"></i> {{ i18n.t('background.video') }}
+          </label>
         </div>
       </div>
     </form>
 
     <div class="ms-0 ms-sm-3">
       <div v-if="bgRef === 'bgPicture'" id="bgPictureInput" class="input-group">
-        <span class="input-group-text" id="picture-addon" data-bs-toggle="tooltip" data-bs-title="URL to a Web Image.">
+        <span
+          class="input-group-text"
+          id="picture-addon"
+          data-bs-toggle="tooltip"
+          :data-bs-title="i18n.t('background.pictureTip')"
+          v-bs
+        >
           <i class="fa-solid fa-circle-info"></i
         ></span>
         <input
           v-model="pictureURL"
           type="text"
           class="form-control"
-          placeholder="Background Picture URL"
-          aria-label="Background Picture URL"
+          :placeholder="i18n.t('background.pictureLabel')"
+          :aria-label="i18n.t('background.pictureLabel')"
           id="pictureURL"
           name="pictureURL"
           aria-describedby="picture-addon"
@@ -89,15 +101,21 @@ function radioChange(e: Event) {
         />
       </div>
       <div v-if="bgRef === 'bgVideo'" id="bgVideoInput" class="input-group">
-        <span class="input-group-text" id="video-addon" data-bs-toggle="tooltip" data-bs-title="URL to a Web Video.">
+        <span
+          class="input-group-text"
+          id="video-addon"
+          data-bs-toggle="tooltip"
+          :data-bs-title="i18n.t('background.videoTip')"
+          v-bs
+        >
           <i class="fa-solid fa-circle-info"></i
         ></span>
         <input
           v-model="videoURL"
           type="text"
           class="form-control"
-          placeholder="Background Video URL"
-          aria-label="Background Video URL"
+          :placeholder="i18n.t('background.videoLabel')"
+          :aria-label="i18n.t('background.videoLabel')"
           id="videoURL"
           name="videoURL"
           aria-describedby="video-addon"

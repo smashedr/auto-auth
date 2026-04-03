@@ -34,7 +34,7 @@ console.log('manifest:', manifest)
 
       <div class="d-flex flex-grow-1 overflow-hidden align-items-baseline">
         <a
-          :title="i18n.t('ui.homePage')"
+          :title="i18n.t('ui.text.homePage')"
           class="link-body-emphasis text-decoration-none fs-4"
           :href="manifest.homepage_url"
           target="_blank"
@@ -44,7 +44,7 @@ console.log('manifest:', manifest)
           {{ manifest.name }}</a
         >
         <a
-          :title="i18n.t('ui.releaseNotes')"
+          :title="i18n.t('ui.text.releaseNotes')"
           class="link-body-emphasis text-decoration-none small ms-1"
           :href="`${manifest.homepage_url}/releases/tag/${manifest.version}`"
           target="_blank"
@@ -93,7 +93,7 @@ console.log('manifest:', manifest)
 
       <div v-if="optionsButton" class="ms-1">
         <a
-          :title="i18n.t('ui.options')"
+          :title="i18n.t('ui.action.options')"
           href="/options.html"
           class="btn btn-sm btn-outline-info"
           @click.prevent="openOptions(closeWindow)"

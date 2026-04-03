@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { i18n } from '#imports'
 import { computed, ref } from 'vue'
 import { isFirefox, isMobile } from '@/utils/system.ts'
 import { submitHost } from '@/utils/index.ts'
@@ -90,10 +91,10 @@ console.log('width:', width.value)
       <PermsCheck :close-window="true" />
 
       <div v-if="!siteInfo" class="text-center rounded border border-2 border-danger-subtle text-ellipsis p-1">
-        No Access to the Current Tab.
+        {{ i18n.t('popup.noAccess') }}
       </div>
       <div v-if="siteInfo && !savedCreds" class="text-center rounded border border-2 text-ellipsis p-1">
-        No Saved Credentials Found.
+        {{ i18n.t('popup.noSaved') }}
       </div>
       <template v-if="savedCreds">
         <div
@@ -111,19 +112,19 @@ console.log('width:', width.value)
 
         <button class="btn btn-outline-warning" @click.prevent="hostModal?.show(hostnameRef, savedCreds)">
           <i class="fa-solid fa-pen-to-square me-1"></i>
-          <span>Edit Credentials</span>
+          <span>{{ i18n.t('popup.editCreds') }}</span>
         </button>
 
         <button class="btn btn-outline-danger" @click="deleteClick(hostnameRef)">
           <i class="fa-regular fa-trash-can me-1"></i>
-          <span>Delete Credentials</span>
+          <span>{{ i18n.t('popup.deleteCreds') }}</span>
         </button>
       </template>
 
       <OptionsForm :close-window="true" :compact="true" :show="['switches']" class="px-1" />
 
       <a class="btn btn-outline-info w-100" href="/options.html" @click.prevent="openOptions(true)">
-        <i class="fa-solid fa-sliders me-1"></i> More Options</a
+        <i class="fa-solid fa-sliders me-1"></i> {{ i18n.t('popup.moreOptions') }}</a
       >
     </div>
 

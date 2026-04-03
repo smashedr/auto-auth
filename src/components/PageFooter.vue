@@ -27,7 +27,7 @@ const manifest = chrome.runtime.getManifest()
       :href="manifest.homepage_url"
       target="_blank"
       @click.prevent="clickOpen"
-      >{{ i18n.t('ui.homePage') }}</a
+      >{{ i18n.t('ui.text.homePage') }}</a
     >
     <span class="mx-1">&bull;</span>
     <a
@@ -37,7 +37,7 @@ const manifest = chrome.runtime.getManifest()
       :href="`${manifest.homepage_url}/issues/new?template=1-feature.yaml`"
       target="_blank"
       @click.prevent="clickOpen"
-      >{{ i18n.t('ui.requestFeature') }}</a
+      >{{ i18n.t('ui.text.requestFeature') }}</a
     >
     <span class="mx-1">&bull;</span>
     <a
@@ -47,7 +47,7 @@ const manifest = chrome.runtime.getManifest()
       :href="`${manifest.homepage_url}/issues`"
       target="_blank"
       @click.prevent="clickOpen"
-      >{{ i18n.t('ui.openIssue') }}</a
+      >{{ i18n.t('ui.text.openIssue') }}</a
     >
   </div>
 </template>

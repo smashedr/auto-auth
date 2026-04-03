@@ -28,7 +28,7 @@ useTitle(i18n.t('options.title'))
           <div>
             <a
               class="link-body-emphasis text-decoration-none fs-1"
-              :title="i18n.t('ui.homePage')"
+              :title="i18n.t('ui.text.homePage')"
               :href="manifest.homepage_url"
               target="_blank"
               rel="nofollow"
@@ -38,7 +38,7 @@ useTitle(i18n.t('options.title'))
             >
             <a
               class="link-body-emphasis text-decoration-none small"
-              :title="i18n.t('ui.releaseNotes')"
+              :title="i18n.t('ui.text.releaseNotes')"
               :href="`${manifest.homepage_url}/releases/tag/${manifest.version}`"
               target="_blank"
               rel="nofollow"
@@ -49,7 +49,8 @@ useTitle(i18n.t('options.title'))
           </div>
         </div>
 
-        <HorizontalRule>{{ i18n.t('ui.keyboard.shortcut') }}</HorizontalRule>
+        <!--TODO: Update Trans-->
+        <HorizontalRule>{{ i18n.t('keyboard.shortcuts') }}</HorizontalRule>
         <KeyboardShortcuts />
 
         <HorizontalRule>{{ i18n.t('options.extension') }}</HorizontalRule>
@@ -57,7 +58,7 @@ useTitle(i18n.t('options.title'))
 
         <PermsCheck :show-info="true" :show-remove="false" class="my-3" />
 
-        <HorizontalRule>Saved Credentials</HorizontalRule>
+        <HorizontalRule>{{ i18n.t('options.savedCredentials') }}</HorizontalRule>
         <!--NOTE: Add fallthrough attributes-->
         <HostsTable />
 

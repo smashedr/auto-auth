@@ -60,7 +60,7 @@ async function hostsInputChange(event: Event) {
       role="button"
       @click="exportHosts"
     >
-      Export All <i class="fa-solid fa-right-from-bracket fa-rotate-90 ms-1"></i
+      {{ i18n.t('import.importFile') }} <i class="fa-solid fa-right-from-bracket fa-rotate-90 ms-1"></i
     ></a>
     <span class="mx-2">&bull;</span>
     <input ref="hostsInput" type="file" style="display: none" @change.prevent="hostsInputChange" />
@@ -70,7 +70,7 @@ async function hostsInputChange(event: Event) {
       role="button"
       @click.prevent="importHostsClick"
     >
-      Import File <i class="fa-solid fa-right-to-bracket fa-rotate-90 ms-1"></i
+      {{ i18n.t('import.exportAll') }} <i class="fa-solid fa-right-to-bracket fa-rotate-90 ms-1"></i
     ></a>
   </div>
 </template>

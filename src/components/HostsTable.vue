@@ -51,7 +51,7 @@ const computedHosts = computed(() =>
   <div class="d-flex gap-2 my-2">
     <!--TODO: Add prop to make optional or make a component-->
     <button class="btn btn-success" @click="hostModal?.show()">
-      <i class="fa-solid fa-table-cells-row-lock me-2"></i> Add Credentials
+      <i class="fa-solid fa-table-cells-row-lock me-2"></i> {{ i18n.t('ui.action.addCredentials') }}
     </button>
 
     <!--TODO: Add prop to make optional-->
@@ -74,16 +74,16 @@ const computedHosts = computed(() =>
       <tbody>
         <tr v-for="{ host, creds, user } in computedHosts" :key="host">
           <td class="text-center">
-            <!--@click="showDeleteModal(loc.id?.toString() ?? '')"-->
             <a :title="i18n.t('ui.action.delete')" class="link-danger" role="button" @click.prevent="deleteClick(host)"
               ><i class="fa-regular fa-trash-can"></i
             ></a>
           </td>
           <td class="text-truncate">{{ host }}</td>
-          <td v-if="creds === 'ignored'" class="text-truncate text-warning fst-italic">Ignored</td>
+          <td v-if="creds === 'ignored'" class="text-truncate text-warning fst-italic">
+            {{ i18n.t('ui.text.ignored') }}
+          </td>
           <td v-else class="text-truncate" :class="!user ? 'text-muted fst-italic' : ''">{{ user || 'none' }}</td>
           <td class="text-center">
-            <!--@click="showDeleteModal(loc.id?.toString() ?? '')"-->
             <a
               :title="i18n.t('ui.action.edit')"
               class="link-warning"

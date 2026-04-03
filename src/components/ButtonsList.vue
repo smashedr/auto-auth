@@ -36,7 +36,7 @@ console.log('closeWindow:', props.closeWindow)
         @click="showToast('ti ekorb flar')"
       >
         <i class="fa-regular fa-window-maximize me-1"></i>
-        <span class="flex-fill text-center me-4">{{ i18n.t('ui.action.showToast') }}</span>
+        <span class="flex-fill text-center me-4">Test Toast</span>
       </a>
 
       <a
