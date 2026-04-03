@@ -61,7 +61,7 @@ function onSubmit() {
 }
 
 function hostnameChange() {
-  // NOTE: ADD Validation Here... Copied from VanillaJS.
+  // NOTE: Copied from VanillaJS. ADD Validation Here...
   console.log('HostModal.vue - hostnameChange')
   try {
     let host = hostRef.value.toLowerCase().trim()
@@ -98,7 +98,6 @@ onMounted(() => {
     } else {
       usernameEl.value?.focus()
     }
-    // NOTE: When using as AddModal this should focus the hostnameEl
   })
 
   modalEl.value?.addEventListener('hidePrevented.bs.modal', () => {
@@ -140,7 +139,7 @@ defineExpose({ show })
           <div class="modal-body">
             <form id="edit-form" name="edit-form" class="mb-3" autocomplete="off" @submit.prevent="onSubmit">
               <label for="hostname" class="form-label" :class="compact ? 'visually-hidden' : ''"
-                ><i class="fa-solid fa-globe me-2"></i> {{ i18n.t('ui.text.hostname') }}</label
+                ><i class="fa-solid fa-globe me-2"></i> {{ i18n.t('ui.form.hostname') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
@@ -171,16 +170,12 @@ defineExpose({ show })
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
-                <!--<button class="btn btn-outline-info" type="button" data-bs-toggle="tooltip" tabindex="-1" data-paste-input="#hostname"-->
-                <!--        data-bs-placement="bottom" data-bs-trigger="hover" data-bs-title="Paste Hostname">-->
-                <!--    <i class="fa-regular fa-paste"></i>-->
-                <!--</button>-->
                 <div id="hostnameValidation" class="invalid-feedback"></div>
               </div>
               <div class="form-text visually-hidden" id="hostnameHelp">Basic Authentication Hostname.</div>
 
               <label for="username" class="form-label" :class="compact ? 'visually-hidden' : ''"
-                ><i class="fa-solid fa-user me-2"></i> {{ i18n.t('ui.text.username') }}</label
+                ><i class="fa-solid fa-user me-2"></i> {{ i18n.t('ui.form.username') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
@@ -210,10 +205,6 @@ defineExpose({ show })
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
-                <!--<button class="btn btn-outline-info" type="button" data-bs-toggle="tooltip" tabindex="-1" data-paste-input="#username"-->
-                <!--        data-bs-placement="bottom" data-bs-trigger="hover" data-bs-title="Paste Username">-->
-                <!--    <i class="fa-regular fa-paste"></i>-->
-                <!--</button>-->
                 <div id="usernameValidation" class="invalid-feedback"></div>
               </div>
               <div class="form-text visually-hidden" id="usernameHelp">Basic Authentication Username.</div>
@@ -230,7 +221,7 @@ defineExpose({ show })
               </div>
 
               <label for="password" class="form-label" :class="compact ? 'visually-hidden' : ''"
-                ><i class="fa-solid fa-key me-2"></i> {{ i18n.t('ui.text.password') }}</label
+                ><i class="fa-solid fa-key me-2"></i> {{ i18n.t('ui.form.password') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
@@ -275,10 +266,6 @@ defineExpose({ show })
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
-                <!--<button id="passwordCopy" class="btn btn-outline-info" type="button" tabindex="-1" data-paste-input="#password"-->
-                <!--        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-trigger="hover" data-bs-title="Paste Password">-->
-                <!--    <i class="fa-regular fa-paste"></i>-->
-                <!--</button>-->
                 <div id="passwordValidation" class="invalid-feedback"></div>
               </div>
               <div class="form-text visually-hidden" id="passwordHelp">Basic Authentication Password.</div>

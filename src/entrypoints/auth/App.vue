@@ -5,6 +5,7 @@ import { copyToast } from '@/utils/index.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { getSession, saveKeyValue } from '@/utils/options.ts'
 import { useOptions } from '@/composables/useOptions.ts'
+import { showToast } from '@/composables/useToast.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
@@ -28,6 +29,7 @@ const usernameEl = ref<HTMLInputElement | null>(null)
 const passwordEl = ref<HTMLInputElement | null>(null)
 
 const ignoreModal = ref<HTMLElement | null>(null)
+const isProcessing = ref(false)
 
 watch(
   options,
@@ -53,8 +55,7 @@ function saveCredsChange(event: Event) {
 
 async function submitAuth(event: Event) {
   console.debug('submitAuth:', event)
-  // event.submitter.classList.add('disabled')
-  // document.getElementById('icon').className = 'fa-solid fa-sync fa-spin ms-2'
+  isProcessing.value = true
 
   console.debug('hostRef.value:', hostRef.value)
   console.debug('userRef.value:', userRef.value)
@@ -77,7 +78,11 @@ async function submitAuth(event: Event) {
   }
   const tab = await chrome.tabs.getCurrent()
   console.debug('tab:', tab)
-  if (!tab?.id) return console.error('no tab.id') // NOTE: HANDLE ERROR
+  if (!tab?.id) {
+    // NOTE: Consider handling this better, but it should never happen...
+    isProcessing.value = false
+    return showToast('Error Loading Page', 'danger')
+  }
   await chrome.tabs.update(tab.id, { url: hrefRef.value })
 }
 
@@ -336,11 +341,19 @@ onMounted(async () => {
             <div class="col-12 col-sm-6 mb-2 mb-sm-0">
               <button
                 class="btn btn-lg w-100"
-                :class="options.tempDisabled ? 'btn-danger' : 'btn-success'"
+                :class="{
+                  'btn-danger': options.tempDisabled,
+                  'btn-success': !options.tempDisabled,
+                  disabled: isProcessing,
+                }"
                 type="submit"
               >
                 Login
-                <i id="icon" class="fa-solid fa-right-to-bracket ms-2"></i>
+                <i
+                  ref="loginIcon"
+                  class="fa-solid ms-2"
+                  :class="isProcessing ? 'fa-sync fa-spin' : 'fa-right-to-bracket'"
+                ></i>
               </button>
             </div>
             <div class="col-12 col-sm-6">
@@ -406,7 +419,7 @@ onMounted(async () => {
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-warning me-auto" @click.prevent="ignoreHost">Confirm Ignore</button>
+          <button type="button" class="btn btn-primary me-auto" @click.prevent="ignoreHost">Confirm Ignore</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         </div>
       </div>

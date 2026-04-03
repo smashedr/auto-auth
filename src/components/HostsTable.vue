@@ -66,15 +66,14 @@ const computedHosts = computed(() =>
       <thead>
         <tr>
           <th class="text-center" style="width: 36px"><i class="fa-solid fa-trash-can"></i></th>
-          <th>{{ i18n.t('ui.text.hostname') }}</th>
-          <th>{{ i18n.t('ui.text.username') }}</th>
+          <th>{{ i18n.t('ui.form.hostname') }}</th>
+          <th>{{ i18n.t('ui.form.username') }}</th>
           <th class="text-center" style="width: 36px"><i class="fa-solid fa-pen-to-square"></i></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="{ host, creds, user } in computedHosts" :key="host">
           <td class="text-center">
-            <!--@click="showDeleteModal(loc.id?.toString() ?? '')"-->
             <a :title="i18n.t('ui.action.delete')" class="link-danger" role="button" @click.prevent="deleteClick(host)"
               ><i class="fa-regular fa-trash-can"></i
             ></a>
@@ -83,7 +82,6 @@ const computedHosts = computed(() =>
           <td v-if="creds === 'ignored'" class="text-truncate text-warning fst-italic">Ignored</td>
           <td v-else class="text-truncate" :class="!user ? 'text-muted fst-italic' : ''">{{ user || 'none' }}</td>
           <td class="text-center">
-            <!--@click="showDeleteModal(loc.id?.toString() ?? '')"-->
             <a
               :title="i18n.t('ui.action.edit')"
               class="link-warning"

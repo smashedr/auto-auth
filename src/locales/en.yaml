@@ -3,13 +3,6 @@ short_name: Auto Auth
 description: Automatic Basic HTTP Authentication Web Extension with Browser Synchronization, Import/Export Capability and More Options
 
 ui:
-  options: Options
-  homePage: Home Page
-  releaseNotes: Release Notes
-  requestFeature: Request Feature
-  openIssue: Open Issue
-  noTabAccess: No Access to the Current Tab.
-
   action:
     add: Add
     cancel: Cancel
@@ -17,45 +10,99 @@ ui:
     delete: Delete
     edit: Edit
     go: Go
+    options: Options
     save: Save
 
     openPopup: Open Popup
     sidePanel: Side Panel
     extensionPanel: Extension Panel
     extensionPage: Extension Page
-    showOptions: Show Options
-    showToast: Show Factual Toast
 
-  text:
+  form:
     hostname: Hostname
     username: Username
     password: Password
 
-  keyboard:
-    description: Description
-    manage: Manage Keyboard Shortcuts
-    notSet: Not Set
-    shortcut: Shortcut
-    shortcuts: Keyboard Shortcuts
-    unknown: Unknown
+  text:
+    homePage: Home Page
+    openIssue: Open Issue
+    releaseNotes: Release Notes
+    requestFeature: Request Feature
 
-  perms:
-    granted: Permissions Granted.
-    grant:
-      text: Grant Host Permissions
-      tip: This Extension Requires Host Permissions to Function
-    remove:
-      text: Remove Host Permissions
-      tip: You will no longer be able to analyze new images
-    info: More Information on Permissions
+auth:
+  # auth/App.vue
+  title: Auth
+  loginFor: Login for
+  getSupport: Get Support
 
-  theme:
-    title: Theme Switcher
-    dark: Dark
-    light: Light
-    auto: Auto
+popup:
+  # popup/App.vue
+  editCreds: Edit Credentials
+  deleteCreds: Delete Credentials
+  moreOptions: More Options
+  noAccess: No Access to the Current Tab.
+  noSaved: No Saved Credentials Found.
+
+permissions:
+  # permissions/App.vue
+  title: Permissions
+  reason: To demonstrate the permissions check, host permissions are required.
+
+options:
+  # options/App.vue
+  title: Options
+  extension: Extension Options
+  copySupport: Copy Support Information
+  copySupportTip: For issue reporting.
+  copySupportMsg: Support Information Copied.
+
+content:
+  # content/index.ts
+  press: NOT USED
+
+ctx:
+  # background/menus.ts
+  openPopup: Open Popup
+  openSidePanel: Open Side Panel
+  openExtPanel: Open Extension Panel
+  openOptions: Open Options
+
+cmd:
+  # wxt.config.ts
+  executeAction: Open Popup
+  openSidePanel: Open Side Panel
+  openExtPanel: Open Extension Panel
+  openOptions: Open Options
+
+keyboard:
+  # composables/KeyboardShortcuts.vue
+  description: Description
+  manage: Manage Keyboard Shortcuts
+  notSet: Not Set
+  shortcut: Shortcut
+  shortcuts: Keyboard Shortcuts
+  unknown: Unknown
+
+perms:
+  # composables/PermsCheck.vue
+  granted: Permissions Granted.
+  grant:
+    text: Grant Host Permissions
+    tip: This Extension Requires Host Permissions to Function
+  remove:
+    text: Remove Host Permissions
+    tip: You will no longer be able to analyze new images
+  info: More Information on Permissions
+
+theme:
+  # composables/ThemeSwitch.vue
+  title: Theme Switcher
+  dark: Dark
+  light: Light
+  auto: Auto
 
 option:
+  # composables/FormSwitch.vue
   toggle:
     siteIcon:
       label: Site Icon
@@ -78,40 +125,3 @@ option:
     confirmDelete:
       label: Show Confirmation on Delete
       tip: Show Confirmation Dialog on Delete.
-
-ctx:
-  # background/menus.ts
-  openPopup: Open Popup
-  openSidePanel: Open Side Panel
-  openExtPanel: Open Extension Panel
-  openOptions: Open Options
-
-cmd:
-  # wxt.config.ts
-  executeAction: Open Popup
-  openSidePanel: Open Side Panel
-  openExtPanel: Open Extension Panel
-  openOptions: Open Options
-
-options:
-  # options/App.vue
-  title: Options
-  extension: Extension Options
-  copySupport: Copy Support Information
-  copySupportTip: For issue reporting.
-  copySupportMsg: Support Information Copied.
-
-auth:
-  title: Auth
-  loginFor: Login for
-  getSupport: Get Support
-
-permissions:
-  title: Permissions
-  reason: To demonstrate the permissions check, host permissions are required.
-
-content:
-  press: Press the
-  toggle: key to toggle the icon.
-  key:
-    toggle: T

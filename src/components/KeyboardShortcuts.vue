@@ -50,13 +50,13 @@ onMounted(() => {
       <table id="keyboard-shortcuts" class="table table-sm rounded table-borderless table-hover transparent-table mb-0">
         <caption class="visually-hidden">
           {{
-            i18n.t('ui.keyboard.shortcuts')
+            i18n.t('keyboard.shortcuts')
           }}
         </caption>
         <thead class="visually-hidden">
           <tr>
-            <th>{{ i18n.t('ui.keyboard.description') }}</th>
-            <th>{{ i18n.t('ui.keyboard.shortcut') }}</th>
+            <th>{{ i18n.t('keyboard.description') }}</th>
+            <th>{{ i18n.t('keyboard.shortcut') }}</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -66,8 +66,8 @@ onMounted(() => {
               <i class="fa-regular fa-keyboard me-1"></i>
               <span class="description"></span>
             </td>
-            <td class="text-end pe-2" :title="i18n.t('ui.keyboard.shortcuts')">
-              <kbd>{{ i18n.t('ui.keyboard.unknown') }}</kbd>
+            <td class="text-end pe-2" :title="i18n.t('keyboard.shortcuts')">
+              <kbd>{{ i18n.t('keyboard.unknown') }}</kbd>
             </td>
           </tr>
         </tfoot>
@@ -75,7 +75,7 @@ onMounted(() => {
     </div>
 
     <div class="mb-2">
-      {{ i18n.t('ui.keyboard.manage') }}:
+      {{ i18n.t('keyboard.manage') }}:
       <a
         v-if="isFirefox"
         class="text-decoration-none d-inline-block firefox"
