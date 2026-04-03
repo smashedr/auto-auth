@@ -37,6 +37,14 @@ async function deleteHost(host: string) {
     if (e instanceof Error) showToast(`Delete Host Error: ${e.message}`, 'danger')
   }
 }
+
+const computedHosts = computed(() =>
+  Object.entries(hosts.value).map(([host, creds]) => ({
+    host,
+    creds,
+    user: creds.split(':')[0],
+  })),
+)
 </script>
 
 <template>
@@ -53,38 +61,41 @@ async function deleteHost(host: string) {
   <!--TODO: Add prop to make optional-->
   <ImportExport class="my-2" />
 
-  <table id="history-table" class="table table-sm table-striped" style="table-layout: fixed">
-    <thead>
-      <tr>
-        <th class="text-center" style="width: 36px"><i class="fa-solid fa-trash-can"></i></th>
-        <th>{{ i18n.t('ui.text.hostname') }}</th>
-        <th>{{ i18n.t('ui.text.username') }}</th>
-        <th class="text-center" style="width: 36px"><i class="fa-solid fa-pen-to-square"></i></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(creds, host) of hosts" :key="host">
-        <td class="text-center">
-          <!--@click="showDeleteModal(loc.id?.toString() ?? '')"-->
-          <a :title="i18n.t('ui.action.delete')" class="link-danger" role="button" @click.prevent="deleteClick(host)"
-            ><i class="fa-regular fa-trash-can"></i
-          ></a>
-        </td>
-        <td class="">{{ host }}</td>
-        <td class="">{{ creds }}</td>
-        <td class="text-center">
-          <!--@click="showDeleteModal(loc.id?.toString() ?? '')"-->
-          <a
-            :title="i18n.t('ui.action.edit')"
-            class="link-warning"
-            role="button"
-            @click.prevent="hostModal?.show(host, creds)"
-            ><i class="fa-solid fa-pen-to-square"></i
-          ></a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="rounded rounded-3 overflow-hidden">
+    <table id="history-table" class="table table-sm table-hover transparent-table" style="table-layout: fixed">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 36px"><i class="fa-solid fa-trash-can"></i></th>
+          <th>{{ i18n.t('ui.text.hostname') }}</th>
+          <th>{{ i18n.t('ui.text.username') }}</th>
+          <th class="text-center" style="width: 36px"><i class="fa-solid fa-pen-to-square"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="{ host, creds, user } in computedHosts" :key="host">
+          <td class="text-center">
+            <!--@click="showDeleteModal(loc.id?.toString() ?? '')"-->
+            <a :title="i18n.t('ui.action.delete')" class="link-danger" role="button" @click.prevent="deleteClick(host)"
+              ><i class="fa-regular fa-trash-can"></i
+            ></a>
+          </td>
+          <td class="text-truncate">{{ host }}</td>
+          <td v-if="creds === 'ignored'" class="text-truncate text-warning fst-italic">Ignored</td>
+          <td v-else class="text-truncate" :class="!user ? 'text-muted fst-italic' : ''">{{ user || 'none' }}</td>
+          <td class="text-center">
+            <!--@click="showDeleteModal(loc.id?.toString() ?? '')"-->
+            <a
+              :title="i18n.t('ui.action.edit')"
+              class="link-warning"
+              role="button"
+              @click.prevent="hostModal?.show(host, creds)"
+              ><i class="fa-solid fa-pen-to-square"></i
+            ></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <DeleteModal ref="deleteModal" @delete="deleteHost" />
   <HostModal ref="hostModal" @submit="submitHost" />

@@ -3,7 +3,7 @@ import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
 import { copyToast } from '@/utils/index.ts'
 import { openOptions } from '@/utils/extension.ts'
-import { getSession } from '@/utils/options.ts'
+import { getSession, saveKeyValue } from '@/utils/options.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
@@ -19,25 +19,37 @@ const hostRef = ref('')
 const hrefRef = ref('')
 
 const saveCreds = ref(false)
+const hasSavedCreds = ref(false)
 const isFailure = ref(false)
-const userRequired = ref(true)
+const noUsername = ref(false)
 
+const passwordShown = ref(false)
 const usernameEl = ref<HTMLInputElement | null>(null)
 const passwordEl = ref<HTMLInputElement | null>(null)
-const passwordShown = ref(false)
 
 const ignoreModal = ref<HTMLElement | null>(null)
 
 watch(
   options,
   (opts) => {
-    // NOTE: This needs to be combined with the tempSave logic below
     console.log('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
-    saveCreds.value = opts.defaultSave
     setBackground(opts)
+
+    const tempSave = sessionStorage.getItem(hostRef.value)
+    console.log('tempSave:', tempSave)
+    if (tempSave) {
+      saveCreds.value = !!Number.parseInt(tempSave)
+    } else {
+      saveCreds.value = opts.defaultSave
+    }
   },
   { once: true },
 )
+
+function saveCredsChange(event: Event) {
+  console.debug('saveCredsChange:', event)
+  sessionStorage.setItem(hostRef.value, saveCreds.value ? '1' : '0')
+}
 
 async function submitAuth(event: Event) {
   console.debug('submitAuth:', event)
@@ -149,6 +161,7 @@ const config = getAppConfig()
 console.log('config:', config)
 
 onMounted(async () => {
+  // NOTE: Copied from VanillaJS...
   const searchParams = new URLSearchParams(window.location.search)
   const fail = searchParams.get('fail')
   console.log('fail:', fail)
@@ -168,26 +181,12 @@ onMounted(async () => {
   const creds = await Hosts.get(hostRef.value)
   console.log('creds:', creds)
 
-  // NOTE: This needs to be combined with the watch logic above
-  const tempSave = sessionStorage.getItem(hostRef.value)
-  console.log('tempSave:', tempSave)
-  // if (tempSave) {
-  //   saveCreds.checked = !!Number.parseInt(tempSave)
-  // } else {
-  //   saveCreds.checked = options.defaultSave
-  // }
-  // if (!saveCreds.checked) {
-  //   document.getElementById('save-session').classList.remove('d-none')
-  //   if (creds) {
-  //     document.getElementById('temp-alert').classList.remove('d-none')
-  //   }
-  // }
-
   const session = await getSession()
   console.log('session:', session)
 
   if (creds) {
     console.log('if creds:', creds)
+    hasSavedCreds.value = true
     if (creds !== 'ignored') {
       const [username, password] = creds.split(':')
       userRef.value = username
@@ -244,7 +243,7 @@ onMounted(async () => {
               type="text"
               class="form-control"
               autocomplete="off"
-              :required="userRequired"
+              :required="!noUsername"
               autofocus
             />
             <!--<button class="btn btn-outline-info" type="button" data-bs-toggle="tooltip" tabindex="-1" data-paste-input="#username"-->
@@ -255,12 +254,12 @@ onMounted(async () => {
           <div class="form-text ms-2" id="usernameHelp">Basic Authentication Username.</div>
           <div class="form-check form-switch ms-2 mb-3">
             <input
+              v-model="noUsername"
               class="form-check-input"
               type="checkbox"
               role="switch"
               id="usernameSwitch"
               tabindex="-1"
-              @change="() => (userRequired = !userRequired)"
             />
             <label class="form-check-label" for="usernameSwitch">No Username</label>
           </div>
@@ -309,24 +308,37 @@ onMounted(async () => {
               role="switch"
               id="saveCreds"
               name="saveCreds"
+              @change="saveCredsChange"
             />
             <label class="form-check-label" for="saveCreds">Save Login</label>
-            <span id="save-session" class="text-warning-emphasis fs-6 ms-2 d-none">
-              <i class="fa-solid fa-triangle-exclamation me-1"></i>
+            <span v-if="!saveCreds" id="save-session" class="text-warning-emphasis fs-6 ms-2">
+              <i class="fa-solid fa-circle-exclamation me-1"></i>
               Credentials will not be saved!
             </span>
           </div>
 
-          <div id="temp-alert" class="alert alert-danger text-center p-2 d-none">
+          <div v-if="!saveCreds && hasSavedCreds" class="alert alert-warning p-2">
             Credentials are already saved for this host and temporary credentials <b>will have no effect</b>!
             <br />
             Until this is fixed you can enable <b>Save Login</b> or
             <a class="alert-link" href="/options.html" @click.prevent="openOptions()">delete the saved credentials</a>.
           </div>
 
+          <div v-if="options.tempDisabled" class="alert alert-danger p-2">
+            <i class="fa-solid fa-triangle-exclamation me-1"></i> Extension is Temporarily Disabled! Use the
+            <a class="alert-link" :href="hrefRef">Native Login</a> or
+            <a class="alert-link" role="button" @click.prevent="saveKeyValue('tempDisabled', false)"
+              >Enable the Extension</a
+            >.
+          </div>
+
           <div class="row">
             <div class="col-12 col-sm-6 mb-2 mb-sm-0">
-              <button class="btn btn-lg btn-success w-100" type="submit">
+              <button
+                class="btn btn-lg w-100"
+                :class="options.tempDisabled ? 'btn-danger' : 'btn-success'"
+                type="submit"
+              >
                 Login
                 <i id="icon" class="fa-solid fa-right-to-bracket ms-2"></i>
               </button>

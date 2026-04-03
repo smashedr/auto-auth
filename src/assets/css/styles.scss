@@ -3,6 +3,12 @@
 @import 'bootstrap/scss/bootstrap';
 //@import 'bootswatch/dist/zephyr/bootswatch';
 
+.transparent-table {
+    --bs-table-bg: rgba(0, 0, 0, 0.3);
+    --bs-table-striped-bg: rgba(0, 0, 0, 0.5);
+    --bs-table-hover-bg: rgba(0, 0, 0, 0.6);
+}
+
 //.icon {
 //  width: 16px;
 //  height: 16px;
