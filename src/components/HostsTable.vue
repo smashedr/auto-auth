@@ -37,6 +37,14 @@ async function deleteHost(host: string) {
     if (e instanceof Error) showToast(`Delete Host Error: ${e.message}`, 'danger')
   }
 }
+
+const computedHosts = computed(() =>
+  Object.entries(hosts.value).map(([host, creds]) => ({
+    host,
+    creds,
+    user: creds.split(':')[0],
+  })),
+)
 </script>
 
 <template>
@@ -64,7 +72,7 @@ async function deleteHost(host: string) {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(creds, host) of hosts" :key="host">
+        <tr v-for="{ host, creds, user } in computedHosts" :key="host">
           <td class="text-center">
             <!--@click="showDeleteModal(loc.id?.toString() ?? '')"-->
             <a :title="i18n.t('ui.action.delete')" class="link-danger" role="button" @click.prevent="deleteClick(host)"
@@ -72,7 +80,7 @@ async function deleteHost(host: string) {
             ></a>
           </td>
           <td class="text-truncate">{{ host }}</td>
-          <td class="text-truncate">{{ creds }}</td>
+          <td class="text-truncate" :class="!user ? 'text-muted fst-italic' : ''">{{ user || 'none' }}</td>
           <td class="text-center">
             <!--@click="showDeleteModal(loc.id?.toString() ?? '')"-->
             <a

@@ -3,7 +3,7 @@ import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
 import { copyToast } from '@/utils/index.ts'
 import { openOptions } from '@/utils/extension.ts'
-import { getSession } from '@/utils/options.ts'
+import { getSession, saveKeyValue } from '@/utils/options.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
@@ -32,27 +32,15 @@ const ignoreModal = ref<HTMLElement | null>(null)
 watch(
   options,
   (opts) => {
-    // NOTE: This needs to be combined with the tempSave logic below
     console.log('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
     setBackground(opts)
 
-    if (saveCreds.value) return
-    // NOTE: This needs to be combined with the watch logic above
     const tempSave = sessionStorage.getItem(hostRef.value)
     console.log('tempSave:', tempSave)
     if (tempSave) {
-      console.log('%c SETTING SAVED VALUE', 'color: Yellow')
       saveCreds.value = !!Number.parseInt(tempSave)
     } else {
-      console.log('%c SETTING OPTIONS VALUE', 'color: Lime')
       saveCreds.value = opts.defaultSave
-    }
-    if (!saveCreds.value) {
-      console.log('RALF BROKE IT')
-      // document.getElementById('save-session').classList.remove('d-none')
-      // if (creds) {
-      //   document.getElementById('temp-alert').classList.remove('d-none')
-      // }
     }
   },
   { once: true },
@@ -324,21 +312,33 @@ onMounted(async () => {
             />
             <label class="form-check-label" for="saveCreds">Save Login</label>
             <span v-if="!saveCreds" id="save-session" class="text-warning-emphasis fs-6 ms-2">
-              <i class="fa-solid fa-triangle-exclamation me-1"></i>
+              <i class="fa-solid fa-circle-exclamation me-1"></i>
               Credentials will not be saved!
             </span>
           </div>
 
-          <div v-if="!saveCreds && hasSavedCreds" id="temp-alert" class="alert alert-warning p-2">
+          <div v-if="!saveCreds && hasSavedCreds" class="alert alert-warning p-2">
             Credentials are already saved for this host and temporary credentials <b>will have no effect</b>!
             <br />
             Until this is fixed you can enable <b>Save Login</b> or
             <a class="alert-link" href="/options.html" @click.prevent="openOptions()">delete the saved credentials</a>.
           </div>
 
+          <div v-if="options.tempDisabled" class="alert alert-danger p-2">
+            <i class="fa-solid fa-triangle-exclamation me-1"></i> Extension is Temporarily Disabled! Use the
+            <a class="alert-link" :href="hrefRef">Native Login</a> or
+            <a class="alert-link" role="button" @click.prevent="saveKeyValue('tempDisabled', false)"
+              >Enable the Extension</a
+            >.
+          </div>
+
           <div class="row">
             <div class="col-12 col-sm-6 mb-2 mb-sm-0">
-              <button class="btn btn-lg btn-success w-100" type="submit">
+              <button
+                class="btn btn-lg w-100"
+                :class="options.tempDisabled ? 'btn-danger' : 'btn-success'"
+                type="submit"
+              >
                 Login
                 <i id="icon" class="fa-solid fa-right-to-bracket ms-2"></i>
               </button>

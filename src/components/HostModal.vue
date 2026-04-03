@@ -18,6 +18,7 @@ const modal = ref<Modal | any | null>(null) // NOTE: Lazy Typing...
 
 const hostnameEl = ref<HTMLInputElement | null>(null)
 const usernameEl = ref<HTMLInputElement | null>(null)
+const passwordEl = ref<HTMLInputElement | null>(null)
 
 const originalHost = ref('')
 const hostRef = ref('')
@@ -91,6 +92,9 @@ onMounted(() => {
   modalEl.value?.addEventListener('shown.bs.modal', () => {
     if (isAdding.value) {
       hostnameEl.value?.focus()
+    } else if (!userRef.value) {
+      passwordEl.value?.focus()
+      noUsername.value = true
     } else {
       usernameEl.value?.focus()
     }
@@ -231,6 +235,7 @@ defineExpose({ show })
               <div class="input-group has-validation col-12 mb-3">
                 <input
                   v-model="passRef"
+                  ref="passwordEl"
                   id="password"
                   placeholder="password"
                   aria-describedby="passwordHelp passwordValidation"
