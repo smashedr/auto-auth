@@ -61,13 +61,13 @@ option:
       label: Site Icon
       tip: Show Icon on Sites.
     contextMenu:
-      label: Context Menu
+      label: Show Right-Click Context Menu
       tip: Show context menu on right click.
     showUpdate:
-      label: Show Update
+      label: Show Release Notes on Update
       tip: Show update notifications.
     tempDisabled:
-      label: Temporarily Disable
+      label: Temporarily Disable Extension
       tip: Temporarily Disable the Extension for Debugging.
     ignoreProxy:
       label: Ignore Proxy Authentication

@@ -46,32 +46,33 @@ onMounted(() => {
 
 <template>
   <div>
-    <table id="keyboard-shortcuts" class="table table-sm rounded table-borderless table-hover d-none">
-      <caption class="visually-hidden">
-        {{
-          i18n.t('ui.keyboard.shortcuts')
-        }}
-      </caption>
-      <thead class="visually-hidden">
-        <tr>
-          <th>{{ i18n.t('ui.keyboard.description') }}</th>
-          <th>{{ i18n.t('ui.keyboard.shortcut') }}</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-      <tfoot class="d-none">
-        <tr>
-          <td class="bg-transparent">
-            <i class="fa-regular fa-keyboard me-1"></i>
-            <span class="description"></span>
-          </td>
-          <td class="bg-transparent text-end" :title="i18n.t('ui.keyboard.shortcuts')">
-            <kbd>{{ i18n.t('ui.keyboard.unknown') }}</kbd>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-    <!-- keyboard-shortcuts -->
+    <div class="rounded rounded-3 overflow-hidden">
+      <table id="keyboard-shortcuts" class="table table-sm rounded table-borderless table-hover transparent-table mb-0">
+        <caption class="visually-hidden">
+          {{
+            i18n.t('ui.keyboard.shortcuts')
+          }}
+        </caption>
+        <thead class="visually-hidden">
+          <tr>
+            <th>{{ i18n.t('ui.keyboard.description') }}</th>
+            <th>{{ i18n.t('ui.keyboard.shortcut') }}</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot class="d-none">
+          <tr>
+            <td class="ps-2">
+              <i class="fa-regular fa-keyboard me-1"></i>
+              <span class="description"></span>
+            </td>
+            <td class="text-end pe-2" :title="i18n.t('ui.keyboard.shortcuts')">
+              <kbd>{{ i18n.t('ui.keyboard.unknown') }}</kbd>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
 
     <div class="mb-2">
       {{ i18n.t('ui.keyboard.manage') }}:

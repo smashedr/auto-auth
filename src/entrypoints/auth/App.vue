@@ -19,12 +19,13 @@ const hostRef = ref('')
 const hrefRef = ref('')
 
 const saveCreds = ref(false)
+const hasSavedCreds = ref(false)
 const isFailure = ref(false)
 const userRequired = ref(true)
 
+const passwordShown = ref(false)
 const usernameEl = ref<HTMLInputElement | null>(null)
 const passwordEl = ref<HTMLInputElement | null>(null)
-const passwordShown = ref(false)
 
 const ignoreModal = ref<HTMLElement | null>(null)
 
@@ -33,11 +34,34 @@ watch(
   (opts) => {
     // NOTE: This needs to be combined with the tempSave logic below
     console.log('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
-    saveCreds.value = opts.defaultSave
     setBackground(opts)
+
+    if (saveCreds.value) return
+    // NOTE: This needs to be combined with the watch logic above
+    const tempSave = sessionStorage.getItem(hostRef.value)
+    console.log('tempSave:', tempSave)
+    if (tempSave) {
+      console.log('%c SETTING SAVED VALUE', 'color: Yellow')
+      saveCreds.value = !!Number.parseInt(tempSave)
+    } else {
+      console.log('%c SETTING OPTIONS VALUE', 'color: Lime')
+      saveCreds.value = opts.defaultSave
+    }
+    if (!saveCreds.value) {
+      console.log('RALF BROKE IT')
+      // document.getElementById('save-session').classList.remove('d-none')
+      // if (creds) {
+      //   document.getElementById('temp-alert').classList.remove('d-none')
+      // }
+    }
   },
   { once: true },
 )
+
+function saveCredsChange(event: Event) {
+  console.debug('saveCredsChange:', event)
+  sessionStorage.setItem(hostRef.value, saveCreds.value ? '1' : '0')
+}
 
 async function submitAuth(event: Event) {
   console.debug('submitAuth:', event)
@@ -149,6 +173,7 @@ const config = getAppConfig()
 console.log('config:', config)
 
 onMounted(async () => {
+  // NOTE: Copied from VanillaJS...
   const searchParams = new URLSearchParams(window.location.search)
   const fail = searchParams.get('fail')
   console.log('fail:', fail)
@@ -168,26 +193,12 @@ onMounted(async () => {
   const creds = await Hosts.get(hostRef.value)
   console.log('creds:', creds)
 
-  // NOTE: This needs to be combined with the watch logic above
-  const tempSave = sessionStorage.getItem(hostRef.value)
-  console.log('tempSave:', tempSave)
-  // if (tempSave) {
-  //   saveCreds.checked = !!Number.parseInt(tempSave)
-  // } else {
-  //   saveCreds.checked = options.defaultSave
-  // }
-  // if (!saveCreds.checked) {
-  //   document.getElementById('save-session').classList.remove('d-none')
-  //   if (creds) {
-  //     document.getElementById('temp-alert').classList.remove('d-none')
-  //   }
-  // }
-
   const session = await getSession()
   console.log('session:', session)
 
   if (creds) {
     console.log('if creds:', creds)
+    hasSavedCreds.value = true
     if (creds !== 'ignored') {
       const [username, password] = creds.split(':')
       userRef.value = username
@@ -309,15 +320,16 @@ onMounted(async () => {
               role="switch"
               id="saveCreds"
               name="saveCreds"
+              @change="saveCredsChange"
             />
             <label class="form-check-label" for="saveCreds">Save Login</label>
-            <span id="save-session" class="text-warning-emphasis fs-6 ms-2 d-none">
+            <span v-if="!saveCreds" id="save-session" class="text-warning-emphasis fs-6 ms-2">
               <i class="fa-solid fa-triangle-exclamation me-1"></i>
               Credentials will not be saved!
             </span>
           </div>
 
-          <div id="temp-alert" class="alert alert-danger text-center p-2 d-none">
+          <div v-if="!saveCreds && hasSavedCreds" id="temp-alert" class="alert alert-warning p-2">
             Credentials are already saved for this host and temporary credentials <b>will have no effect</b>!
             <br />
             Until this is fixed you can enable <b>Save Login</b> or
