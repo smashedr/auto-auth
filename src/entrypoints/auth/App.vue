@@ -21,7 +21,7 @@ const hrefRef = ref('')
 const saveCreds = ref(false)
 const hasSavedCreds = ref(false)
 const isFailure = ref(false)
-const userRequired = ref(true)
+const noUsername = ref(false)
 
 const passwordShown = ref(false)
 const usernameEl = ref<HTMLInputElement | null>(null)
@@ -255,7 +255,7 @@ onMounted(async () => {
               type="text"
               class="form-control"
               autocomplete="off"
-              :required="userRequired"
+              :required="!noUsername"
               autofocus
             />
             <!--<button class="btn btn-outline-info" type="button" data-bs-toggle="tooltip" tabindex="-1" data-paste-input="#username"-->
@@ -266,12 +266,12 @@ onMounted(async () => {
           <div class="form-text ms-2" id="usernameHelp">Basic Authentication Username.</div>
           <div class="form-check form-switch ms-2 mb-3">
             <input
+              v-model="noUsername"
               class="form-check-input"
               type="checkbox"
               role="switch"
               id="usernameSwitch"
               tabindex="-1"
-              @change="() => (userRequired = !userRequired)"
             />
             <label class="form-check-label" for="usernameSwitch">No Username</label>
           </div>

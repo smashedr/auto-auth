@@ -28,6 +28,7 @@ const passwordShown = ref(false)
 const unsavedChanges = ref(false)
 const showAlert = ref(false)
 const isAdding = ref(false)
+const noUsername = ref(false)
 
 const emit = defineEmits(['submit'])
 
@@ -115,6 +116,7 @@ onMounted(() => {
     unsavedChanges.value = false
     showAlert.value = false
     isAdding.value = false
+    noUsername.value = false
     modal.value._config.backdrop = true
   })
 })
@@ -186,7 +188,7 @@ defineExpose({ show })
                   type="text"
                   class="form-control"
                   autocomplete="off"
-                  required
+                  :required="!noUsername"
                   @change.once="onceChange"
                 />
                 <button
@@ -212,7 +214,14 @@ defineExpose({ show })
               </div>
               <div class="form-text visually-hidden" id="usernameHelp">Basic Authentication Username.</div>
               <div class="form-check form-switch ms-2 mb-3">
-                <input class="form-check-input" type="checkbox" role="switch" id="usernameSwitch" tabindex="-1" />
+                <input
+                  v-model="noUsername"
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="usernameSwitch"
+                  tabindex="-1"
+                />
                 <label class="form-check-label" for="usernameSwitch">No Username</label>
               </div>
 
