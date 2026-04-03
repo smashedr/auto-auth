@@ -181,7 +181,7 @@ onMounted(async () => {
   hostRef.value = url.host
   hrefRef.value = url.href
 
-  document.title = `${i18n.t('auth.loginFor')} ${hostRef.value}`
+  document.title = `${i18n.t('auth.title')} ${hostRef.value}`
 
   const creds = await Hosts.get(hostRef.value)
   console.log('creds:', creds)
@@ -223,27 +223,33 @@ onMounted(async () => {
     <div class="container-fluid pt-3 px-0 px-sm-4">
       <div id="auth-outer" class="rounded rounded-4 w-100 mx-auto mb-4 p-3">
         <div class="text-center fs-4">
-          <kbd class="text-ellipsis host" role="button" @click="copyToast(hostRef, 'Hostname Copied to Clipboard.')">{{
-            hostRef
-          }}</kbd>
+          <kbd
+            class="text-ellipsis host"
+            role="button"
+            @click="copyToast(hostRef, i18n.t('ui.action.hostnameCopied'))"
+            >{{ hostRef }}</kbd
+          >
         </div>
         <div class="text-center mb-2">
-          <i class="fa-regular fa-copy me-2" role="button" @click="copyToast(hrefRef, 'URL Copied to Clipboard.')"> </i
+          <i class="fa-regular fa-copy me-2" role="button" @click="copyToast(hrefRef, i18n.t('ui.action.urlCopied'))">
+          </i
           ><a id="link" class="text-break" :href="hrefRef" target="_blank" rel="noopener">{{ hrefRef }}</a>
         </div>
 
         <div v-if="isFailure" id="fail" class="alert alert-warning text-center p-2 mb-2" role="alert">
-          <b>Authentication Failed.</b> Please Try Again...
+          <b>{{ i18n.t('auth.authFailed') }}.</b> {{ i18n.t('auth.tryAgain') }}...
         </div>
 
         <form id="auth-form" class="mb-3" autocomplete="off" @submit.prevent="submitAuth">
-          <label for="username" class="form-label"><i class="fa-solid fa-user me-2"></i> Username</label>
+          <label for="username" class="form-label"
+            ><i class="fa-solid fa-user me-2"></i>{{ i18n.t('ui.text.username') }}</label
+          >
           <div class="input-group input-group-lg col-12">
             <input
               v-model="userRef"
               ref="usernameEl"
               id="username"
-              placeholder="username"
+              :placeholder="i18n.t('auth.usernamePlaceholder')"
               aria-describedby="usernameHelp"
               type="text"
               class="form-control"
@@ -251,12 +257,8 @@ onMounted(async () => {
               :required="!noUsername"
               autofocus
             />
-            <!--<button class="btn btn-outline-info" type="button" data-bs-toggle="tooltip" tabindex="-1" data-paste-input="#username"-->
-            <!--        data-bs-placement="bottom" data-bs-trigger="hover" data-bs-title="Paste Username">-->
-            <!--    <i class="fa-regular fa-paste"></i>-->
-            <!--</button>-->
           </div>
-          <div class="form-text ms-2" id="usernameHelp">Basic Authentication Username.</div>
+          <div class="form-text ms-2" id="usernameHelp">{{ i18n.t('auth.usernameHelp') }}</div>
           <div class="form-check form-switch ms-2 mb-3">
             <input
               v-model="noUsername"
@@ -266,16 +268,18 @@ onMounted(async () => {
               id="usernameSwitch"
               tabindex="-1"
             />
-            <label class="form-check-label" for="usernameSwitch">No Username</label>
+            <label class="form-check-label" for="usernameSwitch">{{ i18n.t('auth.noUsername') }}</label>
           </div>
 
-          <label for="password" class="form-label"><i class="fa-solid fa-key me-2"></i> Password</label>
+          <label for="password" class="form-label"
+            ><i class="fa-solid fa-key me-2"></i> {{ i18n.t('ui.text.password') }}</label
+          >
           <div class="input-group input-group-lg col-12">
             <input
               v-model="passRef"
               ref="passwordEl"
               id="password"
-              placeholder="password"
+              :placeholder="i18n.t('auth.passwordPlaceholder')"
               aria-describedby="passwordHelp"
               :type="passwordShown ? 'text' : 'password'"
               class="form-control"
@@ -291,19 +295,15 @@ onMounted(async () => {
               tabindex="-1"
               data-bs-placement="bottom"
               data-bs-trigger="hover"
-              data-bs-title="Show/Hide Password"
+              :data-bs-title="i18n.t('ui.text.showHidePassword')"
               data-class-on="btn-outline-warning"
               data-class-off="btn-outline-success"
               @click.prevent="() => (passwordShown = !passwordShown)"
             >
               <i class="fa-regular fa-eye"></i>
             </button>
-            <!--<button id="passwordCopy" class="btn btn-outline-info" type="button" tabindex="-1" data-paste-input="#password"-->
-            <!--        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-trigger="hover" data-bs-title="Paste Password">-->
-            <!--    <i class="fa-regular fa-paste"></i>-->
-            <!--</button>-->
           </div>
-          <div class="form-text ms-2 mb-3" id="passwordHelp">Basic Authentication Password.</div>
+          <div class="form-text ms-2 mb-3" id="passwordHelp">{{ i18n.t('auth.passwordHelp') }}</div>
 
           <div class="form-check form-switch fs-4 mb-3">
             <input
@@ -315,25 +315,29 @@ onMounted(async () => {
               name="saveCreds"
               @change="saveCredsChange"
             />
-            <label class="form-check-label" for="saveCreds">Save Login</label>
+            <label class="form-check-label" for="saveCreds">{{ i18n.t('auth.saveLogin') }}</label>
             <span v-if="!saveCreds" id="save-session" class="text-warning-emphasis fs-6 ms-2">
               <i class="fa-solid fa-circle-exclamation me-1"></i>
-              Credentials will not be saved!
+              {{ i18n.t('auth.credsNotSaved') }}
             </span>
           </div>
 
           <div v-if="!saveCreds && hasSavedCreds" class="alert alert-warning p-2">
-            Credentials are already saved for this host and temporary credentials <b>will have no effect</b>!
+            {{ i18n.t('auth.credsAlreadySaved') }}
             <br />
-            Until this is fixed you can enable <b>Save Login</b> or
-            <a class="alert-link" href="/options.html" @click.prevent="openOptions()">delete the saved credentials</a>.
+            {{ i18n.t('auth.untilFixed') }} <b>{{ i18n.t('auth.saveLogin') }}</b> or
+            <a class="alert-link" href="/options.html" @click.prevent="openOptions()">{{
+              i18n.t('auth.deleteSaved')
+            }}</a
+            >.
           </div>
 
           <div v-if="options.tempDisabled" class="alert alert-danger p-2">
-            <i class="fa-solid fa-triangle-exclamation me-1"></i> Extension is Temporarily Disabled! Use the
-            <a class="alert-link" :href="hrefRef">Native Login</a> or
-            <a class="alert-link" role="button" @click.prevent="saveKeyValue('tempDisabled', false)"
-              >Enable the Extension</a
+            <i class="fa-solid fa-triangle-exclamation me-1"></i> {{ i18n.t('ui.text.extensionDisabled') }}!
+            {{ i18n.t('auth.useThe') }} <a class="alert-link" :href="hrefRef">{{ i18n.t('auth.nativeLogin') }}</a> or
+            <a class="alert-link" role="button" @click.prevent="saveKeyValue('tempDisabled', false)">{{
+              i18n.t('auth.enableExtension')
+            }}</a
             >.
           </div>
 
@@ -348,7 +352,7 @@ onMounted(async () => {
                 }"
                 type="submit"
               >
-                Login
+                {{ i18n.t('auth.login') }}
                 <i
                   ref="loginIcon"
                   class="fa-solid ms-2"
@@ -363,7 +367,7 @@ onMounted(async () => {
                 data-bs-toggle="modal"
                 data-bs-target="#ignore-modal"
               >
-                Ignore Host
+                {{ i18n.t('auth.ignoreHost') }}
                 <i class="fa-solid fa-ban ms-2"></i>
               </button>
             </div>
@@ -405,22 +409,27 @@ onMounted(async () => {
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="ignore-modal-label">Confirm Ignore Host</h1>
+          <h1 class="modal-title fs-5" id="ignore-modal-label">{{ i18n.t('auth.ignore.confirmIgnore') }}</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" tabindex="-1"></button>
         </div>
         <div class="modal-body">
-          <p>Ignore host and remove any saved credentials?</p>
+          <p>{{ i18n.t('auth.ignore.ignoreHost') }}</p>
           <p class="text-center">
             <kbd class="ms-2">{{ hostRef }}</kbd>
           </p>
           <p class="mb-0">
-            Ignored hosts can be removed from the
-            <a href="/options.html" @click.prevent="openOptions()">Options Page</a>.
+            {{ i18n.t('auth.ignore.ignoreRemoved') }}
+            <a href="/options.html" @click.prevent="openOptions()">{{ i18n.t('auth.ignore.optionsPage') }}</a
+            >.
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary me-auto" @click.prevent="ignoreHost">Confirm Ignore</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary me-auto" @click.prevent="ignoreHost">
+            {{ i18n.t('auth.ignore.confirmIgnore') }}
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            {{ i18n.t('ui.action.cancel') }}
+          </button>
         </div>
       </div>
     </div>

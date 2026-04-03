@@ -58,7 +58,7 @@ useTitle(i18n.t('options.title'))
 
         <PermsCheck :show-info="true" :show-remove="false" class="my-3" />
 
-        <HorizontalRule>Saved Credentials</HorizontalRule>
+        <HorizontalRule>{{ i18n.t('options.savedCredentials') }}</HorizontalRule>
         <!--NOTE: Add fallthrough attributes-->
         <HostsTable />
 

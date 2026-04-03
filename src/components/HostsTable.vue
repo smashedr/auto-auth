@@ -66,8 +66,8 @@ const computedHosts = computed(() =>
       <thead>
         <tr>
           <th class="text-center" style="width: 36px"><i class="fa-solid fa-trash-can"></i></th>
-          <th>{{ i18n.t('ui.form.hostname') }}</th>
-          <th>{{ i18n.t('ui.form.username') }}</th>
+          <th>{{ i18n.t('ui.text.hostname') }}</th>
+          <th>{{ i18n.t('ui.text.username') }}</th>
           <th class="text-center" style="width: 36px"><i class="fa-solid fa-pen-to-square"></i></th>
         </tr>
       </thead>

@@ -102,7 +102,7 @@ console.log('width:', width.value)
           class="text-center rounded border border-2 text-ellipsis p-1"
           :class="usernameRef === 'ignored' ? 'border-warning-subtle' : 'border-success-subtle'"
         >
-          {{ i18n.t('ui.form.username') }}:
+          {{ i18n.t('ui.text.username') }}:
           <span
             class="fw-bold"
             :class="usernameRef === 'ignored' ? 'text-warning-emphasis' : 'text-success-emphasis'"

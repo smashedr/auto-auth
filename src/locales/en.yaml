@@ -18,22 +18,57 @@ ui:
     extensionPanel: Extension Panel
     extensionPage: Extension Page
 
-  form:
+    hostnameCopied: Hostname Copied to Clipboard
+    usernameCopied: Username Copied to Clipboard
+    passwordCopied: Password Copied to Clipboard
+    urlCopied: URL Copied to Clipboard
+
+  text:
     hostname: Hostname
     username: Username
     password: Password
 
-  text:
+    copyHostname: Copy Hostname
+    copyUsername: Copy Username
+    copyPassword: Copy Password
+
     homePage: Home Page
     openIssue: Open Issue
     releaseNotes: Release Notes
     requestFeature: Request Feature
 
+    showHidePassword: Show/Hide Password
+    extensionDisabled: Extension Temporarily Disabled
+    unsavedChanges: Unsaved Changes Detected.
+
 auth:
   # auth/App.vue
-  title: Auth
-  loginFor: Login for
+  title: Login for # Login for hostname
+  login: Login
+  ignoreHost: Ignore Host
   getSupport: Get Support
+  authFailed: Authentication Failed
+  tryAgain: Please Try Again
+  useThe: Use the # Use the Native Login
+  noUsername: No Username
+  saveLogin: Save Login
+  usernamePlaceholder: username
+  usernameHelp: Basic Authentication Username.
+  passwordPlaceholder: password
+  passwordHelp: Basic Authentication Password.
+
+  nativeLogin: Native Login
+  enableExtension: Enable the Extension
+  untilFixed: Until this is fixed you can enable # ...Save Login or
+  deleteSaved: delete the saved credentials
+  credsNotSaved: Credentials will not be saved!
+  credsAlreadySaved: Credentials are already saved for this host and temporary credentials will have no effect!
+
+  ignore:
+    confirmIgnore: Confirm Ignore
+    optionsPage: Options Page
+    ignoreHost: Ignore host and remove any saved credentials?
+    ignoreRemoved: Ignored hosts can be removed from the
 
 popup:
   # popup/App.vue
@@ -55,10 +90,12 @@ options:
   copySupport: Copy Support Information
   copySupportTip: For issue reporting.
   copySupportMsg: Support Information Copied.
+  savedCredentials: Saved Credentials
 
 content:
   # content/index.ts
-  press: NOT USED
+  on: On
+  off: Off
 
 ctx:
   # background/menus.ts

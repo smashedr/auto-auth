@@ -139,7 +139,7 @@ defineExpose({ show })
           <div class="modal-body">
             <form id="edit-form" name="edit-form" class="mb-3" autocomplete="off" @submit.prevent="onSubmit">
               <label for="hostname" class="form-label" :class="compact ? 'visually-hidden' : ''"
-                ><i class="fa-solid fa-globe me-2"></i> {{ i18n.t('ui.form.hostname') }}</label
+                ><i class="fa-solid fa-globe me-2"></i> {{ i18n.t('ui.text.hostname') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
@@ -160,13 +160,11 @@ defineExpose({ show })
                   type="button"
                   data-bs-toggle="tooltip"
                   tabindex="-1"
-                  data-copy-input="#hostname"
-                  data-copy-text="Hostname Copied."
                   data-bs-placement="bottom"
                   data-bs-trigger="hover"
-                  data-bs-title="Copy Hostname"
+                  :data-bs-title="i18n.t('ui.text.copyHostname')"
                   v-bs
-                  @click="copyToast(hostRef, 'Hostname Copied to Clipboard.')"
+                  @click="copyToast(hostRef, i18n.t('ui.action.hostnameCopied'))"
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
@@ -175,14 +173,14 @@ defineExpose({ show })
               <div class="form-text visually-hidden" id="hostnameHelp">Basic Authentication Hostname.</div>
 
               <label for="username" class="form-label" :class="compact ? 'visually-hidden' : ''"
-                ><i class="fa-solid fa-user me-2"></i> {{ i18n.t('ui.form.username') }}</label
+                ><i class="fa-solid fa-user me-2"></i> {{ i18n.t('ui.text.username') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
                   v-model="userRef"
                   ref="usernameEl"
                   id="username"
-                  placeholder="username"
+                  :placeholder="i18n.t('auth.passwordPlaceholder')"
                   aria-describedby="usernameHelp usernameValidation"
                   type="text"
                   class="form-control"
@@ -195,19 +193,17 @@ defineExpose({ show })
                   type="button"
                   data-bs-toggle="tooltip"
                   tabindex="-1"
-                  data-copy-input="#username"
-                  data-copy-text="Username Copied."
                   data-bs-placement="bottom"
                   data-bs-trigger="hover"
-                  data-bs-title="Copy Username"
+                  :data-bs-title="i18n.t('ui.text.copyUsername')"
                   v-bs
-                  @click="copyToast(userRef, 'Username Copied to Clipboard.')"
+                  @click="copyToast(userRef, i18n.t('ui.action.usernameCopied'))"
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
                 <div id="usernameValidation" class="invalid-feedback"></div>
               </div>
-              <div class="form-text visually-hidden" id="usernameHelp">Basic Authentication Username.</div>
+              <div class="form-text visually-hidden" id="usernameHelp">{{ i18n.t('auth.usernameHelp') }}</div>
               <div class="form-check form-switch ms-2 mb-3">
                 <input
                   v-model="noUsername"
@@ -217,18 +213,18 @@ defineExpose({ show })
                   id="usernameSwitch"
                   tabindex="-1"
                 />
-                <label class="form-check-label" for="usernameSwitch">No Username</label>
+                <label class="form-check-label" for="usernameSwitch">{{ i18n.t('auth.noUsername') }}</label>
               </div>
 
               <label for="password" class="form-label" :class="compact ? 'visually-hidden' : ''"
-                ><i class="fa-solid fa-key me-2"></i> {{ i18n.t('ui.form.password') }}</label
+                ><i class="fa-solid fa-key me-2"></i> {{ i18n.t('ui.text.password') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
                   v-model="passRef"
                   ref="passwordEl"
                   id="password"
-                  placeholder="password"
+                  :placeholder="i18n.t('auth.passwordPlaceholder')"
                   aria-describedby="passwordHelp passwordValidation"
                   :type="passwordShown ? 'text' : 'password'"
                   class="form-control"
@@ -245,7 +241,7 @@ defineExpose({ show })
                   tabindex="-1"
                   data-bs-placement="bottom"
                   data-bs-trigger="hover"
-                  data-bs-title="Show/Hide Password"
+                  :data-bs-title="i18n.t('ui.text.showHidePassword')"
                   v-bs
                   @click.prevent="() => (passwordShown = !passwordShown)"
                 >
@@ -256,23 +252,21 @@ defineExpose({ show })
                   type="button"
                   data-bs-toggle="tooltip"
                   tabindex="-1"
-                  data-copy-input="#password"
-                  data-copy-text="Password Copied."
                   data-bs-placement="bottom"
                   data-bs-trigger="hover"
-                  data-bs-title="Copy Password"
+                  :data-bs-title="i18n.t('ui.text.copyPassword')"
                   v-bs
-                  @click="copyToast(passRef, 'Password Copied to Clipboard.')"
+                  @click="copyToast(passRef, i18n.t('ui.action.passwordCopied'))"
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
                 <div id="passwordValidation" class="invalid-feedback"></div>
               </div>
-              <div class="form-text visually-hidden" id="passwordHelp">Basic Authentication Password.</div>
+              <div class="form-text visually-hidden" id="passwordHelp">{{ i18n.t('auth.passwordHelp') }}</div>
             </form>
 
             <div v-if="showAlert" class="alert alert-warning text-center p-2 mb-2" role="alert">
-              Unsaved Changes Detected.
+              {{ i18n.t('ui.text.unsavedChanges') }}
             </div>
           </div>
 
