@@ -57,10 +57,7 @@ function hide() {
   Modal.getInstance(modalEl.value)?.hide()
 }
 
-async function onSubmit() {
-  console.log('HostModal.vue - onSubmit:', hostRef.value, userRef.value, passRef.value, originalHost.value)
-
-  // url
+function validateHostname(): string | undefined {
   let value = hostRef.value
   console.debug('value1:', value)
   if (!value.includes('://')) {
@@ -72,22 +69,34 @@ async function onSubmit() {
     url = new URL(value)
   } catch (e) {
     console.debug(e)
+    hostInvalid.value = 'Invalid Hostname or URL.'
+    return
+  }
+  console.log(`url.hostname: "${url.hostname}"`, url)
+  return url.hostname
+}
+
+async function onSubmit() {
+  console.log('HostModal.vue - onSubmit:', hostRef.value, userRef.value, passRef.value, originalHost.value)
+
+  // hostname
+  const hostname = validateHostname()
+  if (!hostname) {
     hostnameEl.value?.focus()
     hostnameEl.value?.select()
     hostInvalid.value = 'Invalid Hostname or URL.'
     return
   }
-  console.log(`url.hostname: "${url.hostname}"`, url)
+  hostRef.value = hostname
 
-  // hostname
-  hostRef.value = url.hostname
+  // existing
   const existing = await Hosts.get(hostRef.value)
   console.debug('existing:', existing)
-  if (existing) {
+  if (existing && isAdding.value) {
     console.debug('Existing Host:', hostRef.value)
     hostnameEl.value?.focus()
     hostnameEl.value?.select()
-    hostInvalid.value = 'Hostname Already Exists. Edit or Delete it First.'
+    hostInvalid.value = 'Hostname Already Exists. Edit or Delete First.'
     // showToast(`Host Exists: ${url.hostname}`, 'warning')
     return
   }
@@ -105,25 +114,15 @@ async function onSubmit() {
     return
   }
 
-  console.log(`Adding Host: ${hostRef.value}`, url)
+  console.log('Adding Host:', hostRef.value)
   emit('submit', hostRef.value, userRef.value, passRef.value, originalHost.value)
   hide()
 }
 
 function hostnameChange() {
-  // NOTE: Consider validating hostname on change and submit...
   console.log('HostModal.vue - hostnameChange')
-  // try {
-  //   let host = hostRef.value.toLowerCase().trim()
-  //   console.log('host:', host)
-  //   host = host.includes('://') ? host : 'https://' + host
-  //   console.debug('host:', host)
-  //   const url = new URL(host)
-  //   console.debug('url.host:', url.host)
-  //   if (!url.host) return console.error(`Invalid Hostname: ${hostRef.value}`)
-  // } catch (e) {
-  //   console.error(e)
-  // }
+  onceChange()
+  validateHostname()
 }
 
 function onceChange() {
@@ -165,6 +164,8 @@ onMounted(() => {
     hostRef.value = ''
     userRef.value = ''
     passRef.value = ''
+    hostInvalid.value = ''
+    passInvalid.value = ''
     passwordShown.value = false
     unsavedChanges.value = false
     showAlert.value = false
@@ -213,7 +214,6 @@ defineExpose({ show })
                   required
                   @input="hostInvalid = ''"
                   @change="hostnameChange"
-                  @change.once="onceChange"
                 />
                 <button
                   class="btn btn-outline-info"
@@ -246,7 +246,7 @@ defineExpose({ show })
                   class="form-control"
                   autocomplete="off"
                   :required="!noUsername"
-                  @change.once="onceChange"
+                  @change="onceChange"
                 />
                 <button
                   class="btn btn-outline-info"
@@ -292,7 +292,7 @@ defineExpose({ show })
                   autocomplete="off"
                   required
                   @input="passInvalid = ''"
-                  @change.once="onceChange"
+                  @change="onceChange"
                 />
                 <button
                   class="btn"
