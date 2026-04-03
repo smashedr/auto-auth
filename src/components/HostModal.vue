@@ -90,15 +90,16 @@ async function onSubmit() {
   hostRef.value = hostname
 
   // existing
-  const existing = await Hosts.get(hostRef.value)
-  console.debug('existing:', existing)
-  if (existing && isAdding.value) {
-    console.debug('Existing Host:', hostRef.value)
-    hostnameEl.value?.focus()
-    hostnameEl.value?.select()
-    hostInvalid.value = 'Hostname Already Exists. Edit or Delete First.'
-    // showToast(`Host Exists: ${url.hostname}`, 'warning')
-    return
+  if (isAdding.value) {
+    const existing = await Hosts.get(hostRef.value)
+    console.debug('existing:', existing)
+    if (existing) {
+      console.debug('Existing Host:', hostRef.value)
+      hostnameEl.value?.focus()
+      hostnameEl.value?.select()
+      hostInvalid.value = 'Hostname Already Exists. Edit or Delete First.'
+      return
+    }
   }
 
   // username
