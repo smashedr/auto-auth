@@ -133,8 +133,16 @@ defineExpose({ show })
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="edit-modal-label">{{ isAdding ? 'Add' : 'Edit' }} Host</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" tabindex="-1"></button>
+            <h1 class="modal-title fs-5" id="edit-modal-label">
+              {{ isAdding ? i18n.t('ui.action.add') : i18n.t('ui.action.edit') }} {{ i18n.t('ui.text.host') }}
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              :aria-label="i18n.t('ui.action.close')"
+              tabindex="-1"
+            ></button>
           </div>
           <div class="modal-body">
             <form id="edit-form" name="edit-form" class="mb-3" autocomplete="off" @submit.prevent="onSubmit">

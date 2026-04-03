@@ -6,6 +6,7 @@ ui:
   action:
     add: Add
     cancel: Cancel
+    clear: Clear
     close: Close
     delete: Delete
     edit: Edit
@@ -13,6 +14,7 @@ ui:
     options: Options
     save: Save
 
+    addCredentials: Add Credentials
     openPopup: Open Popup
     sidePanel: Side Panel
     extensionPanel: Extension Panel
@@ -24,6 +26,9 @@ ui:
     urlCopied: URL Copied to Clipboard
 
   text:
+    ignored: Ignored
+
+    host: Host
     hostname: Hostname
     username: Username
     password: Password
@@ -53,13 +58,13 @@ form:
 
 auth:
   # auth/App.vue
-  title: Login for # Login for hostname
+  title: Login for # ...hostname
   login: Login
   ignoreHost: Ignore Host
   getSupport: Get Support
   authFailed: Authentication Failed
   tryAgain: Please Try Again
-  useThe: Use the # Use the Native Login
+  useThe: Use the # ...Native Login
   noUsername: No Username
   saveLogin: Save Login
 
@@ -118,6 +123,20 @@ cmd:
   openSidePanel: Open Side Panel
   openExtPanel: Open Extension Panel
   openOptions: Open Options
+
+import:
+  # components/ImportExport.vue
+  exportAll: Export All
+  importFile: Import File
+  # components/ImportText.vue
+  import: Import
+  importText: Import Text
+  importCredentials: Import Credentials
+  jsonImport: JSON Import
+  placeholder: Paste text to import here...
+  formatSee: For data format, see the # ...Migration Guide
+  migrationGuide: Migration Guide # ...on GitHub
+  onGithub: on GitHub
 
 background:
   # components/BackgroundForm.vue

@@ -411,7 +411,13 @@ onMounted(async () => {
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="ignore-modal-label">{{ i18n.t('auth.ignore.confirmIgnore') }}</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" tabindex="-1"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            :aria-label="i18n.t('ui.action.close')"
+            tabindex="-1"
+          ></button>
         </div>
         <div class="modal-body">
           <p>{{ i18n.t('auth.ignore.ignoreHost') }}</p>
