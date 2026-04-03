@@ -80,7 +80,8 @@ const computedHosts = computed(() =>
             ></a>
           </td>
           <td class="text-truncate">{{ host }}</td>
-          <td class="text-truncate" :class="!user ? 'text-muted fst-italic' : ''">{{ user || 'none' }}</td>
+          <td v-if="creds === 'ignored'" class="text-truncate text-warning fst-italic">Ignored</td>
+          <td v-else class="text-truncate" :class="!user ? 'text-muted fst-italic' : ''">{{ user || 'none' }}</td>
           <td class="text-center">
             <!--@click="showDeleteModal(loc.id?.toString() ?? '')"-->
             <a
