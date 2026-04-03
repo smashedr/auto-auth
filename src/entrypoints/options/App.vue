@@ -13,7 +13,7 @@ import HorizontalRule from '@/components/HorizontalRule.vue'
 import CopySupport from '@/components/CopySupport.vue'
 import HostsTable from '@/components/HostsTable.vue'
 
-console.debug('%c options/App.vue', 'color: Lime')
+console.debug('%c options/App.vue', 'color: SpringGreen')
 
 useBackground()
 

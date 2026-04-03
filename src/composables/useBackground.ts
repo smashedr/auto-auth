@@ -4,7 +4,7 @@ import { getOptions } from '@/utils/options.ts'
 
 function setBackground(options: Options) {
   // NOTE: Copied from VanillaJS. Refactor this method...
-  console.log('setBackground:', options.radioBackground)
+  console.log('setBackground: options.radioBackground:', options.radioBackground)
   const video = document.querySelector('video')
   console.log('video:', video)
   if (!video) return console.error('no video element') // NOTE: Handle Error
@@ -27,21 +27,17 @@ function setBackground(options: Options) {
 async function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
   console.log('composables/useBackground.ts - onChanged:', changes)
   const records = changes as Record<string, any> // NOTE: Lazy Typing...
-  console.debug('options:', records.options)
+  // console.debug('options:', records.options)
   const optionChange = records.options
   if (!optionChange?.oldValue || !optionChange?.newValue) return
-  console.debug('oldValue:', optionChange.oldValue)
-  console.debug('newValue:', optionChange.newValue)
+  // console.debug('oldValue:', optionChange.oldValue)
+  // console.debug('newValue:', optionChange.newValue)
   if (
     optionChange.oldValue.radioBackground !== optionChange.newValue.radioBackground ||
     optionChange.oldValue.pictureURL !== optionChange.newValue.pictureURL ||
     optionChange.oldValue.videoURL !== optionChange.newValue.videoURL
   ) {
-    console.log(
-      '%c Background Option Change',
-      'color: Yellow',
-      optionChange.newValue.radioBackground,
-    )
+    console.log('%c Background Option Change Detected.', 'color: Yellow')
     setBackground(optionChange.newValue)
   }
 }
