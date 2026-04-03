@@ -25,6 +25,9 @@ const hostRef = ref('')
 const userRef = ref('')
 const passRef = ref('')
 
+const hostInvalid = ref('')
+const passInvalid = ref('')
+
 const passwordShown = ref(false)
 const unsavedChanges = ref(false)
 const showAlert = ref(false)
@@ -54,26 +57,73 @@ function hide() {
   Modal.getInstance(modalEl.value)?.hide()
 }
 
-function onSubmit() {
+async function onSubmit() {
   console.log('HostModal.vue - onSubmit:', hostRef.value, userRef.value, passRef.value, originalHost.value)
+
+  // url
+  let value = hostRef.value
+  console.debug('value1:', value)
+  if (!value.includes('://')) {
+    value = `https://${value}`
+  }
+  console.debug('value2:', value)
+  let url
+  try {
+    url = new URL(value)
+  } catch (e) {
+    console.debug(e)
+    hostnameEl.value?.focus()
+    hostnameEl.value?.select()
+    hostInvalid.value = 'Invalid Hostname or URL.'
+    return
+  }
+  console.log(`url.hostname: "${url.hostname}"`, url)
+
+  // hostname
+  hostRef.value = url.hostname
+  const existing = await Hosts.get(hostRef.value)
+  console.debug('existing:', existing)
+  if (existing) {
+    console.debug('Existing Host:', hostRef.value)
+    hostnameEl.value?.focus()
+    hostnameEl.value?.select()
+    hostInvalid.value = 'Hostname Already Exists. Edit or Delete it First.'
+    // showToast(`Host Exists: ${url.hostname}`, 'warning')
+    return
+  }
+
+  // username
+  console.log('username:', userRef.value)
+  // NOTE: Consider validating username as a convince to the user...
+
+  // password
+  console.log('password:', passRef.value)
+  if (!passRef.value) {
+    console.debug('No password')
+    passwordEl.value?.focus()
+    passInvalid.value = 'Password Required.'
+    return
+  }
+
+  console.log(`Adding Host: ${hostRef.value}`, url)
   emit('submit', hostRef.value, userRef.value, passRef.value, originalHost.value)
   hide()
 }
 
 function hostnameChange() {
-  // NOTE: Copied from VanillaJS. ADD Validation Here...
+  // NOTE: Consider validating hostname on change and submit...
   console.log('HostModal.vue - hostnameChange')
-  try {
-    let host = hostRef.value.toLowerCase().trim()
-    console.log('host:', host)
-    host = host.includes('://') ? host : 'https://' + host
-    console.debug('host:', host)
-    const url = new URL(host)
-    console.debug('url.host:', url.host)
-    if (!url.host) return console.error(`Invalid Hostname: ${hostRef.value}`)
-  } catch (e) {
-    console.error(e)
-  }
+  // try {
+  //   let host = hostRef.value.toLowerCase().trim()
+  //   console.log('host:', host)
+  //   host = host.includes('://') ? host : 'https://' + host
+  //   console.debug('host:', host)
+  //   const url = new URL(host)
+  //   console.debug('url.host:', url.host)
+  //   if (!url.host) return console.error(`Invalid Hostname: ${hostRef.value}`)
+  // } catch (e) {
+  //   console.error(e)
+  // }
 }
 
 function onceChange() {
@@ -158,8 +208,10 @@ defineExpose({ show })
                   aria-describedby="hostnameHelp hostnameValidation"
                   type="text"
                   class="form-control"
+                  :class="{ 'is-invalid': hostInvalid }"
                   autocomplete="off"
                   required
+                  @input="hostInvalid = ''"
                   @change="hostnameChange"
                   @change.once="onceChange"
                 />
@@ -176,7 +228,7 @@ defineExpose({ show })
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
-                <div id="hostnameValidation" class="invalid-feedback"></div>
+                <div id="hostnameValidation" class="invalid-feedback">{{ hostInvalid }}</div>
               </div>
               <div class="form-text visually-hidden" id="hostnameHelp">{{ i18n.t('form.host.hostnameHelp') }}</div>
 
@@ -236,8 +288,10 @@ defineExpose({ show })
                   aria-describedby="passwordHelp passwordValidation"
                   :type="passwordShown ? 'text' : 'password'"
                   class="form-control"
+                  :class="{ 'is-invalid': passInvalid }"
                   autocomplete="off"
                   required
+                  @input="passInvalid = ''"
                   @change.once="onceChange"
                 />
                 <button
@@ -268,7 +322,7 @@ defineExpose({ show })
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
-                <div id="passwordValidation" class="invalid-feedback"></div>
+                <div id="passwordValidation" class="invalid-feedback">{{ passInvalid }}</div>
               </div>
               <div class="form-text visually-hidden" id="passwordHelp">{{ i18n.t('form.host.passwordHelp') }}</div>
             </form>
