@@ -146,7 +146,7 @@ defineExpose({ show })
           </div>
           <div class="modal-body">
             <form id="edit-form" name="edit-form" class="mb-3" autocomplete="off" @submit.prevent="onSubmit">
-              <label for="hostname" class="form-label" :class="compact ? 'visually-hidden' : ''"
+              <label for="hostname" class="form-label" :class="{ 'visually-hidden': compact }"
                 ><i class="fa-solid fa-globe me-2"></i> {{ i18n.t('ui.text.hostname') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
@@ -180,7 +180,7 @@ defineExpose({ show })
               </div>
               <div class="form-text visually-hidden" id="hostnameHelp">{{ i18n.t('form.host.hostnameHelp') }}</div>
 
-              <label for="username" class="form-label" :class="compact ? 'visually-hidden' : ''"
+              <label for="username" class="form-label" :class="{ 'visually-hidden': compact }"
                 ><i class="fa-solid fa-user me-2"></i> {{ i18n.t('ui.text.username') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
@@ -224,7 +224,7 @@ defineExpose({ show })
                 <label class="form-check-label" for="usernameSwitch">{{ i18n.t('auth.noUsername') }}</label>
               </div>
 
-              <label for="password" class="form-label" :class="compact ? 'visually-hidden' : ''"
+              <label for="password" class="form-label" :class="{ 'visually-hidden': compact }"
                 ><i class="fa-solid fa-key me-2"></i> {{ i18n.t('ui.text.password') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">

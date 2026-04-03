@@ -82,7 +82,7 @@ const computedHosts = computed(() =>
           <td v-if="creds === 'ignored'" class="text-truncate text-warning fst-italic">
             {{ i18n.t('ui.text.ignored') }}
           </td>
-          <td v-else class="text-truncate" :class="!user ? 'text-muted fst-italic' : ''">{{ user || 'none' }}</td>
+          <td v-else class="text-truncate" :class="{ 'text-muted fst-italic': !user }">{{ user || 'none' }}</td>
           <td class="text-center">
             <a
               :title="i18n.t('ui.action.edit')"

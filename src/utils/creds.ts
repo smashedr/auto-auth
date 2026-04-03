@@ -1,7 +1,10 @@
+import { i18n } from '#imports'
+import { showToast } from '@/composables/useToast.ts'
 import { Hosts } from '@/utils/hosts.ts'
 
+// TODO: Cleanup this function...
 export async function importCredentials(data: any) {
-  // NOTE: Cleanup this function, copied from VanillaJS
+  // NOTE: Copied from VanillaJS...
   console.debug('importCredentials:', data)
   const hosts: Record<string, string> = {}
   let count = 0
@@ -53,7 +56,10 @@ export async function importCredentials(data: any) {
   // console.debug('hosts:', hosts)
   await Hosts.update(hosts)
   const type = count ? 'success' : 'warning'
-  showToast(`Imported/Updated ${count}/${total} Hosts.`, type)
+  showToast(
+    `${i18n.t('ui.action.importUpdate')} ${count}/${total} ${i18n.t('ui.text.hosts')}.`,
+    type,
+  )
 }
 
 function getHost(hostname: string) {

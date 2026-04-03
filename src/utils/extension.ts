@@ -1,6 +1,6 @@
-// NOTE: Below is ported from VanillaJS
-
 import { showToast } from '@/composables/useToast.ts'
+
+// NOTE: All functions below are ported from VanillaJS
 
 export function openSidePanel(close?: boolean) {
   console.debug('openSidePanel:', close)

@@ -1,3 +1,4 @@
+import { i18n } from '#imports'
 import { showToast } from '@/composables/useToast.ts'
 
 export function debounce(fn: Function, timeout = 250) {
@@ -16,6 +17,7 @@ export function copyToast(text: string, message: string, type = 'success') {
     .catch((e) => console.log(e))
 }
 
+// TODO: This does not belong here...
 export async function submitHost(
   host: string,
   user: string,
@@ -31,7 +33,7 @@ export async function submitHost(
       await Hosts.set(host, `${user}:${pass}`)
     }
 
-    showToast(`Add/Edited: ${host}`, 'success')
+    showToast(`${i18n.t('ui.action.addEdit')}: ${host}`, 'success')
   } catch (e) {
     if (e instanceof Error) showToast(`Add/Edit Error: ${e.message}`, 'danger')
   }
