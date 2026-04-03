@@ -36,12 +36,6 @@
 
 This is almost complete and ready for testing. To use the new version see the [Test Instructions](#test-instructions)
 
-<svg width="138" height="138" viewBox="-17.25 -17.25 172.5 172.5" version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
-  <circle r="59" cx="69" cy="69" fill="transparent" stroke="#e0e0e0" stroke-width="16px"></circle>
-  <circle r="59" cx="69" cy="69" stroke="#76e5b1" stroke-width="16px" stroke-linecap="round" stroke-dashoffset="37px" fill="transparent" stroke-dasharray="370.52000000000004px"></circle>
-  <text x="40px" y="87px" fill="#6bdba7" font-size="52px" font-weight="bold" style="transform:rotate(90deg) translate(0px, -134px)">90</text>
-</svg>
-
 [![Latest Release](https://img.shields.io/github/v/release/smashedr/auto-auth?style=for-the-badge&logo=github&color=brightgreen&label=download%20latest%20release)](https://github.com/smashedr/auto-auth/releases/latest)
 
 ## Install
