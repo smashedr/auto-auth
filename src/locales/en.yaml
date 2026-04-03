@@ -41,6 +41,16 @@ ui:
     extensionDisabled: Extension Temporarily Disabled
     unsavedChanges: Unsaved Changes Detected.
 
+form:
+  host:
+    hostnamePlaceholder: hostname
+    usernamePlaceholder: username
+    passwordPlaceholder: password
+
+    hostnameHelp: Basic Authentication Hostname.
+    usernameHelp: Basic Authentication Username.
+    passwordHelp: Basic Authentication Password.
+
 auth:
   # auth/App.vue
   title: Login for # Login for hostname
@@ -52,10 +62,6 @@ auth:
   useThe: Use the # Use the Native Login
   noUsername: No Username
   saveLogin: Save Login
-  usernamePlaceholder: username
-  usernameHelp: Basic Authentication Username.
-  passwordPlaceholder: password
-  passwordHelp: Basic Authentication Password.
 
   nativeLogin: Native Login
   enableExtension: Enable the Extension
@@ -91,6 +97,8 @@ options:
   copySupportTip: For issue reporting.
   copySupportMsg: Support Information Copied.
   savedCredentials: Saved Credentials
+  # components/OptionsForm.vue
+  authPageBackground: Auth Page Background
 
 content:
   # content/index.ts
@@ -111,8 +119,18 @@ cmd:
   openExtPanel: Open Extension Panel
   openOptions: Open Options
 
+background:
+  # components/BackgroundForm.vue
+  none: None
+  picture: Picture
+  pictureTip: URL to a Web Image.
+  pictureLabel: Background Picture URL
+  video: Video
+  videoTip: URL to a Web Video
+  videoLabel: Background Video URL
+
 keyboard:
-  # composables/KeyboardShortcuts.vue
+  # components/KeyboardShortcuts.vue
   description: Description
   manage: Manage Keyboard Shortcuts
   notSet: Not Set
@@ -121,7 +139,7 @@ keyboard:
   unknown: Unknown
 
 perms:
-  # composables/PermsCheck.vue
+  # components/PermsCheck.vue
   granted: Permissions Granted.
   grant:
     text: Grant Host Permissions
@@ -132,14 +150,14 @@ perms:
   info: More Information on Permissions
 
 theme:
-  # composables/ThemeSwitch.vue
+  # components/ThemeSwitch.vue
   title: Theme Switcher
   dark: Dark
   light: Light
   auto: Auto
 
 option:
-  # composables/FormSwitch.vue
+  # components/FormSwitch.vue
   toggle:
     siteIcon:
       label: Site Icon

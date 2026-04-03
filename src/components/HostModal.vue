@@ -146,7 +146,7 @@ defineExpose({ show })
                   v-model="hostRef"
                   ref="hostnameEl"
                   id="hostname"
-                  placeholder="hostname"
+                  :placeholder="i18n.t('form.host.hostnamePlaceholder')"
                   aria-describedby="hostnameHelp hostnameValidation"
                   type="text"
                   class="form-control"
@@ -163,14 +163,14 @@ defineExpose({ show })
                   data-bs-placement="bottom"
                   data-bs-trigger="hover"
                   :data-bs-title="i18n.t('ui.text.copyHostname')"
-                  v-bs
                   @click="copyToast(hostRef, i18n.t('ui.action.hostnameCopied'))"
+                  v-bs
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
                 <div id="hostnameValidation" class="invalid-feedback"></div>
               </div>
-              <div class="form-text visually-hidden" id="hostnameHelp">Basic Authentication Hostname.</div>
+              <div class="form-text visually-hidden" id="hostnameHelp">{{ i18n.t('form.host.hostnameHelp') }}</div>
 
               <label for="username" class="form-label" :class="compact ? 'visually-hidden' : ''"
                 ><i class="fa-solid fa-user me-2"></i> {{ i18n.t('ui.text.username') }}</label
@@ -180,7 +180,7 @@ defineExpose({ show })
                   v-model="userRef"
                   ref="usernameEl"
                   id="username"
-                  :placeholder="i18n.t('auth.passwordPlaceholder')"
+                  :placeholder="i18n.t('form.host.usernamePlaceholder')"
                   aria-describedby="usernameHelp usernameValidation"
                   type="text"
                   class="form-control"
@@ -196,14 +196,14 @@ defineExpose({ show })
                   data-bs-placement="bottom"
                   data-bs-trigger="hover"
                   :data-bs-title="i18n.t('ui.text.copyUsername')"
-                  v-bs
                   @click="copyToast(userRef, i18n.t('ui.action.usernameCopied'))"
+                  v-bs
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
                 <div id="usernameValidation" class="invalid-feedback"></div>
               </div>
-              <div class="form-text visually-hidden" id="usernameHelp">{{ i18n.t('auth.usernameHelp') }}</div>
+              <div class="form-text visually-hidden" id="usernameHelp">{{ i18n.t('form.host.usernameHelp') }}</div>
               <div class="form-check form-switch ms-2 mb-3">
                 <input
                   v-model="noUsername"
@@ -224,7 +224,7 @@ defineExpose({ show })
                   v-model="passRef"
                   ref="passwordEl"
                   id="password"
-                  :placeholder="i18n.t('auth.passwordPlaceholder')"
+                  :placeholder="i18n.t('form.host.passwordPlaceholder')"
                   aria-describedby="passwordHelp passwordValidation"
                   :type="passwordShown ? 'text' : 'password'"
                   class="form-control"
@@ -242,8 +242,8 @@ defineExpose({ show })
                   data-bs-placement="bottom"
                   data-bs-trigger="hover"
                   :data-bs-title="i18n.t('ui.text.showHidePassword')"
-                  v-bs
                   @click.prevent="() => (passwordShown = !passwordShown)"
+                  v-bs
                 >
                   <i class="fa-regular fa-eye"></i>
                 </button>
@@ -255,14 +255,14 @@ defineExpose({ show })
                   data-bs-placement="bottom"
                   data-bs-trigger="hover"
                   :data-bs-title="i18n.t('ui.text.copyPassword')"
-                  v-bs
                   @click="copyToast(passRef, i18n.t('ui.action.passwordCopied'))"
+                  v-bs
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
                 <div id="passwordValidation" class="invalid-feedback"></div>
               </div>
-              <div class="form-text visually-hidden" id="passwordHelp">{{ i18n.t('auth.passwordHelp') }}</div>
+              <div class="form-text visually-hidden" id="passwordHelp">{{ i18n.t('form.host.passwordHelp') }}</div>
             </form>
 
             <div v-if="showAlert" class="alert alert-warning text-center p-2 mb-2" role="alert">

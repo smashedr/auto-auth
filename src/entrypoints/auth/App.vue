@@ -249,7 +249,7 @@ onMounted(async () => {
               v-model="userRef"
               ref="usernameEl"
               id="username"
-              :placeholder="i18n.t('auth.usernamePlaceholder')"
+              :placeholder="i18n.t('form.host.usernamePlaceholder')"
               aria-describedby="usernameHelp"
               type="text"
               class="form-control"
@@ -258,7 +258,7 @@ onMounted(async () => {
               autofocus
             />
           </div>
-          <div class="form-text ms-2" id="usernameHelp">{{ i18n.t('auth.usernameHelp') }}</div>
+          <div class="form-text ms-2" id="usernameHelp">{{ i18n.t('form.host.usernameHelp') }}</div>
           <div class="form-check form-switch ms-2 mb-3">
             <input
               v-model="noUsername"
@@ -279,7 +279,7 @@ onMounted(async () => {
               v-model="passRef"
               ref="passwordEl"
               id="password"
-              :placeholder="i18n.t('auth.passwordPlaceholder')"
+              :placeholder="i18n.t('form.host.passwordPlaceholder')"
               aria-describedby="passwordHelp"
               :type="passwordShown ? 'text' : 'password'"
               class="form-control"
@@ -299,11 +299,12 @@ onMounted(async () => {
               data-class-on="btn-outline-warning"
               data-class-off="btn-outline-success"
               @click.prevent="() => (passwordShown = !passwordShown)"
+              v-bs
             >
               <i class="fa-regular fa-eye"></i>
             </button>
           </div>
-          <div class="form-text ms-2 mb-3" id="passwordHelp">{{ i18n.t('auth.passwordHelp') }}</div>
+          <div class="form-text ms-2 mb-3" id="passwordHelp">{{ i18n.t('form.host.passwordHelp') }}</div>
 
           <div class="form-check form-switch fs-4 mb-3">
             <input

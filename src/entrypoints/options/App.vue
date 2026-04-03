@@ -50,7 +50,7 @@ useTitle(i18n.t('options.title'))
         </div>
 
         <!--TODO: Update Trans-->
-        <HorizontalRule>{{ i18n.t('keyboard.shortcut') }}</HorizontalRule>
+        <HorizontalRule>{{ i18n.t('keyboard.shortcuts') }}</HorizontalRule>
         <KeyboardShortcuts />
 
         <HorizontalRule>{{ i18n.t('options.extension') }}</HorizontalRule>

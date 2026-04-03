@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Modal } from 'bootstrap'
 import { importCredentials } from '@/utils/creds.ts'
 
@@ -27,6 +27,15 @@ async function importText(event: Event) {
     if (e instanceof Error) invalidText.value = e.message
   }
 }
+
+onMounted(() => {
+  if (!modalEl.value) return
+  // const modal = Modal.getOrCreateInstance(modalEl.value)
+  // console.log('modal:', modal)
+  modalEl.value?.addEventListener('shown.bs.modal', () => {
+    textareaEl.value?.focus()
+  })
+})
 </script>
 
 <template>
