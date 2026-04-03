@@ -5,12 +5,10 @@ import BackgroundForm from '@/components/BackgroundForm.vue'
 
 withDefaults(
   defineProps<{
-    compact?: boolean // NOTE: Not Used
     show?: string[]
     switches?: string[]
   }>(),
   {
-    compact: false,
     show: () => ['switches', 'background'],
     switches: () => ['tempDisabled', 'ignoreProxy', 'defaultSave', 'confirmDelete', 'contextMenu', 'showUpdate'],
   },

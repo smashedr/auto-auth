@@ -14,6 +14,8 @@ ui:
     options: Options
     save: Save
 
+    addEdit: Added/Edited
+    importUpdate: Imported/Updated
     addCredentials: Add Credentials
     openPopup: Open Popup
     sidePanel: Side Panel
@@ -29,6 +31,7 @@ ui:
     ignored: Ignored
 
     host: Host
+    hosts: Hosts
     hostname: Hostname
     username: Username
     password: Password

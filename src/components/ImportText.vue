@@ -72,7 +72,7 @@ onMounted(() => {
               <textarea
                 ref="textareaEl"
                 class="form-control"
-                :class="invalidText ? 'is-invalid' : ''"
+                :class="{ 'is-invalid': invalidText }"
                 :placeholder="i18n.t('import.placeholder')"
                 id="import-textarea"
                 style="height: 100px"
