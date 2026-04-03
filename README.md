@@ -4,7 +4,6 @@
 [![Mozilla Add-on Rating](https://img.shields.io/amo/rating/auto-auth?logo=mozilla&logoColor=white)](https://addons.mozilla.org/addon/auto-auth)
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/gpoiggobidhogpmmlakahiaaegibnogm?label=chrome&logo=googlechrome)](https://chromewebstore.google.com/detail/gpoiggobidhogpmmlakahiaaegibnogm)
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/auto-auth?label=firefox&logo=firefox)](https://addons.mozilla.org/addon/auto-auth)
-[![Edge Add-on Version](https://img.shields.io/badge/dynamic/json?label=microsoft&logo=leptos&logoColor=2bc3d2&&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fnmndaimimedljcfgnnoahempcajdamej)](https://microsoftedge.microsoft.com/addons/detail/auto-auth/nmndaimimedljcfgnnoahempcajdamej)
 [![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/auto-auth?logo=github)](https://github.com/cssnr/auto-auth/releases/latest)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_auto-auth&metric=alert_status&label=quality)](https://sonarcloud.io/summary/overall?id=cssnr_auto-auth)
 [![Workflow Build](https://img.shields.io/github/actions/workflow/status/cssnr/auto-auth/build.yaml?logo=norton&logoColor=white&label=build)](https://github.com/cssnr/auto-auth/actions/workflows/build.yaml)

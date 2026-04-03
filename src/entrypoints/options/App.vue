@@ -2,6 +2,7 @@
 import { i18n } from '#imports'
 import { clickOpen } from '@/utils/extension.ts'
 import { useTitle } from '@/composables/useTitle.ts'
+import { useBackground } from '@/composables/useBackground.ts'
 import BackToTop from '@/components/BackToTop.vue'
 import PermsCheck from '@/components/PermsCheck.vue'
 import ToastAlerts from '@/components/ToastAlerts.vue'
@@ -13,6 +14,8 @@ import CopySupport from '@/components/CopySupport.vue'
 import HostsTable from '@/components/HostsTable.vue'
 
 console.debug('%c options/App.vue', 'color: Lime')
+
+useBackground()
 
 const manifest = chrome.runtime.getManifest()
 

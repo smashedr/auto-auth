@@ -16,6 +16,21 @@ body,
     height: 100%;
 }
 
+/*#app {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
 :root,
 [data-bs-theme='light'] {
     --bs-emphasis-bg: var(--bs-white);
@@ -34,8 +49,8 @@ body {
 
     overflow-y: scroll;
     /*noinspection CssUnknownTarget*/
-    background: url('https://picsum.photos/1920/1080') no-repeat center fixed;
-    background-size: cover;
+    /*background: url('https://picsum.photos/1920/1080') no-repeat center fixed;*/
+    /*background-size: cover;*/
 }
 
 #options-wrapper {

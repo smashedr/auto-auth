@@ -2,7 +2,6 @@
 import { onMounted } from 'vue'
 import { debounce } from '@/utils'
 import { useTitle } from '@/composables/useTitle.ts'
-import ButtonsList from '@/components/ButtonsList.vue'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import PanelHeader from '@/components/PanelHeader.vue'
@@ -39,7 +38,6 @@ useTitle('Panel')
   <main class="flex-grow-1 overflow-auto p-1">
     <div class="d-grid gap-2">
       <PermsCheck />
-      <ButtonsList :popup-button="false" :panel-button="false" :side-button="false" />
       <OptionsForm :close-window="true" :compact="true" :show="['switches', 'background']" />
     </div>
   </main>
