@@ -25,6 +25,8 @@
 <a title="Auto Auth" href="https://github.com/cssnr/auto-auth" target="_blank">
 <img alt="Auto Auth" align="right" width="128" height="auto" src="https://raw.githubusercontent.com/smashedr/auto-auth/master/src/assets/icon.svg"></a>
 
+- [Install](#install)
+  - [Test Instructions](#test-instructions)
 - [Development](#development)
 - [Contributing](#contributing)
 
@@ -32,9 +34,17 @@
 > Development version of [cssnr/auto-auth](https://github.com/cssnr/auto-auth).  
 > For progress, see the [Roadmap Issue](https://github.com/cssnr/auto-auth/issues/17).
 
-Note, this is functional but missing most options.
+This is almost complete and ready for testing. To use the new version see the [Test Instructions](#test-instructions)
 
-[![Latest Release](https://img.shields.io/github/v/release/smashedr/auto-auth?style=for-the-badge&logo=github&label=download%20latest%20release)](https://github.com/smashedr/auto-auth/releases/latest)
+<svg width="138" height="138" viewBox="-17.25 -17.25 172.5 172.5" version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
+  <circle r="59" cx="69" cy="69" fill="transparent" stroke="#e0e0e0" stroke-width="16px"></circle>
+  <circle r="59" cx="69" cy="69" stroke="#76e5b1" stroke-width="16px" stroke-linecap="round" stroke-dashoffset="37px" fill="transparent" stroke-dasharray="370.52000000000004px"></circle>
+  <text x="40px" y="87px" fill="#6bdba7" font-size="52px" font-weight="bold" style="transform:rotate(90deg) translate(0px, -134px)">90</text>
+</svg>
+
+[![Latest Release](https://img.shields.io/github/v/release/smashedr/auto-auth?style=for-the-badge&logo=github&color=brightgreen&label=download%20latest%20release)](https://github.com/smashedr/auto-auth/releases/latest)
+
+## Install
 
 First, Download a [GitHub release](https://github.com/smashedr/auto-auth/releases) for your browser.
 
@@ -43,6 +53,21 @@ Then, Install it locally by completing these additional steps.
 - [Mozilla Firefox](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/)
 - [Google Chrome](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)
 - [Microsoft Edge](https://learn.microsoft.com/en-us/microsoft-edge/extensions/getting-started/extension-sideloading#locally-installing-and-running-an-extension)
+
+### Test Instructions
+
+To test and use the development version without effecting the live version:
+
+1. Export your credentials from the live version.
+2. Disable the live version.
+3. [Install](#install) and enable the Development version.
+4. Import the credentials from step #1.
+5. Manually configure any other options.
+
+Done! You are now using the development version.
+
+If you run into any issues, you can switch back at any time by disabling this version and re-enabling the live version.
+Additionally, please [report the issue](https://github.com/smashedr/auto-auth/issues) you find if you have the time. Thanks!
 
 ## Development
 
