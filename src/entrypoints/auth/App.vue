@@ -173,7 +173,7 @@ onMounted(async () => {
             >{{ hostRef }}</kbd
           >
         </div>
-        <div class="text-center mb-2">
+        <div class="text-center mb-2 text-truncate">
           <i class="fa-regular fa-copy me-2" role="button" @click="copyToast(hrefRef, i18n.t('ui.action.urlCopied'))">
           </i>
           <a id="link" class="text-break" :href="hrefRef" target="_blank" rel="noopener">{{ hrefRef }}</a>
