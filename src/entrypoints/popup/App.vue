@@ -58,7 +58,7 @@ async function onSubmit(host: string, user: string, pass: string, original?: str
   await submitHost(host, user, pass, original)
 }
 
-const isBrowser = isFirefox ? '360px' : null
+const isBrowser = isFirefox ? '380px' : null
 const width = computed(() => (isMobile ? '100%' : isBrowser))
 console.log('width:', width.value)
 
