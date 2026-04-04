@@ -183,6 +183,7 @@ theme:
 option:
   # components/FormSwitch.vue
   toggle:
+    #label: Max Length 38
     siteIcon:
       label: Site Icon
       tip: Show Icon on Sites.
