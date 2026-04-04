@@ -72,7 +72,7 @@ useTitle(i18n.t('options.title'))
           >{{ i18n.t('options.copySupport') }}</CopySupport
         >
 
-        <hr class="mt-0" />
+        <hr />
 
         <PageFooter />
       </div>
