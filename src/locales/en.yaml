@@ -28,8 +28,9 @@ ui:
     urlCopied: URL Copied to Clipboard
 
   text:
-    ignored: Ignored
+    or: ou
 
+    ignored: Ignored
     host: Host
     hosts: Hosts
     hostname: Hostname
@@ -67,16 +68,17 @@ auth:
   getSupport: Get Support
   authFailed: Authentication Failed
   tryAgain: Please Try Again
-  useThe: Use the # ...Native Login
   noUsername: No Username
   saveLogin: Save Login
-
-  nativeLogin: Native Login
-  enableExtension: Enable the Extension
-  untilFixed: Until this is fixed you can enable # ...Save Login or
-  deleteSaved: delete the saved credentials
   credsNotSaved: Credentials will not be saved!
-  credsAlreadySaved: Credentials are already saved for this host and temporary credentials will have no effect!
+
+  credsAlreadySaved: Credentials are already saved and this option will not work!
+  untilFixed: To proceed you must # ...deleteSaved
+  deleteSaved: Delete Saved Credentials #... or saveLogin
+
+  useThe: Use the # ...Native Login
+  nativeLogin: Native Login #... or enableExtension
+  enableExtension: Enable the Extension
 
   ignore:
     confirmIgnore: Confirm Ignore

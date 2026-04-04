@@ -49,6 +49,11 @@ watch(
   { once: true },
 )
 
+watch(saveCreds, (newVal) => {
+  console.log('watch - saveCreds:', newVal)
+  saveCredsChange()
+})
+
 async function submitAuth(event: Event) {
   console.debug('submitAuth:', event)
   isProcessing.value = true
@@ -93,7 +98,7 @@ async function ignoreHost(_event: Event) {
   await chrome.tabs.update(tab.id, { url: hrefRef.value })
 }
 
-function saveCredsChange(event: Event) {
+function saveCredsChange(event?: Event) {
   console.debug('saveCredsChange:', event)
   sessionStorage.setItem(hostRef.value, saveCreds.value ? '1' : '0')
 }
@@ -168,10 +173,10 @@ onMounted(async () => {
             >{{ hostRef }}</kbd
           >
         </div>
-        <div class="text-center mb-2">
+        <div class="text-center mb-2 text-truncate">
           <i class="fa-regular fa-copy me-2" role="button" @click="copyToast(hrefRef, i18n.t('ui.action.urlCopied'))">
-          </i
-          ><a id="link" class="text-break" :href="hrefRef" target="_blank" rel="noopener">{{ hrefRef }}</a>
+          </i>
+          <a id="link" class="text-break" :href="hrefRef" target="_blank" rel="noopener">{{ hrefRef }}</a>
         </div>
 
         <div v-if="isFailure" id="fail" class="alert alert-warning text-center p-2 mb-2" role="alert">
@@ -262,18 +267,23 @@ onMounted(async () => {
           </div>
 
           <div v-if="!saveCreds && hasSavedCreds" class="alert alert-warning p-2">
-            {{ i18n.t('auth.credsAlreadySaved') }}
+            <i class="fa-solid fa-triangle-exclamation me-1"></i> {{ i18n.t('auth.credsAlreadySaved') }}
             <br />
-            {{ i18n.t('auth.untilFixed') }} <b>{{ i18n.t('auth.saveLogin') }}</b> or
+            {{ i18n.t('auth.untilFixed') }}
             <a class="alert-link" href="/options.html" @click.prevent="openOptions()">{{
               i18n.t('auth.deleteSaved')
-            }}</a
+            }}</a>
+            {{ i18n.t('ui.text.or') }}
+            <a class="alert-link" role="button" @click="saveCreds = true">{{ i18n.t('auth.saveLogin') }}</a
             >.
           </div>
 
           <div v-if="options.tempDisabled" class="alert alert-danger p-2">
-            <i class="fa-solid fa-triangle-exclamation me-1"></i> {{ i18n.t('ui.text.extensionDisabled') }}!
-            {{ i18n.t('auth.useThe') }} <a class="alert-link" :href="hrefRef">{{ i18n.t('auth.nativeLogin') }}</a> or
+            <i class="fa-solid fa-triangle-exclamation me-1"></i>
+            {{ i18n.t('ui.text.extensionDisabled') }}!
+            {{ i18n.t('auth.useThe') }}
+            <a class="alert-link" :href="hrefRef">{{ i18n.t('auth.nativeLogin') }}</a>
+            {{ i18n.t('ui.text.or') }}
             <a class="alert-link" role="button" @click.prevent="saveKeyValue('tempDisabled', false)">{{
               i18n.t('auth.enableExtension')
             }}</a
@@ -287,6 +297,7 @@ onMounted(async () => {
                 :class="{
                   'btn-danger': options.tempDisabled,
                   'btn-success': !options.tempDisabled,
+                  'btn-warning': !saveCreds && hasSavedCreds,
                   disabled: isProcessing,
                 }"
                 type="submit"
@@ -333,7 +344,6 @@ onMounted(async () => {
           >
         </div>
       </div>
-      <!-- auth-outer -->
     </div>
   </main>
 

@@ -8,6 +8,7 @@ import PanelHeader from '@/components/PanelHeader.vue'
 import PanelFooter from '@/components/PanelFooter.vue'
 import PermsCheck from '@/components/PermsCheck.vue'
 import OptionsForm from '@/components/OptionsForm.vue'
+import HostsTable from '@/components/HostsTable.vue'
 
 console.debug('%c popout/App.vue', 'color: Lime')
 
@@ -38,6 +39,7 @@ useTitle('Panel')
   <main class="flex-grow-1 overflow-auto p-1">
     <div class="d-grid gap-2">
       <PermsCheck />
+      <HostsTable />
       <OptionsForm :close-window="true" :compact="true" :show="['switches', 'background']" />
     </div>
   </main>

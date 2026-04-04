@@ -79,7 +79,7 @@ const computedHosts = computed(() =>
             ></a>
           </td>
           <td class="text-truncate">{{ host }}</td>
-          <td v-if="creds === 'ignored'" class="text-truncate text-warning fst-italic">
+          <td v-if="creds === 'ignored'" class="text-truncate text-warning fst-italic fw-bold">
             {{ i18n.t('ui.text.ignored') }}
           </td>
           <td v-else class="text-truncate" :class="{ 'text-muted fst-italic': !user }">{{ user || 'none' }}</td>
