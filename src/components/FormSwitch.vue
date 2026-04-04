@@ -9,18 +9,13 @@ const model = defineModel()
 const props = defineProps<{
   id: string
   label?: string
-  tooltip?: string | false
+  tooltip?: string
 }>()
 
-// const id = useId()
-
 const labelText = computed(() => props.label || i18n.t(`option.toggle.${props.id}.label` as any))
-// const tooltipText = computed(() => props.tooltip || i18n.t(`option.toggle.${props.id}.tip` as any))
-const tooltipText = computed(() =>
-  props.tooltip === false ? undefined : props.tooltip || i18n.t(`option.toggle.${props.id}.tip` as any),
-)
+const tooltipText = computed(() => props.tooltip || i18n.t(`option.toggle.${props.id}.tip` as any))
 
-function onChange(_e: Event) {
+function onChange(_event: Event) {
   saveKeyValue(props.id, model.value)
 }
 </script>

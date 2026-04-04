@@ -28,8 +28,9 @@ ui:
     urlCopied: URL Copiada para a Área de Transferência
 
   text:
-    ignored: Ignorado
+    or: or
 
+    ignored: Ignorado
     host: Host
     hosts: Hosts
     hostname: Nome do Host
@@ -67,16 +68,17 @@ auth:
   getSupport: Obter Suporte
   authFailed: Falha na Autenticação
   tryAgain: Por Favor, Tente Novamente
-  useThe: Use o # ...Native Login
   noUsername: Sem Nome de Usuário
   saveLogin: Salvar Login
-
-  nativeLogin: Login Nativo
-  enableExtension: Ativar a Extensão
-  untilFixed: Até que isso seja corrigido, você pode ativar o # ...Save Login ou
-  deleteSaved: excluir as credenciais salvas
   credsNotSaved: As credenciais não serão salvas!
+
   credsAlreadySaved: As credenciais já estão salvas para este host e as credenciais temporárias não terão efeito!
+  untilFixed: Até que isso seja corrigido, você pode ativar o # ...deleteSaved
+  deleteSaved: excluir as credenciais salvas #... or saveLogin
+
+  useThe: Use o # ...Native Login
+  nativeLogin: Login Nativo #... or enableExtension
+  enableExtension: Ativar a Extensão
 
   ignore:
     confirmIgnore: Confirmar Exclusão

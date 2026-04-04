@@ -2,9 +2,9 @@ import { getAppConfig } from '#imports'
 import { isFirefox } from '@/utils/system.ts'
 import { defaultOptions, getOptions } from '@/utils/options.ts'
 import { openExtPanel, openPopup, openSidePanel } from '@/utils/extension.ts'
-import { createContextMenus } from './menus.ts'
 import { onAuthRequired, webRequestFinished } from '@/entrypoints/background/auth.ts'
 import { updateIcon } from '@/entrypoints/background/icons.ts'
+import { createContextMenus } from './menus.ts'
 
 export default defineBackground(() => {
   console.log(`Loaded: %c${chrome.runtime.id}`, 'Color: Cyan')
