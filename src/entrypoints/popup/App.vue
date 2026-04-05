@@ -2,7 +2,7 @@
 import { i18n } from '#imports'
 import { computed, onMounted, ref } from 'vue'
 import { isFirefox, isMobile } from '@/utils/system.ts'
-import { submitHost } from '@/utils/index.ts'
+import { parseCreds, submitHost } from '@/utils/index.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { useOptions } from '@/composables/useOptions.ts'
@@ -45,9 +45,9 @@ async function deleteHost(host: string) {
     hostnameRef.value = ''
     usernameRef.value = ''
     savedCreds.value = ''
-    showToast(`Removed: ${host}`, 'success')
+    showToast(`${i18n.t('ui.text.removed')}: ${host}`, 'success')
   } catch (e) {
-    if (e instanceof Error) showToast(`Delete Host Error: ${e.message}`, 'danger')
+    if (e instanceof Error) showToast(`${i18n.t('ui.text.deleteHostError')}: ${e.message}`, 'danger')
   }
 }
 
@@ -74,7 +74,7 @@ onMounted(async () => {
   console.debug('creds:', creds)
   if (!creds) return
   savedCreds.value = creds
-  usernameRef.value = creds.split(':')[0]
+  usernameRef.value = parseCreds(creds)[0]
 
   console.log('hostnameRef.value:', hostnameRef.value)
   console.log('usernameRef.value:', usernameRef.value)

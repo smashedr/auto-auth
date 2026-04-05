@@ -29,6 +29,7 @@ ui:
 
   text:
     or: ou
+    removed: Removed
 
     ignored: Ignored
     host: Host
@@ -46,6 +47,13 @@ ui:
     releaseNotes: Release Notes
     requestFeature: Request Feature
 
+    addEditError: Add/Edit Error
+    importError: Import Error
+
+    deleteHostError: Delete Host Error
+    errorReadingFile: Error Reading File
+    errorLoadingPage: Error Loading Page
+    noCredentialsExport: No Credentials to Export
     showHidePassword: Show/Hide Password
     extensionDisabled: Extension Temporarily Disabled
     unsavedChanges: Unsaved Changes Detected.

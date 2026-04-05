@@ -2,7 +2,7 @@
 import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
 import { Modal } from 'bootstrap'
-import { copyToast } from '@/utils/index.ts'
+import { copyToast, parseCreds } from '@/utils/index.ts'
 
 withDefaults(
   defineProps<{
@@ -42,7 +42,7 @@ function show(host?: string, creds?: string) {
   if (host && creds) {
     originalHost.value = host
     hostRef.value = host
-    const [username, password] = creds.split(':')
+    const [username, password] = parseCreds(creds)
     userRef.value = username
     passRef.value = password
   } else {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
-import { copyToast } from '@/utils/index.ts'
+import { copyToast, parseCreds } from '@/utils/index.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { getSession, saveKeyValue } from '@/utils/options.ts'
 import { useBackground } from '@/composables/useBackground.ts'
@@ -82,7 +82,7 @@ async function submitAuth(event: Event) {
   if (!tab?.id) {
     // NOTE: Consider handling this better, but it should never happen...
     isProcessing.value = false
-    return showToast('Error Loading Page', 'danger')
+    return showToast(i18n.t('ui.text.errorLoadingPage'), 'danger')
   }
   await chrome.tabs.update(tab.id, { url: hrefRef.value })
 }
@@ -136,7 +136,7 @@ onMounted(async () => {
     console.log('if creds:', creds)
     hasSavedCreds.value = true
     if (creds !== 'ignored') {
-      const [username, password] = creds.split(':')
+      const [username, password] = parseCreds(creds)
       userRef.value = username
       console.log('usernameEl.value:', usernameEl.value)
       await nextTick()
@@ -145,7 +145,7 @@ onMounted(async () => {
     }
   } else if (hostRef.value in session) {
     console.log('else hostRef.value in session:', hostRef.value)
-    const [username, password] = session[hostRef.value].split(':')
+    const [username, password] = parseCreds(session[hostRef.value])
     userRef.value = username
     console.log('usernameEl.value:', usernameEl.value)
     await nextTick()

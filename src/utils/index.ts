@@ -17,6 +17,17 @@ export function copyToast(text: string, message: string, type = 'success') {
     .catch((e) => console.log(e))
 }
 
+export function parseCreds(creds: string): [string, string] {
+  console.log('parseCreds:', creds)
+  const i = creds.indexOf(':')
+  if (i === -1) return [creds, '']
+  const username = creds.slice(0, i)
+  const password = creds.slice(i + 1)
+  console.log('username:', username)
+  console.log('password:', password)
+  return [username, password]
+}
+
 // TODO: This does not belong here...
 export async function submitHost(
   host: string,
@@ -35,6 +46,7 @@ export async function submitHost(
 
     showToast(`${i18n.t('ui.action.addEdit')}: ${host}`, 'success')
   } catch (e) {
-    if (e instanceof Error) showToast(`Add/Edit Error: ${e.message}`, 'danger')
+    if (e instanceof Error)
+      showToast(`${i18n.t('ui.text.addEditError')}: ${e.message}`, 'danger')
   }
 }

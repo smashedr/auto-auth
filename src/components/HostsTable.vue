@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { submitHost } from '@/utils/index.ts'
+import { parseCreds, submitHost } from '@/utils/index.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import { useHosts } from '@/composables/useHosts.ts'
@@ -32,9 +32,9 @@ async function deleteHost(host: string) {
   console.log('creds:', creds) // NOTE: Check if validation is needed...
   try {
     await Hosts.delete(host)
-    showToast(`Removed: ${host}`, 'success')
+    showToast(`${i18n.t('ui.text.removed')}: ${host}`, 'success')
   } catch (e) {
-    if (e instanceof Error) showToast(`Delete Host Error: ${e.message}`, 'danger')
+    if (e instanceof Error) showToast(`${i18n.t('ui.text.deleteHostError')}: ${e.message}`, 'danger')
   }
 }
 
@@ -42,7 +42,7 @@ const computedHosts = computed(() =>
   Object.entries(hosts.value).map(([host, creds]) => ({
     host,
     creds,
-    user: creds.split(':')[0],
+    user: parseCreds(creds)[0],
   })),
 )
 </script>

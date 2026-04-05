@@ -29,6 +29,7 @@ ui:
 
   text:
     or: or
+    removed: Removido
 
     ignored: Ignorado
     host: Host
@@ -46,6 +47,13 @@ ui:
     releaseNotes: Notas de Versão
     requestFeature: Solicitar Funcionalidade
 
+    addEditError: Erro ao Adicionar/Editar
+    importError: Erro de Importação
+
+    deleteHostError: Erro ao Excluir Host
+    errorReadingFile: Erro ao Ler Arquivo
+    errorLoadingPage: Erro ao Carregar Página
+    noCredentialsExport: Sem Credenciais para Exportar
     showHidePassword: Mostrar/Ocultar Senha
     extensionDisabled: Extensão Temporariamente Desativada
     unsavedChanges: Alterações Não Salvas Detectadas.
