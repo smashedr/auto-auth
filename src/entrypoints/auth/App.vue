@@ -10,6 +10,7 @@ import { showToast } from '@/composables/useToast.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
+// import HostsOffscreen from '@/components/HostsOffscreen.vue'
 
 console.debug('%c auth/App.vue', 'color: SpringGreen')
 
@@ -389,6 +390,7 @@ onMounted(async () => {
     </div>
   </div>
 
+  <!--<HostsOffscreen />-->
   <OptionsOffscreen />
 
   <ToastAlerts />
