@@ -82,7 +82,7 @@ async function submitAuth(event: Event) {
   if (!tab?.id) {
     // NOTE: Consider handling this better, but it should never happen...
     isProcessing.value = false
-    return showToast('Error Loading Page', 'danger')
+    return showToast(i18n.t('ui.text.errorLoadingPage'), 'danger')
   }
   await chrome.tabs.update(tab.id, { url: hrefRef.value })
 }

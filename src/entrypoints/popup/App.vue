@@ -45,9 +45,9 @@ async function deleteHost(host: string) {
     hostnameRef.value = ''
     usernameRef.value = ''
     savedCreds.value = ''
-    showToast(`Removed: ${host}`, 'success')
+    showToast(`${i18n.t('ui.text.removed')}: ${host}`, 'success')
   } catch (e) {
-    if (e instanceof Error) showToast(`Delete Host Error: ${e.message}`, 'danger')
+    if (e instanceof Error) showToast(`${i18n.t('ui.text.deleteHostError')}: ${e.message}`, 'danger')
   }
 }
 

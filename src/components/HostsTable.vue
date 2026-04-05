@@ -32,9 +32,9 @@ async function deleteHost(host: string) {
   console.log('creds:', creds) // NOTE: Check if validation is needed...
   try {
     await Hosts.delete(host)
-    showToast(`Removed: ${host}`, 'success')
+    showToast(`${i18n.t('ui.text.removed')}: ${host}`, 'success')
   } catch (e) {
-    if (e instanceof Error) showToast(`Delete Host Error: ${e.message}`, 'danger')
+    if (e instanceof Error) showToast(`${i18n.t('ui.text.deleteHostError')}: ${e.message}`, 'danger')
   }
 }
 

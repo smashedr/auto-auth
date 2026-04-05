@@ -46,6 +46,7 @@ export async function submitHost(
 
     showToast(`${i18n.t('ui.action.addEdit')}: ${host}`, 'success')
   } catch (e) {
-    if (e instanceof Error) showToast(`Add/Edit Error: ${e.message}`, 'danger')
+    if (e instanceof Error)
+      showToast(`${i18n.t('ui.text.addEditError')}: ${e.message}`, 'danger')
   }
 }

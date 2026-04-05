@@ -1,5 +1,3 @@
-import { showToast } from '@/composables/useToast.ts'
-
 // NOTE: All functions below are ported from VanillaJS
 
 export function openSidePanel(close?: boolean) {
@@ -59,7 +57,6 @@ export async function openExtPanel(close = false) {
 
   if (!chrome.windows) {
     console.log('Browser does not support: chrome.windows')
-    showToast('Browser does not support windows', 'danger')
     return
   }
 

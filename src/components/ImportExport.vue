@@ -12,7 +12,7 @@ async function exportHosts(event: Event) {
   const hosts = await Hosts.all()
   // console.debug('hosts:', hosts)
   if (Object.keys(hosts).length === 0) {
-    return showToast('No Credentials to Export', 'warning')
+    return showToast(i18n.t('ui.text.noCredentialsExport'), 'warning')
   }
   const json = JSON.stringify(hosts, null, 2)
   textFileDownload('auto-auth-secrets.txt', json)
@@ -40,14 +40,14 @@ async function hostsInputChange(event: Event) {
   try {
     const target = event.currentTarget as HTMLInputElement
     const file = target.files?.item(0)
-    if (!file) return showToast(`Error Reading File.`, 'error')
+    if (!file) return showToast(i18n.t('ui.text.errorReadingFile'), 'error')
     const text = await file.text()
     const data = JSON.parse(text)
     console.debug('data:', data)
     await importCredentials(data)
   } catch (e) {
     console.log('Import error:', e)
-    if (e instanceof Error) showToast(`Import Error: ${e.message}`, 'warning')
+    if (e instanceof Error) showToast(`${i18n.t('ui.text.importError')}: ${e.message}`, 'warning')
   }
 }
 </script>
