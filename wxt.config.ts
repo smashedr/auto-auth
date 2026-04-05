@@ -111,7 +111,13 @@ export default defineConfig({
 
   // https://wxt.dev/guide/essentials/config/hooks
   hooks: {
+    'build:manifestGenerated': (wxt, manifest) => {
+      // console.log('build:manifestGenerated:', wxt.config.browser)
+      if (manifest.action) manifest.action.default_icon = manifest.icons
+      if (manifest.sidebar_action) manifest.sidebar_action.default_icon = manifest.icons
+    },
     'build:done': async (wxt) => {
+      // console.log('build:done:', wxt.config.outDir)
       await generateIcons(wxt.config.outDir)
     },
   },
