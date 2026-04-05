@@ -28,7 +28,7 @@ ui:
     urlCopied: URL Copied to Clipboard
 
   text:
-    or: ou
+    or: or
     removed: Removed
 
     ignored: Ignored

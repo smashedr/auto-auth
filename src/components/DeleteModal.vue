@@ -52,7 +52,7 @@ defineExpose({ show })
           </div>
           <div class="modal-footer p-2">
             <button type="button" class="btn btn-danger me-auto" @click.prevent="onDelete">
-              {{ i18n.t('ui.action.delete') }} <i class="fa-regular fa-trash-can ms-2"></i>
+              <i class="fa-regular fa-trash-can me-2"></i> {{ i18n.t('ui.action.delete') }}
             </button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               {{ i18n.t('ui.action.cancel') }}

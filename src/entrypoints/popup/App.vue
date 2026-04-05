@@ -53,9 +53,9 @@ async function deleteHost(host: string) {
 
 async function onSubmit(host: string, user: string, pass: string, original?: string) {
   console.log('popup/App.vue - onSubmit:', host, user, pass, original)
+  await submitHost(host, user, pass, original)
   savedCreds.value = `${user}:${pass}`
   usernameRef.value = user
-  await submitHost(host, user, pass, original)
 }
 
 const isBrowser = isFirefox ? '380px' : null
@@ -124,7 +124,7 @@ onMounted(async () => {
       <OptionsForm :close-window="true" :compact="true" :show="['switches']" class="px-1" />
 
       <a class="btn btn-outline-info w-100" href="/options.html" @click.prevent="openOptions(true)">
-        <i class="fa-solid fa-sliders me-1"></i> {{ i18n.t('popup.moreOptions') }}</a
+        <i class="fa-solid fa-sliders me-2"></i> {{ i18n.t('popup.moreOptions') }}</a
       >
     </div>
 

@@ -378,8 +378,8 @@ onMounted(async () => {
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary me-auto" @click.prevent="ignoreHost">
-            {{ i18n.t('auth.ignore.confirmIgnore') }}
+          <button type="button" class="btn btn-warning me-auto" @click.prevent="ignoreHost">
+            <i class="fa-solid fa-ban ms-2"></i> {{ i18n.t('auth.ignore.confirmIgnore') }}
           </button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             {{ i18n.t('ui.action.cancel') }}

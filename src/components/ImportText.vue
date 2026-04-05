@@ -108,7 +108,7 @@ onMounted(() => {
           </div>
           <div class="modal-footer">
             <button id="import-text" type="button" class="btn btn-success me-auto" @click.prevent="importClick">
-              {{ i18n.t('import.import') }} <i class="fa-solid fa-cloud-arrow-down ms-2"></i>
+              <i class="fa-solid fa-cloud-arrow-down me-2"></i> {{ i18n.t('import.import') }}
             </button>
             <button id="clear-import" type="button" class="btn btn-outline-warning" @click="clearClick">
               {{ i18n.t('ui.action.clear') }}

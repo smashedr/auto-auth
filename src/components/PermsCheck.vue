@@ -79,7 +79,7 @@ onUnmounted(() => {
         @click="grantPerms"
         v-bs
       >
-        <i class="fa-solid fa-check-double me-1"></i> {{ i18n.t('perms.grant.text') }}
+        <i class="fa-solid fa-check-double me-2"></i> {{ i18n.t('perms.grant.text') }}
       </button>
       <p v-if="showInfo" class="text-center mb-0">
         <a href="/permissions.html" target="_blank" @click.prevent="clickOpen($event, closeWindow)">{{
