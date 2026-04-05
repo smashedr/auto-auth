@@ -74,7 +74,7 @@ onMounted(async () => {
   console.debug('creds:', creds)
   if (!creds) return
   savedCreds.value = creds
-  usernameRef.value = creds.split(':')[0]
+  usernameRef.value = creds.split(':', 1)[0]
 
   console.log('hostnameRef.value:', hostnameRef.value)
   console.log('usernameRef.value:', usernameRef.value)

@@ -83,7 +83,7 @@ async function processRequest(
       return asyncCallback({})
     }
     console.log(`%cSending Saved Creds for: ${details.requestId}`, 'color: LimeGreen')
-    const [username, password] = creds.split(':')
+    const [username, password] = creds.split(':', 1)
     const authCredentials: chrome.webRequest.AuthCredentials = { username, password }
     // console.debug('authCredentials:', authCredentials)
     return asyncCallback({ authCredentials })
@@ -95,7 +95,7 @@ async function processRequest(
 
   if (url.host in session) {
     console.log(`%cSending Session Creds for: ${details.requestId}`, 'color: SpringGreen')
-    const [username, password] = session[url.host].split(':')
+    const [username, password] = session[url.host].split(':', 1)
     const authCredentials: chrome.webRequest.AuthCredentials = { username, password }
     // console.debug('authCredentials:', authCredentials)
     return asyncCallback({ authCredentials })

@@ -136,7 +136,7 @@ onMounted(async () => {
     console.log('if creds:', creds)
     hasSavedCreds.value = true
     if (creds !== 'ignored') {
-      const [username, password] = creds.split(':')
+      const [username, password] = creds.split(':', 1)
       userRef.value = username
       console.log('usernameEl.value:', usernameEl.value)
       await nextTick()
@@ -145,7 +145,7 @@ onMounted(async () => {
     }
   } else if (hostRef.value in session) {
     console.log('else hostRef.value in session:', hostRef.value)
-    const [username, password] = session[hostRef.value].split(':')
+    const [username, password] = session[hostRef.value].split(':', 1)
     userRef.value = username
     console.log('usernameEl.value:', usernameEl.value)
     await nextTick()

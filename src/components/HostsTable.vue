@@ -42,7 +42,7 @@ const computedHosts = computed(() =>
   Object.entries(hosts.value).map(([host, creds]) => ({
     host,
     creds,
-    user: creds.split(':')[0],
+    user: creds.split(':', 1)[0],
   })),
 )
 </script>

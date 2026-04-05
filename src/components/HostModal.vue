@@ -42,7 +42,7 @@ function show(host?: string, creds?: string) {
   if (host && creds) {
     originalHost.value = host
     hostRef.value = host
-    const [username, password] = creds.split(':')
+    const [username, password] = creds.split(':', 1)
     userRef.value = username
     passRef.value = password
   } else {

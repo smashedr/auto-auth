@@ -27,7 +27,11 @@ export async function importCredentials(data: any) {
     console.debug('Processing - %c AutoAuth/Native', 'color: SpringGreen')
     total = Object.keys(data).length
     for (const [key, value] of Object.entries(data)) {
-      // console.debug(`${key}:`, value)
+      // console.debug(`key: "${key}":`, value)
+      if (!key) {
+        console.debug(`No hostname for cres: ${value}`)
+        continue
+      }
       try {
         if (typeof value === 'object') {
           // AutoAuth (steffanschlein)
@@ -40,9 +44,10 @@ export async function importCredentials(data: any) {
           hosts[key] = `${username}:${password}`
         } else if (typeof value === 'string') {
           // Auto Auth (this extension)
-          const [username, password] = value.split(':')
-          if (value !== 'ignored' && (!username || !password)) {
-            console.debug(`${key}: missing username or password`)
+          // const [username, password] = value.split(':', 1)
+          const password = value.split(':', 1)[1]
+          if (value !== 'ignored' && !password) {
+            console.debug(`${key}: missing password`)
             continue
           }
           hosts[key] = value
