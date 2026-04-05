@@ -54,6 +54,7 @@ ui:
     errorReadingFile: Erro ao Ler Arquivo
     errorLoadingPage: Erro ao Carregar Página
     noCredentialsExport: Sem Credenciais para Exportar
+    noSavedCreds: Nenhuma Credencial Salva
     showHidePassword: Mostrar/Ocultar Senha
     extensionDisabled: Extensão Temporariamente Desativada
     unsavedChanges: Alterações Não Salvas Detectadas.

@@ -90,6 +90,9 @@ const computedHosts = computed(() =>
             ></a>
           </td>
         </tr>
+        <tr v-if="!computedHosts.length">
+          <td class="text-center text-warning-emphasis fst-italic" colspan="4">{{ i18n.t('ui.text.noSavedCreds') }}</td>
+        </tr>
       </tbody>
     </table>
   </div>
