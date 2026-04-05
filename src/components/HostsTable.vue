@@ -6,8 +6,16 @@ import { useHosts } from '@/composables/useHosts.ts'
 import { Hosts } from '@/utils/hosts.ts'
 import DeleteModal from '@/components/DeleteModal.vue'
 import HostModal from '@/components/HostModal.vue'
-import ImportText from '@/components/ImportText.vue'
 import ImportExport from '@/components/ImportExport.vue'
+
+withDefaults(
+  defineProps<{
+    showImport?: boolean
+  }>(),
+  {
+    showImport: true,
+  },
+)
 
 const options = useOptions()
 const hosts = useHosts()
@@ -48,19 +56,7 @@ const computedHosts = computed(() =>
 </script>
 
 <template>
-  <div class="d-flex gap-2 my-2">
-    <!--TODO: Add prop to make optional or make a component-->
-    <button class="btn btn-success" @click="hostModal?.show()">
-      <i class="fa-solid fa-table-cells-row-lock me-2"></i> {{ i18n.t('ui.action.addCredentials') }}
-    </button>
-
-    <!--TODO: Add prop to make optional-->
-    <!--TODO: Add fallthrough attributes-->
-    <ImportText />
-  </div>
-
-  <!--TODO: Add prop to make optional-->
-  <ImportExport class="my-2" />
+  <ImportExport v-if="showImport" />
 
   <div class="rounded rounded-3 overflow-hidden">
     <table id="history-table" class="table table-sm table-hover transparent-table" style="table-layout: fixed">

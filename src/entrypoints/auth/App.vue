@@ -234,7 +234,6 @@ onMounted(async () => {
               :class="passwordShown ? 'btn-warning' : 'btn-outline-success'"
               type="button"
               data-bs-toggle="tooltip"
-              data-show-hide="#password"
               tabindex="-1"
               data-bs-placement="bottom"
               data-bs-trigger="hover"

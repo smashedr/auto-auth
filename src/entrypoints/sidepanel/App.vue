@@ -6,6 +6,8 @@ import PanelFooter from '@/components/PanelFooter.vue'
 import PermsCheck from '@/components/PermsCheck.vue'
 import OptionsForm from '@/components/OptionsForm.vue'
 import HostsTable from '@/components/HostsTable.vue'
+import AddHostButton from '@/components/AddHostButton.vue'
+import ImportText from '@/components/ImportText.vue'
 
 console.debug('%c sidepanel/App.vue', 'color: Lime')
 </script>
@@ -18,6 +20,10 @@ console.debug('%c sidepanel/App.vue', 'color: Lime')
   <main class="flex-grow-1 overflow-auto p-1">
     <div class="d-grid gap-2">
       <PermsCheck />
+      <div>
+        <AddHostButton class="me-2 mb-2" />
+        <ImportText class="me-2 mb-2" />
+      </div>
       <HostsTable />
       <OptionsForm :close-window="true" :compact="true" :show="['switches', 'background']" />
     </div>
