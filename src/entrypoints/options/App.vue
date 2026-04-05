@@ -12,6 +12,8 @@ import PageFooter from '@/components/PageFooter.vue'
 import HorizontalRule from '@/components/HorizontalRule.vue'
 import CopySupport from '@/components/CopySupport.vue'
 import HostsTable from '@/components/HostsTable.vue'
+import ImportText from '@/components/ImportText.vue'
+import AddHostButton from '@/components/AddHostButton.vue'
 
 console.debug('%c options/App.vue', 'color: SpringGreen')
 
@@ -62,6 +64,12 @@ useTitle(i18n.t('options.title'))
         <PermsCheck :show-info="true" :show-remove="false" class="my-3" />
 
         <HorizontalRule>{{ i18n.t('options.savedCredentials') }}</HorizontalRule>
+
+        <div class="d-flex gap-2 my-2">
+          <AddHostButton />
+          <ImportText />
+        </div>
+
         <!--NOTE: Add fallthrough attributes-->
         <HostsTable />
 

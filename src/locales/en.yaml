@@ -54,6 +54,7 @@ ui:
     errorReadingFile: Error Reading File
     errorLoadingPage: Error Loading Page
     noCredentialsExport: No Credentials to Export
+    noSavedCreds: No Saved Credentials
     showHidePassword: Show/Hide Password
     extensionDisabled: Extension Temporarily Disabled
     unsavedChanges: Unsaved Changes Detected.
@@ -84,7 +85,7 @@ auth:
   untilFixed: To proceed you must # ...deleteSaved
   deleteSaved: Delete Saved Credentials #... or saveLogin
 
-  useThe: Use the # ...Native Login
+  useThe: Use the # ...nativeLogin
   nativeLogin: Native Login #... or enableExtension
   enableExtension: Enable the Extension
 
@@ -147,8 +148,8 @@ import:
   importCredentials: Import Credentials
   jsonImport: JSON Import
   placeholder: Paste text to import here...
-  formatSee: For data format, see the # ...Migration Guide
-  migrationGuide: Migration Guide # ...on GitHub
+  formatSee: For data format, see the # ...migrationGuide
+  migrationGuide: Migration Guide # ...onGithub
   onGithub: on GitHub
 
 background:

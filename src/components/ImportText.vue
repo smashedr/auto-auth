@@ -3,6 +3,10 @@ import { onMounted, ref } from 'vue'
 import { Modal } from 'bootstrap'
 import { importCredentials } from '@/utils/creds.ts'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const modalEl = ref<HTMLElement | null>(null)
 const textareaEl = ref<HTMLTextAreaElement | null>(null)
 const textRef = ref('')
@@ -48,7 +52,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#import-modal">
+  <button v-bind="$attrs" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#import-modal">
     <i class="fa-solid fa-align-left ms-1"></i> {{ i18n.t('import.importText') }}
   </button>
 

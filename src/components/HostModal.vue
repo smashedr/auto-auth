@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, useId } from 'vue'
 import { Modal } from 'bootstrap'
 import { copyToast, parseCreds } from '@/utils/index.ts'
 
@@ -12,6 +12,8 @@ withDefaults(
     compact: false,
   },
 )
+
+const id = useId()
 
 const modalEl = ref<HTMLElement | null>(null)
 const modal = ref<Modal | any | null>(null) // NOTE: Lazy Typing...
@@ -185,7 +187,7 @@ defineExpose({ show })
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="edit-modal-label">
+            <h1 class="modal-title fs-5" :id="`${id}-edit-modal-label`">
               {{ isAdding ? i18n.t('ui.action.add') : i18n.t('ui.action.edit') }} {{ i18n.t('ui.text.host') }}
             </h1>
             <button
@@ -197,17 +199,17 @@ defineExpose({ show })
             ></button>
           </div>
           <div class="modal-body">
-            <form id="edit-form" name="edit-form" class="mb-3" autocomplete="off" @submit.prevent="onSubmit">
-              <label for="hostname" class="form-label" :class="{ 'visually-hidden': compact }"
+            <form :id="`${id}-edit-form`" name="edit-form" class="mb-3" autocomplete="off" @submit.prevent="onSubmit">
+              <label :for="`${id}-hostname`" class="form-label" :class="{ 'visually-hidden': compact }"
                 ><i class="fa-solid fa-globe me-2"></i> {{ i18n.t('ui.text.hostname') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
                   v-model="hostRef"
                   ref="hostnameEl"
-                  id="hostname"
+                  :id="`${id}-hostname`"
                   :placeholder="i18n.t('form.host.hostnamePlaceholder')"
-                  aria-describedby="hostnameHelp hostnameValidation"
+                  :aria-describedby="`${id}-hostnameHelp hostnameValidation`"
                   type="text"
                   class="form-control"
                   :class="{ 'is-invalid': hostInvalid }"
@@ -229,20 +231,22 @@ defineExpose({ show })
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
-                <div id="hostnameValidation" class="invalid-feedback">{{ hostInvalid }}</div>
+                <div :id="`${id}-hostnameValidation`" class="invalid-feedback">{{ hostInvalid }}</div>
               </div>
-              <div class="form-text visually-hidden" id="hostnameHelp">{{ i18n.t('form.host.hostnameHelp') }}</div>
+              <div class="form-text visually-hidden" :id="`${id}-hostnameHelp`">
+                {{ i18n.t('form.host.hostnameHelp') }}
+              </div>
 
-              <label for="username" class="form-label" :class="{ 'visually-hidden': compact }"
+              <label :for="`${id}-username`" class="form-label" :class="{ 'visually-hidden': compact }"
                 ><i class="fa-solid fa-user me-2"></i> {{ i18n.t('ui.text.username') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
                   v-model="userRef"
                   ref="usernameEl"
-                  id="username"
+                  :id="`${id}-username`"
                   :placeholder="i18n.t('form.host.usernamePlaceholder')"
-                  aria-describedby="usernameHelp usernameValidation"
+                  :aria-describedby="`${id}-usernameHelp usernameValidation`"
                   type="text"
                   class="form-control"
                   autocomplete="off"
@@ -262,31 +266,33 @@ defineExpose({ show })
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
-                <div id="usernameValidation" class="invalid-feedback"></div>
+                <div :id="`${id}-usernameValidation`" class="invalid-feedback"></div>
               </div>
-              <div class="form-text visually-hidden" id="usernameHelp">{{ i18n.t('form.host.usernameHelp') }}</div>
+              <div class="form-text visually-hidden" :id="`${id}-usernameHelp`">
+                {{ i18n.t('form.host.usernameHelp') }}
+              </div>
               <div class="form-check form-switch ms-2 mb-3">
                 <input
                   v-model="noUsername"
                   class="form-check-input"
                   type="checkbox"
                   role="switch"
-                  id="usernameSwitch"
+                  :id="`${id}-usernameSwitch`"
                   tabindex="-1"
                 />
-                <label class="form-check-label" for="usernameSwitch">{{ i18n.t('auth.noUsername') }}</label>
+                <label class="form-check-label" :for="`${id}-usernameSwitch`">{{ i18n.t('auth.noUsername') }}</label>
               </div>
 
-              <label for="password" class="form-label" :class="{ 'visually-hidden': compact }"
+              <label :for="`${id}-password`" class="form-label" :class="{ 'visually-hidden': compact }"
                 ><i class="fa-solid fa-key me-2"></i> {{ i18n.t('ui.text.password') }}</label
               >
               <div class="input-group has-validation col-12 mb-3">
                 <input
                   v-model="passRef"
                   ref="passwordEl"
-                  id="password"
+                  :id="`${id}-password`"
                   :placeholder="i18n.t('form.host.passwordPlaceholder')"
-                  aria-describedby="passwordHelp passwordValidation"
+                  :aria-describedby="`${id}-passwordHelp passwordValidation`"
                   :type="passwordShown ? 'text' : 'password'"
                   class="form-control"
                   :class="{ 'is-invalid': passInvalid }"
@@ -300,7 +306,6 @@ defineExpose({ show })
                   :class="passwordShown ? 'btn-warning' : 'btn-outline-success'"
                   type="button"
                   data-bs-toggle="tooltip"
-                  data-show-hide="#password"
                   tabindex="-1"
                   data-bs-placement="bottom"
                   data-bs-trigger="hover"
@@ -323,9 +328,11 @@ defineExpose({ show })
                 >
                   <i class="fa-solid fa-copy"></i>
                 </button>
-                <div id="passwordValidation" class="invalid-feedback">{{ passInvalid }}</div>
+                <div :id="`${id}-passwordValidation`" class="invalid-feedback">{{ passInvalid }}</div>
               </div>
-              <div class="form-text visually-hidden" id="passwordHelp">{{ i18n.t('form.host.passwordHelp') }}</div>
+              <div class="form-text visually-hidden" :id="`${id}-passwordHelp`">
+                {{ i18n.t('form.host.passwordHelp') }}
+              </div>
             </form>
 
             <div v-if="showAlert" class="alert alert-warning text-center p-2 mb-2" role="alert">
@@ -334,7 +341,7 @@ defineExpose({ show })
           </div>
 
           <div class="modal-footer">
-            <button type="submit" form="edit-form" class="btn btn-success me-auto">
+            <button type="submit" :form="`${id}-edit-form`" class="btn btn-success me-auto">
               <i :class="isAdding ? 'fa-solid fa-square-plus' : 'fa-regular fa-floppy-disk me-2'"></i>
               {{ isAdding ? i18n.t('ui.action.add') : i18n.t('ui.action.save') }}
             </button>
