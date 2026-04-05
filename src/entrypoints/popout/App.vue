@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { debounce } from '@/utils'
+import { debounce } from '@/utils/index.ts'
 import { useTitle } from '@/composables/useTitle.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'

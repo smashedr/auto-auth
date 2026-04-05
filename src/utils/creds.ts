@@ -1,4 +1,5 @@
 import { i18n } from '#imports'
+import { parseCreds } from '@/utils/index.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { Hosts } from '@/utils/hosts.ts'
 
@@ -45,7 +46,7 @@ export async function importCredentials(data: any) {
         } else if (typeof value === 'string') {
           // Auto Auth (this extension)
           // const [username, password] = value.split(':', 1)
-          const password = value.split(':', 1)[1]
+          const password = parseCreds(value)[1]
           if (value !== 'ignored' && !password) {
             console.debug(`${key}: missing password`)
             continue

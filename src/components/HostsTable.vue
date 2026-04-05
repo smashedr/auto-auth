@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { submitHost } from '@/utils/index.ts'
+import { parseCreds, submitHost } from '@/utils/index.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import { useHosts } from '@/composables/useHosts.ts'
@@ -42,7 +42,7 @@ const computedHosts = computed(() =>
   Object.entries(hosts.value).map(([host, creds]) => ({
     host,
     creds,
-    user: creds.split(':', 1)[0],
+    user: parseCreds(creds)[0],
   })),
 )
 </script>
