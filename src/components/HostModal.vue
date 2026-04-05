@@ -2,7 +2,8 @@
 import { i18n } from '#imports'
 import { onMounted, ref, useId } from 'vue'
 import { Modal } from 'bootstrap'
-import { copyToast, parseCreds } from '@/utils/index.ts'
+import { copyToast } from '@/utils/index.ts'
+import { parseCreds } from '@/utils/creds.ts'
 
 withDefaults(
   defineProps<{

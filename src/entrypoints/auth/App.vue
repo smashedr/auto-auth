@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
-import { copyToast, parseCreds } from '@/utils/index.ts'
+import { copyToast } from '@/utils/index.ts'
+import { parseCreds } from '@/utils/creds.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { getSession, saveKeyValue } from '@/utils/options.ts'
 import { useBackground } from '@/composables/useBackground.ts'

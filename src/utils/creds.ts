@@ -1,5 +1,4 @@
 import { i18n } from '#imports'
-import { parseCreds } from '@/utils/index.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { Hosts } from '@/utils/hosts.ts'
 
@@ -78,4 +77,15 @@ function getHost(hostname: string) {
     throw new Error(`Invalid Hostname: ${hostname}`)
   }
   return url.host
+}
+
+export function parseCreds(creds: string): [string, string] {
+  console.log('parseCreds:', creds)
+  const i = creds.indexOf(':')
+  if (i === -1) return [creds, '']
+  const username = creds.slice(0, i)
+  const password = creds.slice(i + 1)
+  console.log('username:', username)
+  console.log('password:', password)
+  return [username, password]
 }

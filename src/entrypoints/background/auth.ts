@@ -1,4 +1,4 @@
-import { parseCreds } from '@/utils/index.ts'
+import { parseCreds } from '@/utils/creds.ts'
 import { getOptions, getSession } from '@/utils/options.ts'
 
 const pendingRequests: string[] = []

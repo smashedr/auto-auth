@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { parseCreds, submitHost } from '@/utils/index.ts'
+import { submitHost } from '@/utils/index.ts'
+import { parseCreds } from '@/utils/creds.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import { useHosts } from '@/composables/useHosts.ts'
