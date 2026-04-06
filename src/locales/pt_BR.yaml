@@ -143,6 +143,8 @@ import:
   exportAll: Exportar Tudo
   importFile: Importar Arquivo
   # components/ImportText.vue
+  errorJson: Erro ao Analisar JSON
+  errorUnknown: Erro Desconhecido
   import: Importar
   importText: Importar Texto
   importCredentials: Importar Credenciais

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
 import { Modal } from 'bootstrap'
 import { importCredentials } from '@/utils/creds.ts'
@@ -19,14 +20,26 @@ async function importClick(event: Event) {
     textareaEl.value?.focus()
     return
   }
+  let data
   try {
-    const data = JSON.parse(textRef.value)
+    data = JSON.parse(textRef.value)
+  } catch (e) {
+    console.debug('JSON.parse error:', e)
+    let err = i18n.t('import.errorJson')
+    if (e instanceof Error) err += `: ${e}`
+    invalidText.value = err
+    return
+  }
+  try {
+    // NOTE: This should NOT throw, but just in case...
     await importCredentials(data)
     if (modalEl.value) Modal.getInstance(modalEl.value)?.hide()
     textRef.value = ''
   } catch (e) {
-    console.debug('Import Error:', e)
-    if (e instanceof Error) invalidText.value = e.message
+    console.debug('importCredentials error:', e)
+    let err = i18n.t('import.errorUnknown')
+    if (e instanceof Error) err += `: ${e}`
+    invalidText.value = err
   }
 }
 

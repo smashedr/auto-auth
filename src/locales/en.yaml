@@ -143,6 +143,8 @@ import:
   exportAll: Export All
   importFile: Import File
   # components/ImportText.vue
+  errorJson: JSON Parse Error
+  errorUnknown: Unknown Error
   import: Import
   importText: Import Text
   importCredentials: Import Credentials
