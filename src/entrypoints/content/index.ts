@@ -15,14 +15,7 @@ export default defineContentScript({
       chrome.storage.sync.onChanged.addListener(onChanged)
     }
 
-    chrome.runtime
-      .sendMessage({ host: url.host })
-      .then(async (creds) => {
-        await processCreds(creds)
-      })
-      .catch((e) => {
-        if (e instanceof Error) console.error(e.message)
-      })
+    chrome.runtime.sendMessage({ host: url.host }).then(processCreds).catch(console.error)
   },
 })
 
@@ -55,11 +48,8 @@ async function processCreds(creds: any) {
 async function onChanged(changes: Record<string, any>) {
   console.debug('content/index.ts - onChanged:', changes)
   const items = changes[url.host[0]] // NOTE: Lazy Typing... in changes
-  // console.debug('items:', items)
   const oldCreds = items?.oldValue?.[url.host]
-  // console.debug('oldCreds:', oldCreds)
   const newCreds = items?.newValue?.[url.host]
-  // console.debug('newCreds:', newCreds)
   if (oldCreds !== newCreds) {
     await processCreds(newCreds)
   }
