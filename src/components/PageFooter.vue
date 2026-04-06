@@ -16,6 +16,7 @@ withDefaults(
 )
 
 const manifest = chrome.runtime.getManifest()
+const config = getAppConfig()
 </script>
 
 <template>
@@ -34,7 +35,7 @@ const manifest = chrome.runtime.getManifest()
       v-if="requestFeature"
       class="link-body-emphasis text-decoration-none d-inline-block"
       rel="noopener"
-      :href="`${manifest.homepage_url}/issues/new?template=1-feature.yaml`"
+      :href="`${config.githubUrl}/issues/new?template=1-feature.yaml`"
       target="_blank"
       @click.prevent="clickOpen"
       >{{ i18n.t('ui.text.requestFeature') }}</a
@@ -44,7 +45,7 @@ const manifest = chrome.runtime.getManifest()
       v-if="openIssue"
       class="link-body-emphasis text-decoration-none d-inline-block"
       rel="noopener"
-      :href="`${manifest.homepage_url}/issues`"
+      :href="`${config.githubUrl}/issues`"
       target="_blank"
       @click.prevent="clickOpen"
       >{{ i18n.t('ui.text.openIssue') }}</a

@@ -3,11 +3,13 @@ import { i18n } from '#imports'
 import { ref } from 'vue'
 import { Modal } from 'bootstrap'
 
+defineExpose({ show })
+
+const emit = defineEmits(['delete'])
+
 const modalEl = ref<HTMLElement | null>(null)
 
 const hostRef = ref('')
-
-const emit = defineEmits(['delete'])
 
 function show(host: string) {
   if (!modalEl.value) return console.error('no modalEl')
@@ -25,8 +27,6 @@ function onDelete() {
   emit('delete', hostRef.value)
   hide()
 }
-
-defineExpose({ show })
 </script>
 
 <template>

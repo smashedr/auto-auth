@@ -17,6 +17,10 @@ import HostModal from '@/components/HostModal.vue'
 
 console.debug('%c popup/App.vue', 'color: Lime')
 
+const isBrowser = isFirefox ? '380px' : null
+const width = computed(() => (isMobile ? '100%' : isBrowser))
+console.log('width:', width.value)
+
 const options = useOptions()
 
 const hostnameRef = ref('') // tab hostname
@@ -58,10 +62,6 @@ async function onSubmit(host: string, user: string, pass: string, original?: str
   savedCreds.value = `${user}:${pass}`
   usernameRef.value = user
 }
-
-const isBrowser = isFirefox ? '380px' : null
-const width = computed(() => (isMobile ? '100%' : isBrowser))
-console.log('width:', width.value)
 
 onMounted(async () => {
   console.log('%cMOUNTED: popup/App.vue', 'color: Lime')

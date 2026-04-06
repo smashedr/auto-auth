@@ -10,5 +10,5 @@ declare module 'wxt/utils/define-app-config' {
 }
 
 export default defineAppConfig({
-  githubUrl: 'https://github.com/cssnr/auto-auth',
+  githubUrl: 'https://github.com/smashedr/auto-auth', // TODO: UPDATE BEFORE MERGE
 })
