@@ -46,6 +46,7 @@ onMounted(() => {
 
 <template>
   <div>
+    <!--TODO: Verify keyboard shortcuts visibility on mobile-->
     <div class="rounded rounded-3 overflow-hidden">
       <table id="keyboard-shortcuts" class="table table-sm rounded table-borderless table-hover transparent-table mb-0">
         <caption class="visually-hidden">

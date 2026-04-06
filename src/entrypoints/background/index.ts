@@ -11,7 +11,7 @@ export default defineBackground(() => {
 
   chrome.runtime.onInstalled.addListener(onInstalled)
   chrome.runtime.onStartup.addListener(onStartup)
-  chrome.storage.onChanged.addListener(onChanged)
+  chrome.storage.sync.onChanged.addListener(onChanged)
   chrome.runtime.onMessage.addListener(onMessage)
   chrome.commands?.onCommand.addListener(onCommand)
   chrome.contextMenus?.onClicked.addListener(onClicked)
@@ -57,9 +57,7 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
 
   const options = await setDefaultOptions(defaultOptions)
   console.debug('options:', options)
-
   updateIcon(options).catch(console.warn)
-
   if (options.contextMenu) createContextMenus()
 
   const config = getAppConfig()
@@ -68,8 +66,7 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
   chrome.runtime.setUninstallURL(`${config.githubUrl}/issues`).catch(console.warn)
 
   if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-    // await chrome.runtime.openOptionsPage()
-    // const hasPerms = await checkPerms(manifest)
+    // NOTE: origins defined: background/icons.ts, components/PermsCheck.vue
     const hasPerms = await chrome.permissions.contains({
       origins: manifest.host_permissions,
     })
@@ -106,25 +103,28 @@ async function onStartup() {
   }
 }
 
-function onChanged(changes: object, namespace: string) {
-  // console.debug('background/index.ts - onChanged:', changes, namespace)
-  for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
-    if (namespace === 'sync' && key === 'options' && oldValue && newValue) {
-      if (oldValue.contextMenu !== newValue.contextMenu) {
-        if (newValue?.contextMenu) {
-          console.log('%c Enabled contextMenu...', 'color: Lime')
-          createContextMenus()
-        } else {
-          console.log('%c Disabled contextMenu...', 'color: OrangeRed')
-          chrome.contextMenus?.removeAll().catch(console.warn)
-        }
-      }
+function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
+  console.log('%c background/index.ts - onChanged:', 'color: Cyan', changes)
+  // process and type options
+  const oldValue = changes.options?.oldValue as Options | undefined
+  const newValue = changes.options?.newValue as Options | undefined
+  // if (!oldValue || !newValue) return console.log('missing oldValue or newValue')
+  if (!oldValue) return console.log('onChanged: missing options oldValue')
+  if (!newValue) return console.warn('onChanged: missing options newValue')
 
-      if (oldValue.tempDisabled !== newValue.tempDisabled) {
-        console.debug('%c tempDisabled:', 'color: Yellow', newValue.tempDisabled)
-        updateIcon(newValue).catch(console.warn)
-      }
+  if (oldValue?.contextMenu !== newValue.contextMenu) {
+    if (newValue.contextMenu) {
+      console.log('%c Enabled contextMenu...', 'color: Lime')
+      createContextMenus()
+    } else {
+      console.log('%c Disabled contextMenu...', 'color: OrangeRed')
+      chrome.contextMenus?.removeAll().catch(console.warn)
     }
+  }
+
+  if (oldValue.tempDisabled !== newValue.tempDisabled) {
+    console.debug('%c Toggle tempDisabled:', 'color: Yellow', newValue.tempDisabled)
+    updateIcon(newValue).catch(console.warn)
   }
 }
 

@@ -67,34 +67,36 @@ export async function openExtPanel(close = false) {
   ])
   console.debug('local:', local)
 
-  const lastPanelID = local.lastPanelID as number
+  const lastPanelID = local.lastPanelID as number | undefined
   console.debug('lastPanelID:', lastPanelID)
 
   try {
-    const panel = await chrome.windows.get(lastPanelID)
-    // console.debug('panel', panel)
-    console.debug('panel?.id', panel?.id)
-    if (panel) {
-      const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
-      // console.debug('tabs:', tabs)
-      console.debug('tabs[0]?.windowId:', tabs[0]?.windowId)
-      if (panel.id != tabs[0]?.windowId) {
-        console.debug('%c Window found:', 'color: SpringGreen', panel.id)
-        await chrome.windows.update(lastPanelID, { focused: true })
-        if (close) window.close()
-        return
+    if (lastPanelID) {
+      const panel = await chrome.windows.get(lastPanelID)
+      // console.debug('panel', panel)
+      console.debug('panel?.id', panel?.id)
+      if (panel) {
+        const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
+        // console.debug('tabs:', tabs)
+        console.debug('tabs[0]?.windowId:', tabs[0]?.windowId)
+        if (panel.id != tabs[0]?.windowId) {
+          console.debug('%c Window found:', 'color: SpringGreen', panel.id)
+          await chrome.windows.update(lastPanelID, { focused: true })
+          if (close) window.close()
+          return
+        }
       }
     }
   } catch (e) {
     console.log(e)
   }
 
-  const panelWidth = local.panelWidth as number
+  const panelWidth = local.panelWidth as number | undefined
   console.debug('panelWidth:', panelWidth)
-  const panelHeight = local.panelHeight as number
+  const panelHeight = local.panelHeight as number | undefined
   console.debug('panelHeight:', panelHeight)
-  const width = panelWidth || defaultWidth
-  const height = panelHeight || defaultHeight
+  const width = panelWidth || defaultWidth // NOSONAR
+  const height = panelHeight || defaultHeight // NOSONAR
   console.debug(`width, height:`, width, height)
   const url = chrome.runtime.getURL(panelPath)
   console.debug('url:', url)
@@ -136,11 +138,4 @@ export function clickOpen(e: Event, close = false) {
   activateOrOpen(url).then(() => {
     if (close || target.dataset.close === 'true') window.close()
   })
-}
-
-export async function hasPermissions() {
-  const manifest = chrome.runtime.getManifest()
-  const host_permissions = manifest.host_permissions
-  console.debug('hasPermissions - host_permissions:', host_permissions)
-  return await chrome.permissions.contains({ origins: host_permissions })
 }
