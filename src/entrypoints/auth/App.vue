@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { i18n } from '#imports'
+import { i18n, getAppConfig } from '#imports'
 import { onMounted, ref } from 'vue'
 import { copyToast } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
@@ -11,7 +11,6 @@ import { showToast } from '@/composables/useToast.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
-// import HostsOffscreen from '@/components/HostsOffscreen.vue'
 
 console.debug('%c auth/App.vue', 'color: SpringGreen')
 

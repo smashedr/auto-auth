@@ -24,7 +24,7 @@ withDefaults(
 )
 
 const manifest = chrome.runtime.getManifest()
-console.log('manifest:', manifest)
+const config = getAppConfig()
 </script>
 
 <template>
@@ -46,7 +46,7 @@ console.log('manifest:', manifest)
         <a
           :title="i18n.t('ui.text.releaseNotes')"
           class="link-body-emphasis text-decoration-none small ms-1"
-          :href="`${manifest.homepage_url}/releases/tag/${manifest.version}`"
+          :href="`${config.githubUrl}/releases/tag/${manifest.version}`"
           target="_blank"
           @click.prevent="clickOpen($event, closeWindow)"
         >

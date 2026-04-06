@@ -71,7 +71,7 @@ export default defineConfig({
       short_name: '__MSG_short_name__',
       description: '__MSG_description__',
 
-      homepage_url: 'https://github.com/cssnr/auto-auth',
+      homepage_url: 'https://github.com/smashedr/auto-auth', // TODO: UPDATE BEFORE MERGE
       permissions: ['contextMenus', 'storage', 'webRequest', 'webRequestAuthProvider'],
       host_permissions: ['*://*/*'],
 
@@ -98,7 +98,7 @@ export default defineConfig({
         ? {
             browser_specific_settings: {
               gecko: {
-                id: 'auto-auth-dev@cssnr.com', // TODO: Update On Merge
+                id: 'auto-auth-dev@cssnr.com', // TODO: UPDATE BEFORE MERGE
                 strict_min_version: '128.0', // webRequest.onAuthRequired asyncBlocking
                 data_collection_permissions: { required: ['none'] },
               },

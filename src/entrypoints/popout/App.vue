@@ -16,6 +16,8 @@ import HorizontalRule from '@/components/HorizontalRule.vue'
 
 console.debug('%c popout/App.vue', 'color: Lime')
 
+useTitle('Panel')
+
 async function windowResize() {
   const size = { panelWidth: window.outerWidth, panelHeight: window.outerHeight }
   console.debug('windowResize:', size)
@@ -31,8 +33,6 @@ onMounted(() => {
     })
   })
 })
-
-useTitle('Panel')
 </script>
 
 <template>

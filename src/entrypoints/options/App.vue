@@ -17,11 +17,12 @@ import AddHostButton from '@/components/AddHostButton.vue'
 
 console.debug('%c options/App.vue', 'color: SpringGreen')
 
+useTitle(i18n.t('options.title'))
+
 useBackground()
 
 const manifest = chrome.runtime.getManifest()
-
-useTitle(i18n.t('options.title'))
+const config = getAppConfig()
 </script>
 
 <template>
@@ -44,7 +45,7 @@ useTitle(i18n.t('options.title'))
             <a
               class="link-body-emphasis text-decoration-none small"
               :title="i18n.t('ui.text.releaseNotes')"
-              :href="`${manifest.homepage_url}/releases/tag/${manifest.version}`"
+              :href="`${config.githubUrl}/releases/tag/${manifest.version}`"
               target="_blank"
               rel="nofollow"
               @click.prevent="clickOpen"

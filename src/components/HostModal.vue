@@ -14,6 +14,10 @@ withDefaults(
   },
 )
 
+defineExpose({ show })
+
+const emit = defineEmits(['submit'])
+
 const id = useId()
 
 const modalEl = ref<HTMLElement | null>(null)
@@ -36,8 +40,6 @@ const unsavedChanges = ref(false)
 const showAlert = ref(false)
 const isAdding = ref(false)
 const noUsername = ref(false)
-
-const emit = defineEmits(['submit'])
 
 function show(host?: string, creds?: string) {
   if (!modalEl.value) return console.error('no modalEl')
@@ -178,8 +180,6 @@ onMounted(() => {
     modal.value._config.backdrop = true
   })
 })
-
-defineExpose({ show })
 </script>
 
 <template>

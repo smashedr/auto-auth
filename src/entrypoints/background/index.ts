@@ -33,15 +33,6 @@ export default defineBackground(() => {
   })
 })
 
-// async function setUninstallURL() {
-//   const manifest = chrome.runtime.getManifest()
-//   if (!manifest.homepage_url) return console.warn('No manifest.homepage_url')
-//   const url = new URL(manifest.homepage_url)
-//   url.pathname = '/uninstall/'
-//   url.searchParams.append('version', manifest.version)
-//   await chrome.runtime.setUninstallURL(url.href)
-// }
-
 async function setDefaultOptions(defaultOptions: object) {
   console.log('setDefaultOptions', defaultOptions)
   const options = await getOptions()
@@ -72,12 +63,9 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
   if (options.contextMenu) createContextMenus()
 
   const config = getAppConfig()
-  console.log('config:', config)
-
-  await chrome.runtime.setUninstallURL(`${config.githubUrl}/issues`)
-
   const manifest = chrome.runtime.getManifest()
-  console.debug('manifest:', manifest)
+
+  chrome.runtime.setUninstallURL(`${config.githubUrl}/issues`).catch(console.warn)
 
   if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
     // await chrome.runtime.openOptionsPage()
@@ -95,7 +83,7 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
   } else if (details.reason === chrome.runtime.OnInstalledReason.UPDATE) {
     if (options.showUpdate) {
       if (manifest.version !== details.previousVersion) {
-        const url = `${manifest.homepage_url}/releases/tag/${manifest.version}`
+        const url = `${config.githubUrl}/releases/tag/${manifest.version}`
         await chrome.tabs.create({ active: false, url })
       }
     }
@@ -113,10 +101,8 @@ async function onStartup() {
     console.log('Firefox Startup Workarounds')
     // NOTE: Confirm these checks are still necessary...
     if (options.contextMenu) createContextMenus()
-
-    const manifest = chrome.runtime.getManifest()
-    console.debug('manifest:', manifest)
-    await chrome.runtime.setUninstallURL(`${manifest.homepage_url}/issues`)
+    const config = getAppConfig()
+    chrome.runtime.setUninstallURL(`${config.githubUrl}/issues`).catch(console.warn)
   }
 }
 
