@@ -80,12 +80,12 @@ function getHost(hostname: string) {
 }
 
 export function parseCreds(creds: string): [string, string] {
-  console.log('parseCreds:', creds)
+  // console.log('parseCreds:', creds)
   const i = creds.indexOf(':')
   if (i === -1) return [creds, '']
   const username = creds.slice(0, i)
   const password = creds.slice(i + 1)
-  console.log('username:', username)
-  console.log('password:', password)
+  // console.log('username:', username)
+  // console.log('password:', password)
   return [username, password]
 }

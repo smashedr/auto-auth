@@ -57,9 +57,7 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
 
   const options = await setDefaultOptions(defaultOptions)
   console.debug('options:', options)
-
   updateIcon(options).catch(console.warn)
-
   if (options.contextMenu) createContextMenus()
 
   const config = getAppConfig()
@@ -68,8 +66,7 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
   chrome.runtime.setUninstallURL(`${config.githubUrl}/issues`).catch(console.warn)
 
   if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-    // await chrome.runtime.openOptionsPage()
-    // const hasPerms = await checkPerms(manifest)
+    // NOTE: origins are also defined in components/PermsCheck.vue
     const hasPerms = await chrome.permissions.contains({
       origins: manifest.host_permissions,
     })

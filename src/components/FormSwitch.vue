@@ -21,6 +21,7 @@ function onChange(_event: Event) {
 </script>
 
 <template>
+  <!--TODO: The switch classes may need an additional div wrapper due to padding/margin-->
   <div class="form-check form-switch">
     <input v-model="model" :id="id" @change="onChange" class="form-check-input" type="checkbox" role="switch" />
     <label class="form-check-label" :for="id">{{ labelText }}</label>

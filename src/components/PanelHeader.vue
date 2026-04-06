@@ -40,7 +40,7 @@ const config = getAppConfig()
           target="_blank"
           @click.prevent="clickOpen($event, closeWindow)"
         >
-          <img :src="'/icons/32.png'" alt="L" class="mb-1" style="height: 1.1em" />
+          <img src="@/assets/icon.svg" alt="L" class="mb-1" style="height: 1.1em" />
           {{ manifest.name }}</a
         >
         <a

@@ -4,7 +4,8 @@ import { getOptions } from '@/utils/options.ts'
 
 function setBackground(options: Options) {
   // NOTE: Copied from VanillaJS. Refactor this method...
-  console.log('setBackground: options.radioBackground:', options.radioBackground)
+  console.log('useBackground.ts - setBackground:', options)
+
   const video = document.querySelector('video')
   console.log('video:', video)
   if (!video) return console.error('no video element') // NOTE: Handle Error
@@ -24,26 +25,24 @@ function setBackground(options: Options) {
   }
 }
 
-async function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
-  console.log('composables/useBackground.ts - onChanged:', changes)
-  const records = changes as Record<string, any> // NOTE: Lazy Typing...
-  // console.debug('options:', records.options)
-  const optionChange = records.options
-  if (!optionChange?.oldValue || !optionChange?.newValue) return
-  // console.debug('oldValue:', optionChange.oldValue)
-  // console.debug('newValue:', optionChange.newValue)
+async function onChanged(changes: Record<string, any>) {
+  // console.log('useBackground - onChanged:', changes)
+  const items = changes.options // NOTE: Lazy Typing...
+  // console.log('items:', items)
+  if (!items?.oldValue || !items?.newValue) return
   if (
-    optionChange.oldValue.radioBackground !== optionChange.newValue.radioBackground ||
-    optionChange.oldValue.pictureURL !== optionChange.newValue.pictureURL ||
-    optionChange.oldValue.videoURL !== optionChange.newValue.videoURL
+    items.oldValue.radioBackground !== items.newValue.radioBackground ||
+    items.oldValue.pictureURL !== items.newValue.pictureURL ||
+    items.oldValue.videoURL !== items.newValue.videoURL
   ) {
     console.log('%c Background Option Change Detected.', 'color: Yellow')
-    setBackground(optionChange.newValue)
+    setBackground(items.newValue)
   }
 }
 
-// export function useBackground(options: Ref<Options | null>) {
 export function useBackground() {
+  console.debug('%cLOADED composables/useBackground.ts', 'color: Cyan')
+
   // watch(
   //   options,
   //   (opts) => {
@@ -58,7 +57,6 @@ export function useBackground() {
   }
 
   onMounted(async () => {
-    console.log('composables/useBackground.ts - onMounted')
     const options = await getOptions()
     setBackground(options)
   })
