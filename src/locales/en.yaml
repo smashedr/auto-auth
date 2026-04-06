@@ -97,8 +97,9 @@ auth:
 
 popup:
   # popup/App.vue
-  editCreds: Edit Credentials
   deleteCreds: Delete Credentials
+  editCreds: Edit Credentials
+  hostIgnored: Host Ignored
   moreOptions: More Options
   noAccess: No Access to the Current Tab.
   noSaved: No Saved Credentials Found.
@@ -121,8 +122,10 @@ options:
 
 content:
   # content/index.ts
-  on: On
-  off: Off
+  badge:
+    # Browser Extension Badge Text. Max Visible Characters: 3-4
+    on: On
+    off: Off
 
 ctx:
   # background/menus.ts

@@ -33,13 +33,13 @@ async function processCreds(creds: any) {
     if (creds === 'ignored') {
       console.debug('%cSite is currently ignored.', 'color: Yellow')
       await chrome.runtime.sendMessage({
-        badgeText: i18n.t('content.off'),
+        badgeText: i18n.t('content.badge.off'),
         badgeColor: 'yellow',
       })
     } else {
       console.debug('%cFound credentials for site.', 'color: LimeGreen')
       await chrome.runtime.sendMessage({
-        badgeText: i18n.t('content.on'),
+        badgeText: i18n.t('content.badge.on'),
         badgeColor: 'green',
       })
     }
