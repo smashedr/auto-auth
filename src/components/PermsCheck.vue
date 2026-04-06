@@ -41,6 +41,7 @@ async function grantPerms(event: Event) {
 
 async function revokePerms(event: Event) {
   console.debug('revokePerms:', event)
+  // NOTE: This was modified to remove origins and not permissions...
   const permissions = await chrome.permissions.getAll()
   console.debug('permissions:', permissions)
   try {
