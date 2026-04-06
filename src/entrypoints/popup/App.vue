@@ -103,7 +103,7 @@ onMounted(async () => {
         >
           {{ i18n.t('ui.text.username') }}:
           <span class="fw-bold" :class="savedCreds === 'ignored' ? 'text-warning-emphasis' : 'text-success-emphasis'">{{
-            savedCreds === 'ignored' ? 'Host Ignored' : usernameRef
+            savedCreds === 'ignored' ? i18n.t('popup.hostIgnored') : usernameRef
           }}</span>
         </div>
 
