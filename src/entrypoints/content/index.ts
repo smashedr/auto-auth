@@ -54,7 +54,7 @@ async function processCreds(creds: any) {
 
 async function onChanged(changes: Record<string, any>) {
   console.debug('content/index.ts - onChanged:', changes)
-  const items = changes[url.host[0]]
+  const items = changes[url.host[0]] // NOTE: Lazy Typing... in changes
   // console.debug('items:', items)
   const oldCreds = items?.oldValue?.[url.host]
   // console.debug('oldCreds:', oldCreds)
