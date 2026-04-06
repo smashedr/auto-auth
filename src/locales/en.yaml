@@ -106,7 +106,7 @@ popup:
 permissions:
   # permissions/App.vue
   title: Permissions
-  reason: To demonstrate the permissions check, host permissions are required.
+  reason: To intercept authentication requests, hosts permissions are required.
 
 options:
   # options/App.vue
@@ -193,24 +193,21 @@ option:
   # components/FormSwitch.vue
   toggle:
     #label: Max Length 38
-    siteIcon:
-      label: Site Icon
-      tip: Show Icon on Sites.
     contextMenu:
       label: Show Right-Click Context Menu
-      tip: Show context menu on right click.
+      tip: Show context menu on right click menu.
     showUpdate:
       label: Show Release Notes on Update
-      tip: Show update notifications.
+      tip: Show the release notes on version updates.
     tempDisabled:
       label: Temporarily Disable Extension
-      tip: Temporarily Disable the Extension for Debugging.
+      tip: Temporarily disable the extension for debugging.
     ignoreProxy:
       label: Ignore Proxy Authentication
-      tip: Ignore HTTP 407 Proxy Auth Required Responses.
+      tip: Ignore HTTP 407 Proxy Auth Required responses.
     defaultSave:
       label: Save Authentication by Default
-      tip: Save Login Enabled by Default.
+      tip: Enable the Save Login switch by default.
     confirmDelete:
       label: Show Confirmation on Delete
-      tip: Show Confirmation Dialog on Delete.
+      tip: Show confirmation dialog when deleting items.

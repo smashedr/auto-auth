@@ -193,9 +193,6 @@ option:
   # components/FormSwitch.vue
   toggle:
     #label: Max Length 38
-    siteIcon:
-      label: Ícone do Site
-      tip: Mostrar ícone nos sites.
     contextMenu:
       label: Menu de Contexto ao Clicar Direito
       tip: Mostrar menu de contexto ao clicar com o botão direito.
