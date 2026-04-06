@@ -25,7 +25,7 @@ const props = withDefaults(
 const hasPerms = ref(true)
 
 const manifest = chrome.runtime.getManifest()
-// TODO: Verify permissions check in background/index.ts
+// NOTE: origins defined: background/index.ts, background/icons.ts
 const origins = manifest.host_permissions
 console.debug('PermsCheck.vue - origins:', origins)
 

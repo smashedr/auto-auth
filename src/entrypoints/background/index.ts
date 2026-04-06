@@ -66,7 +66,7 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
   chrome.runtime.setUninstallURL(`${config.githubUrl}/issues`).catch(console.warn)
 
   if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-    // NOTE: origins are also defined in components/PermsCheck.vue
+    // NOTE: origins defined: background/icons.ts, components/PermsCheck.vue
     const hasPerms = await chrome.permissions.contains({
       origins: manifest.host_permissions,
     })
