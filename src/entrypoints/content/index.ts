@@ -15,14 +15,7 @@ export default defineContentScript({
       chrome.storage.sync.onChanged.addListener(onChanged)
     }
 
-    chrome.runtime
-      .sendMessage({ host: url.host })
-      .then(async (creds) => {
-        await processCreds(creds)
-      })
-      .catch((e) => {
-        if (e instanceof Error) console.error(e.message)
-      })
+    chrome.runtime.sendMessage({ host: url.host }).then(processCreds).catch(console.error)
   },
 })
 
@@ -52,19 +45,11 @@ async function processCreds(creds: any) {
   }
 }
 
-async function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
-  // console.debug('content/index.ts - onChanged:', changes)
-  const records = changes as Record<string, any> // NOTE: Lazy Typing...
-  // console.debug('records:', records)
-  const items = records[url.host[0]]
-  // console.debug('items:', items)
-  if (!items?.oldValue || !items?.newValue) return
-
-  const oldCreds = items.oldValue[url.host]
-  console.debug('oldCreds:', oldCreds)
-  const newCreds = items.newValue[url.host]
-  console.debug('newCreds:', newCreds)
-
+async function onChanged(changes: Record<string, any>) {
+  console.debug('content/index.ts - onChanged:', changes)
+  const items = changes[url.host[0]] // NOTE: Lazy Typing... in changes
+  const oldCreds = items?.oldValue?.[url.host]
+  const newCreds = items?.newValue?.[url.host]
   if (oldCreds !== newCreds) {
     await processCreds(newCreds)
   }
