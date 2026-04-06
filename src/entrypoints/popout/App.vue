@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { i18n } from '#imports'
 import { onMounted } from 'vue'
 import { debounce } from '@/utils/index.ts'
 import { useTitle } from '@/composables/useTitle.ts'
@@ -11,6 +12,7 @@ import OptionsForm from '@/components/OptionsForm.vue'
 import HostsTable from '@/components/HostsTable.vue'
 import AddHostButton from '@/components/AddHostButton.vue'
 import ImportText from '@/components/ImportText.vue'
+import HorizontalRule from '@/components/HorizontalRule.vue'
 
 console.debug('%c popout/App.vue', 'color: Lime')
 
@@ -46,6 +48,7 @@ useTitle('Panel')
         <ImportText class="me-2 mb-2" />
       </div>
       <HostsTable />
+      <HorizontalRule>{{ i18n.t('options.extension') }}</HorizontalRule>
       <OptionsForm :close-window="true" :compact="true" :show="['switches', 'background']" />
     </div>
   </main>

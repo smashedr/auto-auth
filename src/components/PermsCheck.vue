@@ -2,7 +2,7 @@
 import { i18n } from '#imports'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useToast } from '@/composables/useToast.ts'
-import { clickOpen, hasPermissions } from '@/utils/extension.ts'
+import { clickOpen } from '@/utils/extension.ts'
 import { isFirefox } from '@/utils/system.ts'
 
 const { showToast } = useToast()
@@ -24,8 +24,12 @@ const props = withDefaults(
 
 const hasPerms = ref(true)
 
+const manifest = chrome.runtime.getManifest()
+const origins = manifest.host_permissions
+console.debug('PermsCheck.vue - origins:', origins)
+
 async function updatePerms() {
-  hasPerms.value = await hasPermissions()
+  hasPerms.value = await chrome.permissions.contains({ origins })
   console.debug('updatePerms:', hasPerms.value)
 }
 
@@ -37,10 +41,11 @@ async function grantPerms(event: Event) {
 
 async function revokePerms(event: Event) {
   console.debug('revokePerms:', event)
+  // NOTE: This was modified to remove origins and not permissions...
   const permissions = await chrome.permissions.getAll()
   console.debug('permissions:', permissions)
   try {
-    await chrome.permissions.remove({ origins: permissions.origins })
+    await chrome.permissions.remove({ origins })
     await updatePerms()
   } catch (e) {
     console.debug(e)
@@ -49,9 +54,7 @@ async function revokePerms(event: Event) {
 }
 
 async function requestPerms() {
-  // NOTE: This should be a reusable function in utils/extension.ts
-  const manifest = chrome.runtime.getManifest()
-  return await chrome.permissions.request({ origins: manifest.host_permissions })
+  return await chrome.permissions.request({ origins })
 }
 
 onMounted(() => {
@@ -79,7 +82,7 @@ onUnmounted(() => {
         @click="grantPerms"
         v-bs
       >
-        <i class="fa-solid fa-check-double me-1"></i> {{ i18n.t('perms.grant.text') }}
+        <i class="fa-solid fa-check-double me-2"></i> {{ i18n.t('perms.grant.text') }}
       </button>
       <p v-if="showInfo" class="text-center mb-0">
         <a href="/permissions.html" target="_blank" @click.prevent="clickOpen($event, closeWindow)">{{

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { i18n } from '#imports'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import PanelHeader from '@/components/PanelHeader.vue'
@@ -8,6 +9,7 @@ import OptionsForm from '@/components/OptionsForm.vue'
 import HostsTable from '@/components/HostsTable.vue'
 import AddHostButton from '@/components/AddHostButton.vue'
 import ImportText from '@/components/ImportText.vue'
+import HorizontalRule from '@/components/HorizontalRule.vue'
 
 console.debug('%c sidepanel/App.vue', 'color: Lime')
 </script>
@@ -25,6 +27,7 @@ console.debug('%c sidepanel/App.vue', 'color: Lime')
         <ImportText class="me-2 mb-2" />
       </div>
       <HostsTable />
+      <HorizontalRule>{{ i18n.t('options.extension') }}</HorizontalRule>
       <OptionsForm :close-window="true" :compact="true" :show="['switches', 'background']" />
     </div>
   </main>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
-import { copyToast, parseCreds } from '@/utils/index.ts'
+import { copyToast } from '@/utils/index.ts'
+import { parseCreds } from '@/utils/creds.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { getSession, saveKeyValue } from '@/utils/options.ts'
 import { useBackground } from '@/composables/useBackground.ts'
@@ -10,6 +11,7 @@ import { showToast } from '@/composables/useToast.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
+// import HostsOffscreen from '@/components/HostsOffscreen.vue'
 
 console.debug('%c auth/App.vue', 'color: SpringGreen')
 
@@ -378,8 +380,8 @@ onMounted(async () => {
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary me-auto" @click.prevent="ignoreHost">
-            {{ i18n.t('auth.ignore.confirmIgnore') }}
+          <button type="button" class="btn btn-warning me-auto" @click.prevent="ignoreHost">
+            <i class="fa-solid fa-ban ms-2"></i> {{ i18n.t('auth.ignore.confirmIgnore') }}
           </button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             {{ i18n.t('ui.action.cancel') }}
@@ -389,6 +391,7 @@ onMounted(async () => {
     </div>
   </div>
 
+  <!--<HostsOffscreen />-->
   <OptionsOffscreen />
 
   <ToastAlerts />

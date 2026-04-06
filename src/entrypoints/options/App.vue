@@ -59,9 +59,10 @@ useTitle(i18n.t('options.title'))
         <KeyboardShortcuts />
 
         <HorizontalRule>{{ i18n.t('options.extension') }}</HorizontalRule>
-        <OptionsForm />
 
         <PermsCheck :show-info="true" :show-remove="false" class="my-3" />
+
+        <OptionsForm />
 
         <HorizontalRule>{{ i18n.t('options.savedCredentials') }}</HorizontalRule>
 
