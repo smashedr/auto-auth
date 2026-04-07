@@ -48,3 +48,22 @@ export class Hosts {
     return sync[host[0]] ?? {}
   }
 }
+
+// Above Code is Original - New Code Below
+
+// TODO: Copied from components/HostModal.vue
+export function validateHostname(hostname: string): string | undefined {
+  try {
+    let value = hostname
+    console.debug('value1:', value)
+    if (!value.includes('://')) {
+      value = `https://${value}`
+    }
+    console.debug('value2:', value)
+    const url = new URL(value)
+    console.log(`url.hostname: "${url.hostname}"`, url)
+    return url.hostname
+  } catch (e) {
+    console.debug(e)
+  }
+}

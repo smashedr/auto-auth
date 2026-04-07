@@ -4,10 +4,12 @@ import { parseCreds } from '@/utils/creds.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import { useHosts } from '@/composables/useHosts.ts'
-import { Hosts } from '@/utils/hosts.ts'
+import { Hosts, validateHostname } from '@/utils/hosts.ts'
 import DeleteModal from '@/components/DeleteModal.vue'
 import HostModal from '@/components/HostModal.vue'
 import ImportExport from '@/components/ImportExport.vue'
+import { ref } from 'vue'
+import InputCell from '@/components/InputCell.vue'
 
 withDefaults(
   defineProps<{
@@ -23,6 +25,14 @@ const hosts = useHosts()
 
 const deleteModal = ref<InstanceType<typeof DeleteModal> | null>(null)
 const hostModal = ref<InstanceType<typeof HostModal> | null>(null)
+
+const computedHosts = computed(() =>
+  Object.entries(hosts.value).map(([host, creds]) => ({
+    host,
+    creds,
+    user: parseCreds(creds)[0],
+  })),
+)
 
 // DUPLICATION: popup/App.vue
 function deleteClick(host: string) {
@@ -47,13 +57,30 @@ async function deleteHost(host: string) {
   }
 }
 
-const computedHosts = computed(() =>
-  Object.entries(hosts.value).map(([host, creds]) => ({
-    host,
-    creds,
-    user: parseCreds(creds)[0],
-  })),
-)
+function onEdit(host: string, field: string, value: string) {
+  console.log('HostsTable.vue - onEdit:', host, field, value)
+  const creds = hosts.value[host]
+  console.log('creds:', creds)
+  if (!creds) return showToast('Credentials Not Found.', 'warning')
+  const [username, password] = parseCreds(creds)
+  console.log('username, password:', username, password)
+  switch (field) {
+    case 'host': {
+      if (!value) return showToast('Hostname is Required.', 'warning')
+      const hostname = validateHostname(value)
+      if (!hostname) return showToast('Invalid Hostname.', 'warning')
+      submitHost(hostname, username, password, host)
+      break
+    }
+    case 'user': {
+      submitHost(host, value, password, host)
+      break
+    }
+    default: {
+      showToast(`Unknown Field: ${field}`, 'warning')
+    }
+  }
+}
 </script>
 
 <template>
@@ -71,16 +98,23 @@ const computedHosts = computed(() =>
       </thead>
       <tbody>
         <tr v-for="{ host, creds, user } in computedHosts" :key="host">
+          <!-- Delete -->
           <td class="text-center">
             <a :title="i18n.t('ui.action.delete')" class="link-danger" role="button" @click.prevent="deleteClick(host)"
               ><i class="fa-regular fa-trash-can"></i
             ></a>
           </td>
-          <td class="text-truncate">{{ host }}</td>
+
+          <!-- Host -->
+          <InputCell :host="host" field="host" :value="host" @edit="onEdit" />
+
+          <!-- User -->
           <td v-if="creds === 'ignored'" class="text-truncate text-warning fst-italic fw-bold">
             {{ i18n.t('ui.text.ignored') }}
           </td>
-          <td v-else class="text-truncate" :class="{ 'text-muted fst-italic': !user }">{{ user || 'none' }}</td>
+          <InputCell v-else :host="host" field="user" :value="user" empty="None" @edit="onEdit" />
+
+          <!-- Edit -->
           <td class="text-center">
             <a
               :title="i18n.t('ui.action.edit')"
@@ -91,8 +125,11 @@ const computedHosts = computed(() =>
             ></a>
           </td>
         </tr>
+
         <tr v-if="!computedHosts.length">
-          <td class="text-center text-warning-emphasis fst-italic" colspan="4">{{ i18n.t('ui.text.noSavedCreds') }}</td>
+          <td class="text-center text-warning-emphasis fst-italic" colspan="4">
+            {{ i18n.t('ui.text.noSavedCreds') }}
+          </td>
         </tr>
       </tbody>
     </table>
