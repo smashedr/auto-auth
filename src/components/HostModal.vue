@@ -4,6 +4,7 @@ import { onMounted, ref, useId } from 'vue'
 import { Modal } from 'bootstrap'
 import { copyToast } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
+import { validateHostname } from '@/utils/hosts.ts'
 
 withDefaults(
   defineProps<{
@@ -62,30 +63,11 @@ function hide() {
   Modal.getInstance(modalEl.value)?.hide()
 }
 
-function validateHostname(): string | undefined {
-  let value = hostRef.value
-  console.debug('value1:', value)
-  if (!value.includes('://')) {
-    value = `https://${value}`
-  }
-  console.debug('value2:', value)
-  let url
-  try {
-    url = new URL(value)
-  } catch (e) {
-    console.debug(e)
-    hostInvalid.value = 'Invalid Hostname or URL.'
-    return
-  }
-  console.log(`url.hostname: "${url.hostname}"`, url)
-  return url.hostname
-}
-
 async function onSubmit() {
   console.log('HostModal.vue - onSubmit:', hostRef.value, userRef.value, passRef.value, originalHost.value)
 
   // hostname
-  const hostname = validateHostname()
+  const hostname = validateHostname(hostRef.value)
   if (!hostname) {
     hostnameEl.value?.focus()
     hostnameEl.value?.select()
@@ -128,7 +110,7 @@ async function onSubmit() {
 function hostnameChange() {
   console.log('HostModal.vue - hostnameChange')
   onceChange()
-  validateHostname()
+  if (!validateHostname(hostRef.value)) hostInvalid.value = 'Invalid Hostname or URL.'
 }
 
 function onceChange() {
