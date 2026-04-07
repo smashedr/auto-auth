@@ -51,7 +51,7 @@ export class Hosts {
 
 // Above Code is Original - New Code Below
 
-// TODO: Copied from components/HostModal.vue
+// NOTE: Moved from components/HostModal.vue and exported
 export function validateHostname(hostname: string): string | undefined {
   try {
     let value = hostname
