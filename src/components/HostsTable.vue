@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { submitHost } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
 import { showToast } from '@/composables/useToast.ts'
@@ -8,7 +9,6 @@ import { Hosts, validateHostname } from '@/utils/hosts.ts'
 import DeleteModal from '@/components/DeleteModal.vue'
 import HostModal from '@/components/HostModal.vue'
 import ImportExport from '@/components/ImportExport.vue'
-import { ref } from 'vue'
 import InputCell from '@/components/InputCell.vue'
 
 withDefaults(
