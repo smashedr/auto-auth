@@ -74,7 +74,7 @@ const config = getAppConfig()
 
         <HorizontalRule>{{ i18n.t('options.savedCredentials') }}</HorizontalRule>
 
-        <div class="d-grid gap-2 d-md-flex">
+        <div class="d-grid gap-2 d-md-flex m-1">
           <AddHostButton class="flex-md-fill text-truncate" />
           <ImportText class="flex-md-fill text-truncate" />
         </div>
