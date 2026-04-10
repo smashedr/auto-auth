@@ -61,10 +61,11 @@ ui:
 
 form:
   host:
+    columns: Columns
+    visible: Visible
     hostnamePlaceholder: hostname
     usernamePlaceholder: username
     passwordPlaceholder: password
-
     hostnameHelp: Basic Authentication Hostname.
     usernameHelp: Basic Authentication Username.
     passwordHelp: Basic Authentication Password.
