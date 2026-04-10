@@ -7,6 +7,11 @@ export const defaultOptions = {
   defaultSave: true,
   confirmDelete: true,
 
+  usernameShown: true,
+  usernameVisible: true,
+  passwordShown: false,
+  passwordVisible: false,
+
   radioBackground: 'bgPicture' as 'bgNone' | 'bgPicture' | 'bgVideo',
   pictureURL: 'https://picsum.photos/1920/1080',
   videoURL: '',

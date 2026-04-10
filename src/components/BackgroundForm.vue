@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { useOptions } from '@/composables/useOptions.ts'
 import { saveKeyValue } from '@/utils/options.ts'
 
-// TODO: Make this live update on changes...
 const options = useOptions()
 
 const bgRef = ref<'bgNone' | 'bgPicture' | 'bgVideo'>('bgNone')
@@ -32,8 +31,8 @@ function radioChange(event: Event) {
 <template>
   <div>
     <form @change="radioChange">
-      <div class="d-flex flex-column flex-sm-row ms-1 ms-sm-3">
-        <div class="form-check form-check-inline mb-2 mb-sm-0">
+      <div class="d-flex flex-column flex-md-row ms-1 ms-md-3">
+        <div class="form-check form-check-inline mb-2 mb-md-0">
           <input
             v-model="bgRef"
             class="form-check-input"
@@ -47,7 +46,7 @@ function radioChange(event: Event) {
           </label>
         </div>
 
-        <div class="form-check form-check-inline mb-2 mb-sm-0">
+        <div class="form-check form-check-inline mb-2 mb-md-0">
           <input
             v-model="bgRef"
             class="form-check-input"
@@ -77,7 +76,7 @@ function radioChange(event: Event) {
       </div>
     </form>
 
-    <div class="ms-0 ms-sm-3">
+    <div class="ms-0 ms-md-3">
       <div v-if="bgRef === 'bgPicture'" id="bgPictureInput" class="input-group">
         <span
           class="input-group-text"

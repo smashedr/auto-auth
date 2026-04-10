@@ -1,4 +1,3 @@
-// composables/useHosts.ts
 import { ref, onMounted, onUnmounted } from 'vue'
 import type { HostsRecord } from '@/utils/hosts.ts'
 import type { Ref } from 'vue'

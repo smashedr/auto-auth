@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { submitHost } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
+import { saveKeyValue } from '@/utils/options.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import { useHosts } from '@/composables/useHosts.ts'
@@ -22,11 +23,6 @@ withDefaults(
 
 const options = useOptions()
 const hosts = useHosts()
-
-const usernameShown = ref(true)
-const usernameVisible = ref(true)
-const passwordShown = ref(false)
-const passwordVisible = ref(false)
 
 const deleteModal = ref<InstanceType<typeof DeleteModal> | null>(null)
 const hostModal = ref<InstanceType<typeof HostModal> | null>(null)
@@ -92,15 +88,12 @@ function onEdit(host: string, field: string, value: string) {
 }
 
 function columnsChange(event: Event) {
-  console.log('HostsTable.vue - columnsChange:', event)
-  // const target = event.currentTarget as HTMLInputElement
-  // TODO: Save column visibility
+  console.debug('HostsTable.vue - columnsChange:', event)
+  const target = event.target as HTMLInputElement
+  console.debug('target.id:', target.id)
+  console.debug('target.checked:', target.checked)
+  saveKeyValue(target.id, target.checked)
 }
-
-onMounted(() => {
-  console.log('HostsTable.vue - onMounted:')
-  // TODO: Load saved column visibility
-})
 </script>
 
 <template>
@@ -121,20 +114,20 @@ onMounted(() => {
       <div class="dropdown-menu dropstart">
         <form class="px-2" @change="columnsChange">
           <div class="form-check">
-            <input v-model="usernameShown" type="checkbox" class="form-check-input" id="userToggle" />
-            <label class="form-check-label text-nowrap" for="userToggle"> Username </label>
+            <input v-model="options.usernameShown" type="checkbox" class="form-check-input" id="usernameShown" />
+            <label class="form-check-label text-nowrap" for="usernameShown"> Username </label>
           </div>
           <div class="form-check ms-4">
-            <input v-model="usernameVisible" type="checkbox" class="form-check-input" id="userShow" />
-            <label class="form-check-label text-nowrap" for="userShow"> Visible </label>
+            <input v-model="options.usernameVisible" type="checkbox" class="form-check-input" id="usernameVisible" />
+            <label class="form-check-label text-nowrap" for="usernameVisible"> Visible </label>
           </div>
           <div class="form-check">
-            <input v-model="passwordShown" type="checkbox" class="form-check-input" id="passToggle" />
-            <label class="form-check-label text-nowrap" for="passToggle"> Password </label>
+            <input v-model="options.passwordShown" type="checkbox" class="form-check-input" id="passwordShown" />
+            <label class="form-check-label text-nowrap" for="passwordShown"> Password </label>
           </div>
           <div class="form-check ms-4">
-            <input v-model="passwordVisible" type="checkbox" class="form-check-input" id="passShow" />
-            <label class="form-check-label text-nowrap" for="passShow"> Visible </label>
+            <input v-model="options.passwordVisible" type="checkbox" class="form-check-input" id="passwordVisible" />
+            <label class="form-check-label text-nowrap" for="passwordVisible"> Visible </label>
           </div>
         </form>
       </div>
@@ -147,8 +140,8 @@ onMounted(() => {
         <tr>
           <th class="text-center" style="width: 36px"><i class="fa-solid fa-trash-can"></i></th>
           <th class="text-truncate">{{ i18n.t('ui.text.hostname') }}</th>
-          <th v-if="usernameShown" class="text-truncate">{{ i18n.t('ui.text.username') }}</th>
-          <th v-if="passwordShown" class="text-truncate">Password</th>
+          <th v-if="options.usernameShown" class="text-truncate">{{ i18n.t('ui.text.username') }}</th>
+          <th v-if="options.passwordShown" class="text-truncate">Password</th>
           <th class="text-center" style="width: 36px"><i class="fa-solid fa-pen-to-square"></i></th>
         </tr>
       </thead>
@@ -165,7 +158,7 @@ onMounted(() => {
           <InputCell :host="host" field="host" :value="host" :visible="true" @edit="onEdit" />
 
           <!-- User -->
-          <template v-if="usernameShown">
+          <template v-if="options.usernameShown">
             <td v-if="creds === 'ignored'" class="text-truncate text-warning fst-italic fw-bold">
               {{ i18n.t('ui.text.ignored') }}
             </td>
@@ -175,16 +168,16 @@ onMounted(() => {
               field="user"
               :value="user"
               empty="None"
-              :visible="usernameVisible"
+              :visible="options.usernameVisible"
               @edit="onEdit"
             />
           </template>
           <InputCell
-            v-if="passwordShown"
+            v-if="options.passwordShown"
             :host="host"
             field="pass"
             :value="pass"
-            :visible="passwordVisible"
+            :visible="options.passwordVisible"
             @edit="onEdit"
           />
 

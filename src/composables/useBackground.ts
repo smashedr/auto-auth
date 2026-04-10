@@ -1,4 +1,3 @@
-// composables/useBackground.ts
 import { onMounted, onUnmounted } from 'vue'
 import { getOptions } from '@/utils/options.ts'
 
