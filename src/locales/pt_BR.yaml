@@ -59,9 +59,13 @@ ui:
     extensionDisabled: Extensão Temporariamente Desativada
     unsavedChanges: Alterações Não Salvas Detectadas.
 
+  toast:
+    notChanged: Valor Não Alterado # TODO: NOT USED
+
 form:
   host:
     columns: Colunas
+    editable: Editável
     visible: Visível
     hostnamePlaceholder: hostname
     usernamePlaceholder: nome de usuário

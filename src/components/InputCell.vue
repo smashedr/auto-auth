@@ -7,6 +7,7 @@ const props = defineProps<{
   value: string
   visible?: boolean
   empty?: string
+  editable?: boolean
 }>()
 
 const emit = defineEmits(['edit'])
@@ -16,8 +17,9 @@ const inputValue = ref(props.value)
 const inputEl = ref<HTMLInputElement | null>(null)
 
 function startEdit() {
-  if (isEditing.value) return
-  console.log('startEdit:', inputValue.value)
+  if (!props.editable) return console.log('%c startEdit: no clickEdit', 'color: LightCoral')
+  if (isEditing.value) return console.log('%c startEdit: not isEditing', 'color: LightCoral')
+  console.log('%c startEdit:', 'color: Lime', inputValue.value)
   inputValue.value = props.value
   isEditing.value = true
   nextTick(() => {
@@ -26,10 +28,12 @@ function startEdit() {
   })
 }
 
-function finishEdit() {
-  console.log('finishEdit:', inputValue.value)
+function finishEdit(event: Event) {
+  console.log('%c finishEdit:', 'color: Lime', event)
+  console.log('event.type:', event.type)
+  if (!isEditing.value) return console.log('%c finishEdit return', 'color: Yellow')
   isEditing.value = false
-  if (inputValue.value === props.value) return console.log('%c Value Not Changed:', 'color: Yellow', inputValue.value)
+  if (inputValue.value === props.value) return console.log('%c Unchanged:', 'color: Bisque', inputValue.value)
   console.log(`Edit: %c${props.field}:`, 'color: Lime', `"${inputValue.value}" / host: ${props.host}`)
   emit('edit', props.host, props.field, inputValue.value)
 }

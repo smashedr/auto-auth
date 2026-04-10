@@ -7,6 +7,7 @@ export const defaultOptions = {
   defaultSave: true,
   confirmDelete: true,
 
+  clickEdit: true,
   usernameShown: true,
   usernameVisible: true,
   passwordShown: false,

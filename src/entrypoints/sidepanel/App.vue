@@ -22,9 +22,9 @@ console.debug('%c sidepanel/App.vue', 'color: Lime')
   <main class="flex-grow-1 overflow-auto p-1">
     <div class="d-grid gap-2">
       <PermsCheck />
-      <div>
-        <AddHostButton class="me-2 mb-2" />
-        <ImportText class="me-2 mb-2" />
+      <div class="d-grid gap-2 d-sm-flex">
+        <AddHostButton class="flex-sm-fill text-truncate" />
+        <ImportText class="flex-sm-fill text-truncate" />
       </div>
       <HostsTable />
       <HorizontalRule>{{ i18n.t('options.extension') }}</HorizontalRule>

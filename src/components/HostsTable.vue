@@ -27,6 +27,10 @@ const hosts = useHosts()
 const deleteModal = ref<InstanceType<typeof DeleteModal> | null>(null)
 const hostModal = ref<InstanceType<typeof HostModal> | null>(null)
 
+// TODO: Provide options at the App.vue level and inject in components...
+// provide('options', options)
+// const options = inject<Ref<Options | undefined>>('options')
+
 const computedHosts = computed(() =>
   Object.entries(hosts.value).map(([host, creds]) => {
     const [user, pass] = parseCreds(creds)
@@ -112,6 +116,18 @@ function columnsChange(event: Event) {
       </a>
 
       <div class="dropdown-menu dropstart">
+        <div class="form-check mx-2">
+          <input
+            v-model="options.clickEdit"
+            type="checkbox"
+            class="form-check-input"
+            id="clickEdit"
+            @change="saveKeyValue('clickEdit', options.clickEdit)"
+          />
+          <label class="form-check-label text-nowrap" for="clickEdit">
+            <i class="fa-solid fa-arrow-pointer"></i> {{ i18n.t('form.host.editable') }}
+          </label>
+        </div>
         <form class="px-2" @change="columnsChange">
           <div class="form-check">
             <input v-model="options.usernameShown" type="checkbox" class="form-check-input" id="usernameShown" />
@@ -165,7 +181,14 @@ function columnsChange(event: Event) {
           </td>
 
           <!-- Host -->
-          <InputCell :host="host" field="host" :value="host" :visible="true" @edit="onEdit" />
+          <InputCell
+            :host="host"
+            field="host"
+            :value="host"
+            :visible="true"
+            :editable="options.clickEdit"
+            @edit="onEdit"
+          />
 
           <!-- User -->
           <template v-if="options.usernameShown">
@@ -179,6 +202,7 @@ function columnsChange(event: Event) {
               :value="user"
               empty="None"
               :visible="options.usernameVisible"
+              :editable="options.clickEdit"
               @edit="onEdit"
             />
           </template>
@@ -188,6 +212,7 @@ function columnsChange(event: Event) {
             field="pass"
             :value="pass"
             :visible="options.passwordVisible"
+            :editable="options.clickEdit"
             @edit="onEdit"
           />
 

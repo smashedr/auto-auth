@@ -17,7 +17,8 @@ import HostModal from '@/components/HostModal.vue'
 
 console.debug('%c popup/App.vue', 'color: Lime')
 
-const isBrowser = isFirefox ? '380px' : null
+// TODO: Chrome: auto-width - Firefox: 360px - Mobile: 100%
+const isBrowser = isFirefox ? '360px' : null
 const width = computed(() => (isMobile ? '100%' : isBrowser))
 console.log('width:', width.value)
 
