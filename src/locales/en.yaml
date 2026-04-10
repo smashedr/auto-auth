@@ -27,6 +27,9 @@ ui:
     passwordCopied: Password Copied to Clipboard
     urlCopied: URL Copied to Clipboard
 
+  toast:
+    notChanged: Value Not Changed # TODO: NOT USED
+
   text:
     or: or
     removed: Removed

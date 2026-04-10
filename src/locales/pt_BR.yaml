@@ -59,6 +59,9 @@ ui:
     extensionDisabled: Extensão Temporariamente Desativada
     unsavedChanges: Alterações Não Salvas Detectadas.
 
+  toast:
+    notChanged: Valor Não Alterado # TODO: NOT USED
+
 form:
   host:
     columns: Colunas
