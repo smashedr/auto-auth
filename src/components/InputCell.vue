@@ -5,6 +5,7 @@ const props = defineProps<{
   host: string
   field: string
   value: string
+  visible?: boolean
   empty?: string
 }>()
 
@@ -40,12 +41,14 @@ function finishEdit() {
       v-if="isEditing"
       v-model="inputValue"
       ref="inputEl"
+      :type="visible ? 'text' : 'password'"
       class="form-control form-control-sm table-input"
       @keyup.esc="isEditing = false"
       @keyup.enter="finishEdit"
       @blur="finishEdit"
     />
-    <span v-else :class="value ? '' : 'text-muted fst-italic'">{{ value || empty }}</span>
+    <span v-if="!isEditing && visible" :class="value ? '' : 'text-muted fst-italic'">{{ value || empty }}</span>
+    <span v-if="!isEditing && !visible">******</span>
   </td>
 </template>
 
