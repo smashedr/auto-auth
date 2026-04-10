@@ -108,26 +108,36 @@ function columnsChange(event: Event) {
         aria-expanded="false"
         data-bs-auto-close="outside"
       >
-        <i class="fa-solid fa-table-columns"></i> Columns
+        <i class="fa-solid fa-table-columns"></i> {{ i18n.t('form.host.columns') }}
       </a>
 
       <div class="dropdown-menu dropstart">
         <form class="px-2" @change="columnsChange">
           <div class="form-check">
             <input v-model="options.usernameShown" type="checkbox" class="form-check-input" id="usernameShown" />
-            <label class="form-check-label text-nowrap" for="usernameShown"> Username </label>
+            <label class="form-check-label text-nowrap" for="usernameShown">
+              <i class="fa-solid fa-at"></i> {{ i18n.t('ui.text.username') }}
+            </label>
           </div>
           <div class="form-check ms-4">
             <input v-model="options.usernameVisible" type="checkbox" class="form-check-input" id="usernameVisible" />
-            <label class="form-check-label text-nowrap" for="usernameVisible"> Visible </label>
+            <label class="form-check-label text-nowrap" for="usernameVisible">
+              <i class="fa-solid" :class="options.usernameVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+              {{ i18n.t('form.host.visible') }}
+            </label>
           </div>
           <div class="form-check">
             <input v-model="options.passwordShown" type="checkbox" class="form-check-input" id="passwordShown" />
-            <label class="form-check-label text-nowrap" for="passwordShown"> Password </label>
+            <label class="form-check-label text-nowrap" for="passwordShown">
+              <i class="fa-solid fa-key"></i> {{ i18n.t('ui.text.password') }}
+            </label>
           </div>
           <div class="form-check ms-4">
             <input v-model="options.passwordVisible" type="checkbox" class="form-check-input" id="passwordVisible" />
-            <label class="form-check-label text-nowrap" for="passwordVisible"> Visible </label>
+            <label class="form-check-label text-nowrap" for="passwordVisible">
+              <i class="fa-solid" :class="options.passwordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+              {{ i18n.t('form.host.visible') }}
+            </label>
           </div>
         </form>
       </div>

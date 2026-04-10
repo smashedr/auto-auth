@@ -1,54 +1,34 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { clickOpen } from '@/utils/extension.ts'
 import { isFirefox } from '@/utils/system.ts'
 
-function openChromeShortcuts() {
-  chrome.tabs.update({ url: 'chrome://extensions/shortcuts' })
-}
+defineProps<{
+  hideLink?: boolean
+  linkMt?: string
+}>()
 
-// NOTE: Ported from VanillaJS
-async function setShortcuts(selector = '#keyboard-shortcuts') {
-  console.debug('setShortcuts')
-  if (!chrome.commands) {
-    return console.debug('Skipping: chrome.commands')
-  }
-  const table = document.querySelector(selector)
-  if (!table) {
-    return console.warn(`Table not found: ${selector}`)
-  }
-  table.classList.remove('d-none')
-  const tbody = table.querySelector('tbody')
-  const source = table.querySelector('tfoot > tr')?.cloneNode(true)
-  if (!tbody || !source) {
-    return console.warn(`Source element not found!`)
-  }
-  const commands = await chrome.commands.getAll()
-  for (const command of commands) {
-    // console.debug('command:', command)
-    const row = source.cloneNode(true) as Element
-    let description = command.description
-    // Note: Chrome does not parse the description for _execute_action in manifest.json
-    if (!description && command.name === '_execute_action') {
-      description = i18n.t('cmd.executeAction') // NOTE: Also defined in: manifest.json
-    }
-    row.querySelector('.description')!.textContent = description ?? null
-    row.querySelector('kbd')!.textContent = command.shortcut || 'Not Set'
-    tbody.appendChild(row)
-  }
-}
+const hasCommands = ref<boolean>(!!chrome.commands)
+const commands = ref<{ description: string; shortcut: string }[]>([])
 
-onMounted(() => {
-  setShortcuts()
+const openChromeShortcuts = () => chrome.tabs.update({ url: 'chrome://extensions/shortcuts' })
+
+onMounted(async () => {
+  if (!hasCommands.value) return
+  const notSet = i18n.t('keyboard.notSet')
+  const result = await chrome.commands.getAll()
+  commands.value = result.map(({ description, name, shortcut }) => ({
+    description: description ?? (name === '_execute_action' ? i18n.t('cmd.executeAction') : notSet),
+    shortcut: shortcut || notSet,
+  }))
 })
 </script>
 
 <template>
-  <div>
-    <!--TODO: Verify keyboard shortcuts visibility on mobile-->
+  <div v-if="hasCommands">
     <div class="rounded rounded-3 overflow-hidden">
-      <table id="keyboard-shortcuts" class="table table-sm rounded table-borderless table-hover transparent-table mb-0">
+      <table class="table table-sm rounded table-borderless table-hover transparent-table mb-0">
         <caption class="visually-hidden">
           {{
             i18n.t('keyboard.shortcuts')
@@ -60,22 +40,21 @@ onMounted(() => {
             <th>{{ i18n.t('keyboard.shortcut') }}</th>
           </tr>
         </thead>
-        <tbody></tbody>
-        <tfoot class="d-none">
-          <tr>
-            <td class="ps-2">
+        <tbody>
+          <tr v-for="cmd in commands">
+            <td class="ps-2 text-truncate w-100" style="max-width: 0">
               <i class="fa-regular fa-keyboard me-1"></i>
-              <span class="description"></span>
+              {{ cmd.description }}
             </td>
-            <td class="text-end pe-2" :title="i18n.t('keyboard.shortcuts')">
-              <kbd>{{ i18n.t('keyboard.unknown') }}</kbd>
+            <td class="text-end pe-2 text-nowrap">
+              <kbd>{{ cmd.shortcut }}</kbd>
             </td>
           </tr>
-        </tfoot>
+        </tbody>
       </table>
     </div>
 
-    <div class="mb-2">
+    <div v-if="!hideLink" :class="linkMt || `mt-2`">
       {{ i18n.t('keyboard.manage') }}:
       <a
         v-if="isFirefox"
@@ -100,4 +79,9 @@ onMounted(() => {
   </div>
 </template>
 
-<!--<style scoped></style>-->
+<!--<style scoped>-->
+<!--#table td:first-child {-->
+<!--  width: 100%;-->
+<!--  max-width: 0;-->
+<!--}-->
+<!--</style>-->
