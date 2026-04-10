@@ -65,6 +65,7 @@ ui:
 form:
   host:
     columns: Columns
+    editable: Editable
     visible: Visible
     hostnamePlaceholder: hostname
     usernamePlaceholder: username
