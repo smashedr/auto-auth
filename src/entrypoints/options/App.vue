@@ -87,7 +87,7 @@ const config = getAppConfig()
           >{{ i18n.t('options.copySupport') }}</CopySupport
         >
 
-        <hr />
+        <hr class="my-2 my-md-3" />
 
         <PageFooter />
       </div>
