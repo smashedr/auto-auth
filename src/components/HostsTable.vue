@@ -167,7 +167,7 @@ function columnsChange(event: Event) {
           <th class="text-center" style="width: 36px"><i class="fa-solid fa-trash-can"></i></th>
           <th class="text-truncate">{{ i18n.t('ui.text.hostname') }}</th>
           <th v-if="options.usernameShown" class="text-truncate">{{ i18n.t('ui.text.username') }}</th>
-          <th v-if="options.passwordShown" class="text-truncate">Password</th>
+          <th v-if="options.passwordShown" class="text-truncate">{{ i18n.t('ui.text.password') }}</th>
           <th class="text-center" style="width: 36px"><i class="fa-solid fa-pen-to-square"></i></th>
         </tr>
       </thead>
@@ -206,15 +206,21 @@ function columnsChange(event: Event) {
               @edit="onEdit"
             />
           </template>
-          <InputCell
-            v-if="options.passwordShown"
-            :host="host"
-            field="pass"
-            :value="pass"
-            :visible="options.passwordVisible"
-            :editable="options.clickEdit"
-            @edit="onEdit"
-          />
+
+          <template v-if="options.passwordShown">
+            <td v-if="creds === 'ignored'" class="text-truncate text-warning-emphasis fst-italic">
+              {{ i18n.t('ui.text.ignored') }}
+            </td>
+            <InputCell
+              v-else
+              :host="host"
+              field="pass"
+              :value="pass"
+              :visible="options.passwordVisible"
+              :editable="options.clickEdit"
+              @edit="onEdit"
+            />
+          </template>
 
           <!-- Edit -->
           <td class="text-center">

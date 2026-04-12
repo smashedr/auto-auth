@@ -62,17 +62,15 @@ const config = getAppConfig()
           </div>
         </div>
 
-        <!--TODO: Update Trans-->
-        <HorizontalRule>{{ i18n.t('keyboard.shortcuts') }}</HorizontalRule>
         <KeyboardShortcuts />
 
-        <HorizontalRule>{{ i18n.t('options.extension') }}</HorizontalRule>
+        <HorizontalRule class="my-2">{{ i18n.t('options.extension') }}</HorizontalRule>
 
         <PermsCheck :show-info="true" :show-remove="false" class="my-3" />
 
         <OptionsForm />
 
-        <HorizontalRule>{{ i18n.t('options.savedCredentials') }}</HorizontalRule>
+        <HorizontalRule class="my-2">{{ i18n.t('options.savedCredentials') }}</HorizontalRule>
 
         <div class="d-grid gap-2 d-md-flex m-1">
           <AddHostButton class="flex-md-fill text-truncate" />
@@ -85,7 +83,7 @@ const config = getAppConfig()
         <CopySupport
           :message="i18n.t('options.copySupportMsg')"
           :tip="i18n.t('options.copySupportTip')"
-          class="fst-italic small"
+          class="fst-italic small my-3"
           >{{ i18n.t('options.copySupport') }}</CopySupport
         >
 
