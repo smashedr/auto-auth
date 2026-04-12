@@ -98,6 +98,13 @@ function columnsChange(event: Event) {
   console.debug('target.checked:', target.checked)
   saveKeyValue(target.id, target.checked)
 }
+
+const columnCount = computed(() => {
+  let count = 3
+  if (options.value.usernameShown) count++
+  if (options.value.passwordShown) count++
+  return count
+})
 </script>
 
 <template>
@@ -235,7 +242,7 @@ function columnsChange(event: Event) {
         </tr>
 
         <tr v-if="!computedHosts.length">
-          <td class="text-center text-warning-emphasis fst-italic" colspan="4">
+          <td class="text-center text-warning-emphasis fst-italic" :colspan="columnCount">
             {{ i18n.t('ui.text.noSavedCreds') }}
           </td>
         </tr>
