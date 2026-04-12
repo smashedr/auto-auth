@@ -52,5 +52,3 @@ const config = getAppConfig()
     >
   </div>
 </template>
-
-<!--<style scoped></style>-->

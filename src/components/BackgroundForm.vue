@@ -124,5 +124,3 @@ function radioChange(event: Event) {
     </div>
   </div>
 </template>
-
-<!--<style scoped></style>-->

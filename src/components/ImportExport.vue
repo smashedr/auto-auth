@@ -74,5 +74,3 @@ async function hostsInputChange(event: Event) {
     ></a>
   </div>
 </template>
-
-<!--<style scoped></style>-->

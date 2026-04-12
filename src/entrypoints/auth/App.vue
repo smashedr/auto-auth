@@ -165,7 +165,7 @@ onMounted(async () => {
 <template>
   <main class="flex-grow-1">
     <div class="container-fluid p-0 p-md-4">
-      <div id="auth-outer" class="rounded rounded-4 w-100 mx-auto p-1 p-md-3">
+      <div id="auth-outer" class="glass-outline rounded rounded-4 w-100 mx-auto p-1 p-md-3">
         <div class="text-center fs-4">
           <kbd
             class="text-ellipsis host"
@@ -396,5 +396,3 @@ onMounted(async () => {
   <ToastAlerts />
   <BackToTop />
 </template>
-
-<!--<style scoped></style>-->

@@ -63,5 +63,3 @@ function onDelete() {
     </div>
   </Teleport>
 </template>
-
-<!--<style scoped></style>-->

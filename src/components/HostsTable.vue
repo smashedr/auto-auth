@@ -253,5 +253,3 @@ const columnCount = computed(() => {
   <DeleteModal ref="deleteModal" @delete="deleteHost" />
   <HostModal ref="hostModal" @submit="submitHost" />
 </template>
-
-<!--<style scoped></style>-->

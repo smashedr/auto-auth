@@ -26,6 +26,17 @@ $grid-breakpoints: (
     --bs-emphasis-bg-rgb: var(--bs-black-rgb);
 }
 
+.form-control {
+    background-color: rgba(var(--bs-emphasis-bg-rgb), 50%);
+}
+
+.glass-outline {
+    backdrop-filter: blur(6px);
+    background-color: rgba(var(--bs-emphasis-bg-rgb), 50%);
+    border: 1px solid rgba(var(--bs-secondary-rgb), 0.3);
+    filter: drop-shadow(15px 12px 12px var(--bs-emphasis-bg));
+}
+
 .transparent-table {
     --bs-table-bg: rgba(var(--bs-emphasis-bg-rgb), 0.3);
     --bs-table-striped-bg: rgba(var(--bs-emphasis-bg-rgb), 0.5);

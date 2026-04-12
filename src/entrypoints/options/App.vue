@@ -26,9 +26,9 @@ const config = getAppConfig()
 </script>
 
 <template>
-  <div class="d-flex align-items-center justify-content-center ps-1 pe-2 p-md-3 h-100 w-100">
+  <div class="d-flex align-items-center justify-content-center h-100 w-100 p-1 p-md-3">
     <div class="m-auto pb-4 w-100">
-      <div id="options-wrapper" class="glass-outline blur rounded rounded-3 p-2 p-md-3 m-auto w-100">
+      <div id="options-wrapper" class="glass-outline rounded rounded-3 w-100 m-auto p-2 p-md-3">
         <div class="d-flex flex-row justify-content-center align-items-center">
           <img
             src="@/assets/icon.svg"
@@ -98,5 +98,3 @@ const config = getAppConfig()
   <ToastAlerts />
   <BackToTop />
 </template>
-
-<!--<style scoped></style>-->

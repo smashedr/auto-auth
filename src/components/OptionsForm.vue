@@ -37,5 +37,3 @@ const options = useOptions()
     </div>
   </div>
 </template>
-
-<!--<style scoped></style>-->

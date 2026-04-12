@@ -58,5 +58,3 @@ async function onAdded(permissions: chrome.permissions.Permissions) {
   <ToastAlerts />
   <BackToTop />
 </template>
-
-<!--<style scoped></style>-->
