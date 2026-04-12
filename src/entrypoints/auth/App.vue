@@ -163,9 +163,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="flex-grow-1 overflow-auto">
-    <div class="container-fluid pt-3 px-0 px-md-4">
-      <div id="auth-outer" class="rounded rounded-4 w-100 mx-auto mb-4 p-1 p-md-3">
+  <main class="flex-grow-1">
+    <div class="container-fluid p-0 p-md-4">
+      <div id="auth-outer" class="glass-outline rounded rounded-4 w-100 mx-auto p-1 p-md-3">
         <div class="text-center fs-4">
           <kbd
             class="text-ellipsis host"
@@ -290,7 +290,7 @@ onMounted(async () => {
             >.
           </div>
 
-          <div class="row">
+          <div class="row m-0">
             <div class="col-12 col-md-6 mb-2 mb-md-0">
               <button
                 class="btn btn-lg w-100"
@@ -396,5 +396,3 @@ onMounted(async () => {
   <ToastAlerts />
   <BackToTop />
 </template>
-
-<!--<style scoped></style>-->

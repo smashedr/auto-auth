@@ -19,6 +19,16 @@ export default defineContentScript({
   },
 })
 
+async function onChanged(changes: Record<string, any>) {
+  console.debug('content/index.ts - onChanged:', changes)
+  const items = changes[url.host[0]] // NOTE: Lazy Typing... in changes
+  const oldCreds = items?.oldValue?.[url.host]
+  const newCreds = items?.newValue?.[url.host]
+  if (oldCreds !== newCreds) {
+    await processCreds(newCreds)
+  }
+}
+
 async function processCreds(creds: any) {
   console.debug('%c processCreds:', 'color: SpringGreen', creds)
   if (creds) {
@@ -42,15 +52,5 @@ async function processCreds(creds: any) {
     await chrome.runtime.sendMessage({
       badgeText: '',
     })
-  }
-}
-
-async function onChanged(changes: Record<string, any>) {
-  console.debug('content/index.ts - onChanged:', changes)
-  const items = changes[url.host[0]] // NOTE: Lazy Typing... in changes
-  const oldCreds = items?.oldValue?.[url.host]
-  const newCreds = items?.newValue?.[url.host]
-  if (oldCreds !== newCreds) {
-    await processCreds(newCreds)
   }
 }

@@ -30,7 +30,7 @@ const config = getAppConfig()
       @click.prevent="clickOpen"
       >{{ i18n.t('ui.text.homePage') }}</a
     >
-    <span class="mx-1">&bull;</span>
+    <span class="mx-2 mx-md-3">&bull;</span>
     <a
       v-if="requestFeature"
       class="link-body-emphasis text-decoration-none d-inline-block"
@@ -40,7 +40,7 @@ const config = getAppConfig()
       @click.prevent="clickOpen"
       >{{ i18n.t('ui.text.requestFeature') }}</a
     >
-    <span class="mx-1">&bull;</span>
+    <span class="mx-2 mx-md-3">&bull;</span>
     <a
       v-if="openIssue"
       class="link-body-emphasis text-decoration-none d-inline-block"
@@ -52,5 +52,3 @@ const config = getAppConfig()
     >
   </div>
 </template>
-
-<!--<style scoped></style>-->

@@ -26,9 +26,9 @@ const config = getAppConfig()
 </script>
 
 <template>
-  <div class="d-flex align-items-center justify-content-center ps-1 pe-2 p-md-3 h-100 w-100">
+  <div class="d-flex align-items-center justify-content-center h-100 w-100 p-1 p-md-3">
     <div class="m-auto pb-4 w-100">
-      <div id="options-wrapper" class="glass-outline blur rounded rounded-3 p-2 p-md-3 m-auto w-100">
+      <div id="options-wrapper" class="glass-outline rounded rounded-3 w-100 m-auto p-2 p-md-3">
         <div class="d-flex flex-row justify-content-center align-items-center">
           <img
             src="@/assets/icon.svg"
@@ -62,19 +62,17 @@ const config = getAppConfig()
           </div>
         </div>
 
-        <!--TODO: Update Trans-->
-        <HorizontalRule>{{ i18n.t('keyboard.shortcuts') }}</HorizontalRule>
         <KeyboardShortcuts />
 
-        <HorizontalRule>{{ i18n.t('options.extension') }}</HorizontalRule>
+        <HorizontalRule class="my-2">{{ i18n.t('options.extension') }}</HorizontalRule>
 
         <PermsCheck :show-info="true" :show-remove="false" class="my-3" />
 
         <OptionsForm />
 
-        <HorizontalRule>{{ i18n.t('options.savedCredentials') }}</HorizontalRule>
+        <HorizontalRule class="my-2">{{ i18n.t('options.savedCredentials') }}</HorizontalRule>
 
-        <div class="d-grid gap-2 d-md-flex m-1">
+        <div class="d-grid gap-2 d-md-flex my-3">
           <AddHostButton class="flex-md-fill text-truncate" />
           <ImportText class="flex-md-fill text-truncate" />
         </div>
@@ -85,7 +83,7 @@ const config = getAppConfig()
         <CopySupport
           :message="i18n.t('options.copySupportMsg')"
           :tip="i18n.t('options.copySupportTip')"
-          class="fst-italic small"
+          class="fst-italic small my-3"
           >{{ i18n.t('options.copySupport') }}</CopySupport
         >
 
@@ -100,5 +98,3 @@ const config = getAppConfig()
   <ToastAlerts />
   <BackToTop />
 </template>
-
-<!--<style scoped></style>-->

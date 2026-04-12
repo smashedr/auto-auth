@@ -1,5 +1,5 @@
 import { onMounted, onUnmounted } from 'vue'
-import { getOptions } from '@/utils/options.ts'
+import { type Options, getOptions } from '@/utils/options.ts'
 
 function setBackground(options: Options) {
   // NOTE: Copied from VanillaJS. Refactor this method...

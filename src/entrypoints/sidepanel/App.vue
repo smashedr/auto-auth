@@ -39,5 +39,3 @@ console.debug('%c sidepanel/App.vue', 'color: Lime')
   <ToastAlerts />
   <BackToTop />
 </template>
-
-<!--<style scoped></style>-->

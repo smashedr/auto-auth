@@ -16,5 +16,3 @@ const hostModal = ref<InstanceType<typeof HostModal> | null>(null)
   <!--TODO: Move HostModal to App.vue and and and get with ref-->
   <HostModal ref="hostModal" @submit="submitHost" />
 </template>
-
-<!--<style scoped></style>-->
