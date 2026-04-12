@@ -181,7 +181,8 @@ onMounted(async () => {
         </div>
 
         <div v-if="isFailure" id="fail" class="alert alert-warning text-center p-2 mb-2" role="alert">
-          <b>{{ i18n.t('auth.authFailed') }}.</b> {{ i18n.t('auth.tryAgain') }}...
+          <b>{{ i18n.t('auth.authFailed') }}.</b> {{ ' ' }}
+          <span class="d-none d-sm-inline">{{ i18n.t('auth.tryAgain') }}...</span>
         </div>
 
         <form id="auth-form" class="mb-3" autocomplete="off" @submit.prevent="submitAuth">
@@ -325,16 +326,16 @@ onMounted(async () => {
         </form>
         <!-- auth-form -->
 
-        <hr />
+        <hr class="my-2 my-md-3" />
 
-        <div class="text-center">
+        <div class="text-center my-1">
           <a
             class="link-body-emphasis text-decoration-none d-inline-block"
             href="/options.html"
             @click.prevent="openOptions()"
             >{{ i18n.t('ctx.openOptions') }}</a
           >
-          <span class="mx-2">&bull;</span>
+          <span class="mx-2 mx-md-3">&bull;</span>
           <a
             class="link-body-emphasis text-decoration-none d-inline-block"
             target="_blank"

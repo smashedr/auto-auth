@@ -52,8 +52,4 @@ const id = useId()
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
-
-/*#hostsOffcanvas {*/
-/*  background-color: rgba(var(--bs-emphasis-bg-rgb), 60%);*/
-/*}*/
 </style>

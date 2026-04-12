@@ -20,7 +20,7 @@ const config = getAppConfig()
 </script>
 
 <template>
-  <div class="text-center">
+  <div class="text-center my-1">
     <a
       v-if="homePage"
       class="link-body-emphasis text-decoration-none d-inline-block"

@@ -66,6 +66,7 @@ form:
   host:
     columns: Colunas
     editable: Editável
+    large: Large
     visible: Visível
     hostnamePlaceholder: hostname
     usernamePlaceholder: nome de usuário

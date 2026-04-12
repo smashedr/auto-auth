@@ -11,6 +11,7 @@ import DeleteModal from '@/components/DeleteModal.vue'
 import HostModal from '@/components/HostModal.vue'
 import ImportExport from '@/components/ImportExport.vue'
 import InputCell from '@/components/InputCell.vue'
+import { isMobile } from '@/utils/system.ts'
 
 withDefaults(
   defineProps<{
@@ -122,7 +123,19 @@ const columnCount = computed(() => {
         <i class="fa-solid fa-table-columns"></i> {{ i18n.t('form.host.columns') }}
       </a>
 
-      <div class="dropdown-menu dropstart">
+      <div class="dropdown-menu dropstart" :class="{ 'fs-5': isMobile }">
+        <div class="form-check mx-2">
+          <input
+            v-model="options.largeTable"
+            type="checkbox"
+            class="form-check-input"
+            id="largeTable"
+            @change="saveKeyValue('largeTable', options.largeTable)"
+          />
+          <label class="form-check-label text-nowrap" for="largeTable">
+            <i class="fa-solid fa-table-cells-large"></i> {{ i18n.t('form.host.large') }}
+          </label>
+        </div>
         <div class="form-check mx-2">
           <input
             v-model="options.clickEdit"
@@ -168,7 +181,12 @@ const columnCount = computed(() => {
   </div>
 
   <div class="rounded rounded-3 overflow-hidden">
-    <table id="history-table" class="table table-sm table-hover transparent-table" style="table-layout: fixed">
+    <table
+      id="history-table"
+      class="table table-hover transparent-table"
+      :class="{ 'table-sm': !options.largeTable }"
+      style="table-layout: fixed"
+    >
       <thead>
         <tr>
           <th class="text-center" style="width: 36px"><i class="fa-solid fa-trash-can"></i></th>

@@ -33,7 +33,7 @@ $grid-breakpoints: (
 .glass-outline {
     backdrop-filter: blur(6px);
     background-color: rgba(var(--bs-emphasis-bg-rgb), 50%);
-    border: 1px solid rgba(var(--bs-secondary-rgb), 0.3);
+    border: 1px solid var(--bs-border-color-translucent);
     filter: drop-shadow(15px 12px 12px var(--bs-emphasis-bg));
 }
 
