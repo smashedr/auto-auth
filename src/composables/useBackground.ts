@@ -42,22 +42,10 @@ async function onChanged(changes: Record<string, any>) {
 export function useBackground() {
   console.debug('%cLOADED composables/useBackground.ts', 'color: Cyan')
 
-  // watch(
-  //   options,
-  //   (opts) => {
-  //     if (!opts) return
-  //     setBackground(opts)
-  //   },
-  //   { once: true },
-  // )
-
   if (!chrome.storage.sync.onChanged.hasListener(onChanged)) {
     chrome.storage.sync.onChanged.addListener(onChanged)
   }
 
-  onMounted(async () => {
-    const options = await getOptions()
-    setBackground(options)
-  })
+  onMounted(() => getOptions().then(setBackground).catch(console.warn))
   onUnmounted(() => chrome.storage.sync.onChanged.removeListener(onChanged))
 }
