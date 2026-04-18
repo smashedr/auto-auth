@@ -1,4 +1,5 @@
 import { i18n } from '#imports'
+import { defineContentScript } from 'wxt/utils/define-content-script'
 
 let url: URL
 let tabEnabled = false

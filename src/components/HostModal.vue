@@ -4,7 +4,7 @@ import { onMounted, ref, useId } from 'vue'
 import { Modal } from 'bootstrap'
 import { copyToast } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
-import { validateHostname } from '@/utils/hosts.ts'
+import { Hosts, validateHostname } from '@/utils/hosts.ts'
 
 withDefaults(
   defineProps<{

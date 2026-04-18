@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { i18n } from '#imports'
+import { ref } from 'vue'
 import { submitHost } from '@/utils/index.ts'
 import HostModal from '@/components/HostModal.vue'
 

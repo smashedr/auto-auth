@@ -1,6 +1,5 @@
-import { ref, onMounted, onUnmounted } from 'vue'
-import type { HostsRecord } from '@/utils/hosts.ts'
-import type { Ref } from 'vue'
+import { type Ref, ref, onMounted, onUnmounted } from 'vue'
+import { type HostsRecord, Hosts } from '@/utils/hosts.ts'
 
 export function useHosts(): Ref<HostsRecord> {
   console.debug('%cLOADED composables/useHosts.ts', 'color: Yellow')

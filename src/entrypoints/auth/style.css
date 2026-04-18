@@ -30,7 +30,3 @@ video {
     object-fit: cover;
     z-index: -1;
 }
-
-#auth-outer {
-    max-width: 767px;
-}

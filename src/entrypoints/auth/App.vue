@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { i18n, getAppConfig } from '#imports'
-import { onMounted, ref } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { copyToast } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
 import { openOptions } from '@/utils/extension.ts'
@@ -8,6 +8,7 @@ import { getSession, saveKeyValue } from '@/utils/options.ts'
 import { useBackground } from '@/composables/useBackground.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import { showToast } from '@/composables/useToast.ts'
+import { Hosts } from '@/utils/hosts.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
@@ -397,3 +398,9 @@ onMounted(async () => {
   <ToastAlerts />
   <BackToTop />
 </template>
+
+<style scoped>
+#auth-outer {
+  max-width: 767px;
+}
+</style>

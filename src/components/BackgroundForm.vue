@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { i18n } from '#imports'
+import { ref, watch } from 'vue'
 import { useOptions } from '@/composables/useOptions.ts'
 import { saveKeyValue } from '@/utils/options.ts'
 

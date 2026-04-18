@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { i18n } from '#imports'
 import { useOptions } from '@/composables/useOptions.ts'
 import FormSwitch from '@/components/FormSwitch.vue'
 import BackgroundForm from '@/components/BackgroundForm.vue'

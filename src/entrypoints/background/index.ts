@@ -1,9 +1,11 @@
 import { getAppConfig } from '#imports'
 import { isFirefox } from '@/utils/system.ts'
-import { defaultOptions, getOptions } from '@/utils/options.ts'
+import { defineBackground } from 'wxt/utils/define-background'
 import { openExtPanel, openPopup, openSidePanel } from '@/utils/extension.ts'
-import { onAuthRequired, webRequestFinished } from '@/entrypoints/background/auth.ts'
-import { updateIcon } from '@/entrypoints/background/icons.ts'
+import { type Options, defaultOptions, getOptions } from '@/utils/options.ts'
+import { Hosts } from '@/utils/hosts.ts'
+import { onAuthRequired, webRequestFinished } from './auth.ts'
+import { updateIcon } from './icons.ts'
 import { createContextMenus } from './menus.ts'
 
 export default defineBackground(() => {
@@ -135,37 +137,29 @@ function onMessage(
 
 async function onCommand(command: string, tab?: chrome.tabs.Tab) {
   console.debug('onCommand:', command, tab)
-  try {
-    if (command === 'openOptions') {
-      await chrome.runtime.openOptionsPage()
-    } else if (command === 'openExtPanel') {
-      await openExtPanel()
-    } else if (command === 'openSidePanel') {
-      openSidePanel()
-    } else {
-      console.warn(`Unknown Command: ${command}`)
-    }
-  } catch (e) {
-    console.warn(e)
+  if (command === 'openOptions') {
+    await chrome.runtime.openOptionsPage()
+  } else if (command === 'openExtPanel') {
+    await openExtPanel()
+  } else if (command === 'openSidePanel') {
+    openSidePanel()
+  } else {
+    console.warn(`Unknown Command: ${command}`)
   }
 }
 
 async function onClicked(ctx: chrome.contextMenus.OnClickData, tab?: chrome.tabs.Tab) {
   console.debug('onClicked:', ctx, tab)
-  try {
-    if (ctx.menuItemId === 'openOptions') {
-      await chrome.runtime.openOptionsPage()
-    } else if (ctx.menuItemId === 'openPopup') {
-      await openPopup()
-    } else if (ctx.menuItemId === 'openExtPanel') {
-      await openExtPanel()
-    } else if (ctx.menuItemId === 'openSidePanel') {
-      openSidePanel()
-    } else {
-      console.error(`Unknown ctx.menuItemId: ${ctx.menuItemId}`)
-    }
-  } catch (e) {
-    console.warn(e)
+  if (ctx.menuItemId === 'openOptions') {
+    await chrome.runtime.openOptionsPage()
+  } else if (ctx.menuItemId === 'openPopup') {
+    await openPopup()
+  } else if (ctx.menuItemId === 'openExtPanel') {
+    await openExtPanel()
+  } else if (ctx.menuItemId === 'openSidePanel') {
+    openSidePanel()
+  } else {
+    console.error(`Unknown ctx.menuItemId: ${ctx.menuItemId}`)
   }
 }
 

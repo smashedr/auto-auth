@@ -61,3 +61,9 @@ useBackground()
   <ToastAlerts />
   <BackToTop />
 </template>
+
+<style scoped>
+#options-wrapper {
+  max-width: 767px;
+}
+</style>
