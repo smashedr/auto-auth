@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { i18n } from '#imports'
+import { i18n, useAppConfig } from '#imports'
 import { clickOpen } from '@/utils/extension.ts'
 
 withDefaults(
@@ -15,17 +15,16 @@ withDefaults(
   },
 )
 
-const manifest = chrome.runtime.getManifest()
-const config = getAppConfig()
+const config = useAppConfig()
 </script>
 
 <template>
-  <div class="text-center my-1">
+  <div class="text-center">
     <a
       v-if="homePage"
       class="link-body-emphasis text-decoration-none d-inline-block"
       rel="noopener"
-      :href="manifest.homepage_url"
+      :href="config.githubUrl"
       target="_blank"
       @click.prevent="clickOpen"
       >{{ i18n.t('ui.text.homePage') }}</a

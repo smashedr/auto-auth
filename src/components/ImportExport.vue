@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { i18n } from '#imports'
 import { ref } from 'vue'
 import { importCredentials } from '@/utils/creds.ts'
 import { showToast } from '@/composables/useToast.ts'

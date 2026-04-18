@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { i18n } from '#imports'
+import { computed, ref } from 'vue'
 import { submitHost } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
 import { saveKeyValue } from '@/utils/options.ts'

@@ -1,39 +1,33 @@
 <script setup lang="ts">
+import { useAppConfig } from '#imports'
 import { isFirefox, isMobile } from '@/utils/system.ts'
 import { getOptions } from '@/utils/options.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { Hosts } from '@/utils/hosts.ts'
 
-const props = withDefaults(
-  defineProps<{
-    message?: string
-    tip?: string
-  }>(),
-  {
-    message: 'Support Information Copied.',
-    tip: 'For Issue Reporting',
-  },
-)
+const props = defineProps<{
+  message: string
+  tip: string
+}>()
 
-async function copySupport(event: Event) {
-  console.debug('copySupport:', event)
-  event.preventDefault()
+async function copySupport() {
   const date = new Date()
-  const manifest = chrome.runtime.getManifest()
+  const config = useAppConfig()
   const permissions = await chrome.permissions.getAll()
   const userSettings = await chrome.action.getUserSettings()
   const options = await getOptions()
   const local = await chrome.storage.local.get()
   const hosts = await Hosts.all()
 
-  options.pictureURL = options.pictureURL ? 'SET' : 'NOT SET'
-  options.videoURL = options.videoURL ? 'SET' : 'NOT SET'
+  options.pictureURL = `length: ${options.pictureURL.length}`
+  options.videoURL = `length: ${options.videoURL.length}`
   // delete local.results
 
   const result = [
-    `${manifest.name} - ${manifest.version}`,
+    `${config.name} - ${config.version}`,
     date.toString(),
     navigator.userAgent,
+    `id: ${chrome.runtime.id}`,
     `permissions.origins: ${JSON.stringify(permissions.origins)}`,
     `options: ${JSON.stringify(options)}`,
     `local: ${JSON.stringify(local)}`,
@@ -44,9 +38,7 @@ async function copySupport(event: Event) {
     `hosts: ${Object.keys(hosts).length}`,
   ]
   const commands = await chrome.commands?.getAll()
-  if (commands) {
-    result.push(`commands: ${JSON.stringify(commands)}`)
-  }
+  if (commands) result.push(`commands: ${JSON.stringify(commands)}`)
   await navigator.clipboard.writeText(result.join('\n'))
   showToast(props.message)
 }

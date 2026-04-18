@@ -1,5 +1,6 @@
 import { parseCreds } from '@/utils/creds.ts'
 import { getOptions, getSession } from '@/utils/options.ts'
+import { Hosts } from '@/utils/hosts.ts'
 
 const pendingRequests: string[] = []
 

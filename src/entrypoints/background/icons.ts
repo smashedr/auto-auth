@@ -1,4 +1,4 @@
-import { getOptions } from '@/utils/options.ts'
+import { type Options, getOptions } from '@/utils/options.ts'
 
 const getIcons = (name = '') => {
   // NOTE: Should be reusable for wxt.config.ts manifest generation...

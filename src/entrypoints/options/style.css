@@ -41,7 +41,3 @@ video {
     object-fit: cover;
     z-index: -1;
 }
-
-#options-wrapper {
-    max-width: 767px;
-}
