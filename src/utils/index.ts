@@ -15,7 +15,7 @@ export function copyToast(text: string, message: string, type = 'success') {
   navigator.clipboard
     .writeText(text)
     .then(() => showToast(message, type))
-    .catch((e) => console.log(e))
+    .catch(console.log)
 }
 
 // TODO: This does not belong here...
