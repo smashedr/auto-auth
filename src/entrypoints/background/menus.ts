@@ -15,12 +15,16 @@ const contexts: chrome.contextMenus.CreateProperties[] = config.map((entry) => (
     : { title: i18n.t(`ctx.${entry.id}` as any) }),
 }))
 
-export function createContextMenus() {
-  console.debug('createContextMenus')
-  if (!chrome.contextMenus) {
-    return console.debug('Skipping: chrome.contextMenus')
-  }
+export function updateContextMenus(enabled?: boolean) {
+  console.debug('%cupdateContextMenus:', `color: ${enabled ? 'Lime' : 'Yellow'}`, enabled)
+  if (!chrome.contextMenus) return console.debug('Skipping: chrome.contextMenus')
+
   chrome.contextMenus.removeAll().then(() => {
-    contexts.forEach((item) => chrome.contextMenus.create(item))
+    contexts.forEach((item) => {
+      const entry = { ...item }
+      if (!enabled) entry.contexts = ['action']
+      // console.log(`entry: ${entry.id}`, entry.contexts)
+      chrome.contextMenus.create(entry)
+    })
   })
 }
