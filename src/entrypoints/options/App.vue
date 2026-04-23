@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
 import { useTitle } from '@/composables/useTitle.ts'
-import { useBackground } from '@/composables/useBackground.ts'
 import BackToTop from '@/components/BackToTop.vue'
 import PermsCheck from '@/components/PermsCheck.vue'
 import ToastAlerts from '@/components/ToastAlerts.vue'
@@ -14,12 +13,11 @@ import HostsTable from '@/components/HostsTable.vue'
 import ImportText from '@/components/ImportText.vue'
 import AddHostButton from '@/components/AddHostButton.vue'
 import PageHeader from '@/components/PageHeader.vue'
+import UseBackground from '@/components/UseBackground.vue'
 
 console.debug('%c options/App.vue', 'color: SpringGreen')
 
 useTitle(i18n.t('options.title'))
-
-useBackground()
 </script>
 
 <template>
@@ -60,6 +58,7 @@ useBackground()
 
   <ToastAlerts />
   <BackToTop />
+  <UseBackground />
 </template>
 
 <style scoped>

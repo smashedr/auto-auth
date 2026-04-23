@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { i18n, useAppConfig } from '#imports'
-import { clickOpen, openExtPanel, openOptions, openPage, openPopup, openSidePanel } from '@/utils/extension.ts'
 import { isMobile } from '@/utils/system.ts'
+import { clickOpen, openExtPanel, openOptions, openPage, openPopup, openSidePanel } from '@/utils/extension.ts'
 import ThemeSwitch from '@/components/ThemeSwitch.vue'
 
 withDefaults(

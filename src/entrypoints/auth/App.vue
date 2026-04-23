@@ -5,17 +5,15 @@ import { copyToast } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
 import { openOptions } from '@/utils/extension.ts'
 import { getSession, saveKeyValue } from '@/utils/options.ts'
-import { useBackground } from '@/composables/useBackground.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { Hosts } from '@/utils/hosts.ts'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
+import UseBackground from '@/components/UseBackground.vue'
 
 console.debug('%c auth/App.vue', 'color: SpringGreen')
-
-useBackground()
 
 const options = useOptions()
 
@@ -397,6 +395,7 @@ onMounted(async () => {
 
   <ToastAlerts />
   <BackToTop />
+  <UseBackground />
 </template>
 
 <style scoped>

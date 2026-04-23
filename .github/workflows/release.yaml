@@ -7,6 +7,7 @@ on:
 env:
   PACKAGE_NAME: auto-auth # can be a wild card unless the to-do's are completed
   CHROME_ID: gpoiggobidhogpmmlakahiaaegibnogm # can be defined in elsewhere and parsed
+  MOZILLA_SLUG: auto-auth # can be defined in elsewhere and parsed
 
 jobs:
   build:
@@ -51,10 +52,15 @@ jobs:
         uses: cssnr/package-changelog-action@v2
 
 #  publish-chrome:
+#    # https://developer.chrome.com/docs/webstore/using-api
 #    name: "Publish Chrome"
 #    runs-on: ubuntu-latest
 #    timeout-minutes: 30
 #    needs: [build]
+#
+#    environment:
+#      name: chrome
+#      url: "https://chromewebstore.google.com/detail/${{ env.CHROME_ID }}"
 #
 #    steps:
 #      - name: "Download Artifacts"
@@ -74,6 +80,11 @@ jobs:
 #          cat chrome-mv3/manifest.json
 #          echo -e "\n::endgroup::"
 #
+#      - name: "Install PBE"
+#        run: |
+#          npm i -g publish-browser-extension
+#          npx publish-extension --version
+#
 #      # NOTE: This does not support Firefox amo-metadata
 #      - name: "Publish Extension"
 #        run: |
@@ -90,6 +101,7 @@ jobs:
 #      # TODO: This only submits for review! Need automation to upload signed release...
 #
 #  publish-mozilla:
+#    # https://mozilla.github.io/addons-server/topics/api/index.html
 #    name: "Publish Mozilla"
 #    runs-on: ubuntu-latest
 #    timeout-minutes: 60
@@ -97,6 +109,10 @@ jobs:
 #
 #    permissions:
 #      contents: write
+#
+#    environment:
+#      name: mozilla
+#      url: "https://addons.mozilla.org/addon/${{ env.MOZILLA_SLUG }}"
 #
 #    steps:
 #      - name: "Download Artifacts"
