@@ -41,7 +41,7 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
   const options = await setDefaultOptions(defaultOptions)
   console.debug('options:', options)
   updateIcon(options).catch(console.warn)
-  updateContextMenus(options.contextMenu)
+  updateContextMenus(options.contextMenu).catch(console.warn)
   setUninstall().catch(console.warn)
 
   const manifest = chrome.runtime.getManifest()
@@ -76,7 +76,7 @@ async function onStartup() {
 
   if (isFirefox) {
     console.log('Firefox Startup Workarounds')
-    updateContextMenus(options.contextMenu)
+    updateContextMenus(options.contextMenu).catch(console.warn)
     setUninstall().catch(console.warn)
   }
 }
@@ -91,7 +91,7 @@ function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
   if (!newValue) return console.warn('onChanged: missing options newValue')
 
   if (oldValue?.contextMenu !== newValue.contextMenu) {
-    updateContextMenus(newValue.contextMenu)
+    updateContextMenus(newValue.contextMenu).catch(console.warn)
   }
 
   if (oldValue.tempDisabled !== newValue.tempDisabled) {
@@ -189,9 +189,8 @@ async function setDefaultOptions(defaultOptions: object) {
 async function setUninstall() {
   // NOTE: Calling this setUninstallURL and using getAppConfig breaks WXT
   const config = getAppConfig()
-  const manifest = chrome.runtime.getManifest()
   const url = new URL(config.uninstallUrl)
-  url.searchParams.append('version', manifest.version)
+  url.searchParams.append('version', config.version)
   url.searchParams.append('id', chrome.runtime.id)
   console.log('setUninstallURL:', url.href)
   await chrome.runtime.setUninstallURL(url.href)

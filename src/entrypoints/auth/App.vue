@@ -13,8 +13,6 @@ import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
 import UseBackground from '@/components/UseBackground.vue'
 
-console.debug('%c auth/App.vue', 'color: SpringGreen')
-
 const options = useOptions()
 
 const userRef = ref('')
@@ -103,8 +101,6 @@ function saveCredsChange(event?: Event) {
   sessionStorage.setItem(hostRef.value, saveCreds.value ? '1' : '0')
 }
 
-// const manifest = chrome.runtime.getManifest()
-// console.debug('manifest:', manifest)
 const config = getAppConfig()
 console.log('config:', config)
 

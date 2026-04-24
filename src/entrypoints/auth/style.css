@@ -1,15 +1,3 @@
-/*NOTE: Fix Bootstrap Modal background shift on show*/
-/* But causes scrolling inside the body on long modals...*/
-@supports (scrollbar-gutter: stable both-edges) {
-    html {
-        scrollbar-gutter: stable;
-    }
-
-    body {
-        padding-right: 0 !important;
-    }
-}
-
 /*html,*/
 /*body,*/
 /*#app {*/
@@ -21,12 +9,14 @@
 /*    flex-direction: column;*/
 /*}*/
 
-video {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
+/*NOTE: Fix Bootstrap Modal background shift on show*/
+/* But causes scrolling inside the body on long modals...*/
+@supports (scrollbar-gutter: stable both-edges) {
+    html {
+        scrollbar-gutter: stable;
+    }
+
+    body {
+        padding-right: 0 !important;
+    }
 }
