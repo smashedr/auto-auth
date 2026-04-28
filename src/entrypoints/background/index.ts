@@ -83,27 +83,28 @@ async function onStartup() {
 
 function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
   console.log('%c background/index.ts - onChanged:', 'color: Cyan', changes)
-  // process and type options
-  const oldValue = changes.options?.oldValue as Options | undefined
-  const newValue = changes.options?.newValue as Options | undefined
-  // if (!oldValue || !newValue) return console.log('missing oldValue or newValue')
-  if (!oldValue) return console.log('onChanged: missing options oldValue')
-  if (!newValue) return console.warn('onChanged: missing options newValue')
+  if (changes?.options) {
+    const oldValue = changes.options?.oldValue as Options | undefined
+    const newValue = changes.options?.newValue as Options | undefined
+    // if (!oldValue || !newValue) return console.log('missing oldValue or newValue')
+    if (!oldValue) return console.log('onChanged: missing options oldValue')
+    if (!newValue) return console.warn('onChanged: missing options newValue')
 
-  if (oldValue?.contextMenu !== newValue.contextMenu) {
-    updateContextMenus(newValue.contextMenu).catch(console.warn)
-  }
+    if (oldValue?.contextMenu !== newValue.contextMenu) {
+      updateContextMenus(newValue.contextMenu).catch(console.warn)
+    }
 
-  if (oldValue.tempDisabled !== newValue.tempDisabled) {
-    console.debug('%c Toggle tempDisabled:', 'color: Yellow', newValue.tempDisabled)
-    updateIcon(newValue).catch(console.warn)
+    if (oldValue.tempDisabled !== newValue.tempDisabled) {
+      console.debug('%c Toggle tempDisabled:', 'color: Yellow', newValue.tempDisabled)
+      updateIcon(newValue).catch(console.warn)
+    }
   }
 }
 
 function onMessage(
   message: any,
   sender: chrome.runtime.MessageSender,
-  sendResponse: Function,
+  sendResponse: Function, // eslint-disable-line
 ) {
   const tabId = message.tabId || sender.tab?.id
   console.log(`onMessage: tabId: ${tabId} - message:`, message)

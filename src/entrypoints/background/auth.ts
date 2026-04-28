@@ -17,7 +17,7 @@ export function webRequestFinished(
     | chrome.webRequest.OnCompletedDetails
     | chrome.webRequest.OnErrorOccurredDetails,
 ): void {
-  let index = pendingRequests.indexOf(requestDetails.requestId)
+  const index = pendingRequests.indexOf(requestDetails.requestId)
   if (index > -1) {
     console.debug(
       `%cRemoving pendingRequests: ${requestDetails.requestId}`,
