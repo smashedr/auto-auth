@@ -2,6 +2,7 @@ import { i18n } from '#imports'
 import { showToast } from '@/composables/useToast.ts'
 import { Hosts } from '@/utils/hosts.ts'
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export function debounce(fn: Function, timeout = 250) {
   let timeoutID: ReturnType<typeof setTimeout>
   return (...args: unknown[]) => {

@@ -85,7 +85,7 @@ async function submitAuth(event: Event) {
   await chrome.tabs.update(tab.id, { url: hrefRef.value })
 }
 
-async function ignoreHost(_event: Event) {
+async function ignoreHost() {
   console.debug('ignoreHost:', hostRef.value)
   await Hosts.set(hostRef.value, 'ignored')
 
