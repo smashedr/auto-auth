@@ -49,7 +49,9 @@ jobs:
 
       - name: "Validate"
         if: ${{ github.event_name == 'release' }}
+        working-directory: .output
         run: |
+          ls -lAh .
           jq -e '.version == "${{ github.event.release.tag_name }}"' firefox-mv3/manifest.json
           echo "::group::chrome-mv3"
           ls -lAh chrome-mv3
