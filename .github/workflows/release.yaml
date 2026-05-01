@@ -74,7 +74,7 @@ jobs:
         run: |
           ls -lAh .
           stat "${{ env.PACKAGE_NAME }}-${{ github.event.release.tag_name }}-chrome.zip"
-          yq -e '.version | test("${{ github.event.release.tag_name }}")' chrome-mv3/manifest.json
+          jq -e '.version == "${{ github.event.release.tag_name }}"' chrome-mv3/manifest.json
           echo "::group::chrome-mv3"
           ls -lAh chrome-mv3
           echo "::endgroup::"
@@ -136,7 +136,7 @@ jobs:
         run: |
           ls -lAh .
           stat "${{ env.PACKAGE_NAME }}-${{ github.event.release.tag_name }}-sources.zip"
-          yq -e '.version | test("${{ github.event.release.tag_name }}")' firefox-mv3/manifest.json
+          jq -e '.version == "${{ github.event.release.tag_name }}"' firefox-mv3/manifest.json
           echo "::group::firefox-mv3"
           ls -lAh firefox-mv3
           echo "::endgroup::"
