@@ -1,26 +1,10 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
-import { ref, watch } from 'vue'
 import { useOptions } from '@/composables/useOptions.ts'
 import { saveKeyValue } from '@/utils/options.ts'
 import HorizontalRule from '@/components/HorizontalRule.vue'
 
 const options = useOptions()
-
-const bgRef = ref<'bgNone' | 'bgPicture' | 'bgVideo'>('bgNone')
-const pictureURL = ref('')
-const videoURL = ref('')
-
-watch(
-  options,
-  (opts) => {
-    console.log('%cBackgroundForm.vue watch - options:', 'color: GreenYellow', opts)
-    bgRef.value = options.value.radioBackground
-    pictureURL.value = options.value.pictureURL
-    videoURL.value = options.value.videoURL
-  },
-  { deep: true },
-)
 
 // NOTE: This was ported from VanillaJS and may need refactoring
 </script>
@@ -28,11 +12,11 @@ watch(
 <template>
   <div>
     <HorizontalRule>New Tab Background</HorizontalRule>
-    <form @change="saveKeyValue('radioBackground', bgRef)">
+    <form @change="saveKeyValue('radioBackground', options.radioBackground)">
       <div class="d-flex flex-column flex-md-row ms-1 ms-md-3">
         <div class="form-check form-check-inline mb-2 mb-md-0">
           <input
-            v-model="bgRef"
+            v-model="options.radioBackground"
             class="form-check-input"
             type="radio"
             name="radioBackground"
@@ -46,7 +30,7 @@ watch(
 
         <div class="form-check form-check-inline mb-2 mb-md-0">
           <input
-            v-model="bgRef"
+            v-model="options.radioBackground"
             class="form-check-input"
             type="radio"
             name="radioBackground"
@@ -60,7 +44,7 @@ watch(
 
         <div class="form-check form-check-inline mb-2">
           <input
-            v-model="bgRef"
+            v-model="options.radioBackground"
             class="form-check-input"
             type="radio"
             name="radioBackground"
@@ -75,7 +59,7 @@ watch(
     </form>
 
     <div class="ms-0 ms-md-3">
-      <div v-if="bgRef === 'bgPicture'" id="bgPictureInput" class="input-group">
+      <div v-if="options.radioBackground === 'bgPicture'" id="bgPictureInput" class="input-group">
         <span
           class="input-group-text"
           id="picture-addon"
@@ -86,7 +70,7 @@ watch(
           <i class="fa-solid fa-circle-info"></i
         ></span>
         <input
-          v-model="pictureURL"
+          v-model="options.pictureURL"
           type="text"
           class="form-control"
           :placeholder="i18n.t('background.pictureLabel')"
@@ -94,10 +78,10 @@ watch(
           id="pictureURL"
           name="pictureURL"
           aria-describedby="picture-addon"
-          @change="saveKeyValue('pictureURL', pictureURL)"
+          @change="saveKeyValue('pictureURL', options.pictureURL)"
         />
       </div>
-      <div v-if="bgRef === 'bgVideo'" id="bgVideoInput" class="input-group">
+      <div v-if="options.radioBackground === 'bgVideo'" id="bgVideoInput" class="input-group">
         <span
           class="input-group-text"
           id="video-addon"
@@ -108,7 +92,7 @@ watch(
           <i class="fa-solid fa-circle-info"></i
         ></span>
         <input
-          v-model="videoURL"
+          v-model="options.videoURL"
           type="text"
           class="form-control"
           :placeholder="i18n.t('background.videoLabel')"
@@ -116,7 +100,7 @@ watch(
           id="videoURL"
           name="videoURL"
           aria-describedby="video-addon"
-          @change="saveKeyValue('videoURL', videoURL)"
+          @change="saveKeyValue('videoURL', options.videoURL)"
         />
       </div>
     </div>

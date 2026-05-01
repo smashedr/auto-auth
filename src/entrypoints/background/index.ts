@@ -104,27 +104,26 @@ function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
 function onMessage(
   message: any,
   sender: chrome.runtime.MessageSender,
-  sendResponse: Function, // eslint-disable-line
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  sendResponse: Function,
 ) {
   const tabId = message.tabId || sender.tab?.id
   console.log(`onMessage: tabId: ${tabId} - message:`, message)
-
-  // TODO: Refactor badgeColor
-  if (tabId && message?.badgeColor) {
+  // message - must be a non-null object
+  if (!message || typeof message !== 'object') return console.warn('invalid message')
+  if (tabId && Object.hasOwn(message, 'badgeColor')) {
     console.debug(`setBadgeBackgroundColor: ${message.badgeColor}`)
     chrome.action
       .setBadgeBackgroundColor({ tabId: tabId, color: message.badgeColor })
       .catch(console.warn)
   }
-  // TODO: Refactor badgeText
-  if (tabId && message?.badgeText) {
+  if (tabId && Object.hasOwn(message, 'badgeText')) {
     console.debug(`setBadgeText: ${message.badgeText}`)
     chrome.action
       .setBadgeText({ tabId: tabId, text: message.badgeText })
       .catch(console.warn)
   }
-
-  if (message?.host) {
+  if (message.host) {
     Hosts.get(message.host).then((creds) => sendResponse(creds))
     return true
   }

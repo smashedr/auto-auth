@@ -2,7 +2,7 @@ import { type Ref, ref, onMounted, onUnmounted } from 'vue'
 import { type HostsRecord, Hosts } from '@/utils/hosts.ts'
 
 export function useHosts(): Ref<HostsRecord> {
-  console.debug('%cLOADED composables/useHosts.ts', 'color: Coral')
+  // console.debug('%cLOADED composables/useHosts.ts', 'color: Coral')
 
   const hosts = ref<HostsRecord>({})
 

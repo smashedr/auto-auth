@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
 import { computed, ref } from 'vue'
+import { isMobile } from '@/utils/system.ts'
 import { submitHost } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
 import { saveKeyValue } from '@/utils/options.ts'
@@ -12,7 +13,6 @@ import DeleteModal from '@/components/DeleteModal.vue'
 import HostModal from '@/components/HostModal.vue'
 import ImportExport from '@/components/ImportExport.vue'
 import InputCell from '@/components/InputCell.vue'
-import { isMobile } from '@/utils/system.ts'
 
 withDefaults(
   defineProps<{

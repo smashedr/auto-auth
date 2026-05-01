@@ -14,7 +14,7 @@ export const defaultOptions = {
   passwordShown: false,
   passwordVisible: false,
 
-  radioBackground: 'bgPicture' as 'bgNone' | 'bgPicture' | 'bgVideo',
+  radioBackground: 'bgPicture' as RadioBackground,
   pictureURL: 'https://picsum.photos/1920/1080',
   videoURL: '',
 }

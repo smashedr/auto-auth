@@ -1,11 +1,11 @@
 import { i18n } from '#imports'
 
 const config: chrome.contextMenus.CreateProperties[] = [
-  { contexts: ['all'], id: 'openPopup' },
-  { contexts: ['all'], id: 'openSidePanel' },
-  { contexts: ['all'], id: 'openExtPanel' },
-  { contexts: ['all'], id: 'separator' },
-  { contexts: ['all'], id: 'openOptions' },
+  { contexts: ['action', 'page'], id: 'openPopup' },
+  { contexts: ['action', 'page'], id: 'openSidePanel' },
+  { contexts: ['action', 'page'], id: 'openExtPanel' },
+  { contexts: ['action', 'page'], id: 'separator' },
+  { contexts: ['action', 'page'], id: 'openOptions' },
 ]
 
 const contexts: chrome.contextMenus.CreateProperties[] = config.map((entry) => ({
@@ -22,8 +22,14 @@ export async function updateContextMenus(enabled?: boolean) {
   chrome.contextMenus.removeAll().then(() => {
     contexts.forEach((item) => {
       const entry = { ...item }
-      if (!enabled) entry.contexts = ['action']
-      // console.log(`entry: ${entry.id}`, entry.contexts)
+      const contexts = [...(entry.contexts ?? [])]
+      // console.log('contexts:', contexts)
+      if (!enabled) {
+        const idx = contexts?.indexOf('page')
+        if (idx !== undefined && idx != -1) contexts?.splice(idx, 1)
+      }
+      entry.contexts = contexts as [chrome.contextMenus.ContextType]
+      console.log(`entry: ${entry.id}`, entry.contexts)
       chrome.contextMenus.create(entry)
     })
   })
