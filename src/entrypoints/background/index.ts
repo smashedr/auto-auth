@@ -110,21 +110,21 @@ function onMessage(
   console.log(`onMessage: tabId: ${tabId} - message:`, message)
 
   // TODO: Refactor badgeColor
-  if ('badgeColor' in message && tabId) {
+  if (tabId && message?.badgeColor) {
     console.debug(`setBadgeBackgroundColor: ${message.badgeColor}`)
     chrome.action
       .setBadgeBackgroundColor({ tabId: tabId, color: message.badgeColor })
       .catch(console.warn)
   }
   // TODO: Refactor badgeText
-  if ('badgeText' in message && tabId) {
+  if (tabId && message?.badgeText) {
     console.debug(`setBadgeText: ${message.badgeText}`)
     chrome.action
       .setBadgeText({ tabId: tabId, text: message.badgeText })
       .catch(console.warn)
   }
 
-  if ('host' in message) {
+  if (message?.host) {
     Hosts.get(message.host).then((creds) => sendResponse(creds))
     return true
   }
