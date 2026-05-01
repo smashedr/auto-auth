@@ -1,9 +1,9 @@
 // NOTE: All functions below are ported from VanillaJS
 
 export function openSidePanel(close?: boolean) {
-  console.debug('openSidePanel:', close)
+  console.debug('openSidePanel - close:', close)
   if (chrome.sidePanel) {
-    console.debug('chrome.sidePanel')
+    // console.debug('chrome.sidePanel')
     chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
       chrome.sidePanel
         .open({ windowId: tab.windowId })
@@ -13,7 +13,7 @@ export function openSidePanel(close?: boolean) {
         .catch(console.warn)
     })
   } else if (chrome.sidebarAction) {
-    console.debug('chrome.sidebarAction')
+    // console.debug('chrome.sidebarAction')
     chrome.sidebarAction.open()
     if (close) window.close()
   } else {
@@ -62,21 +62,21 @@ export async function openExtPanel(close = false) {
     'panelWidth',
     'panelHeight',
   ])
-  console.debug('local:', local)
+  // console.debug('local:', local)
 
   const lastPanelID = local.lastPanelID as number | undefined
-  console.debug('lastPanelID:', lastPanelID)
+  // console.debug('lastPanelID:', lastPanelID)
 
   try {
     if (lastPanelID) {
       // NOTE: This throws if lastPanelID is not an existing window ID
       const panel = await chrome.windows.get(lastPanelID)
       // console.debug('panel', panel)
-      console.debug('panel?.id', panel?.id)
+      // console.debug('panel?.id', panel?.id)
       if (panel?.id) {
         const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
         // console.debug('tabs:', tabs)
-        console.debug('tabs[0]?.windowId:', tabs[0]?.windowId)
+        // console.debug('tabs[0]?.windowId:', tabs[0]?.windowId)
         if (panel.id != tabs[0]?.windowId) {
           console.debug('%c Panel found:', 'color: SpringGreen', panel.id)
           await chrome.windows.update(panel.id, { focused: true })
@@ -86,20 +86,20 @@ export async function openExtPanel(close = false) {
       }
     }
   } catch (e) {
-    console.log(e)
+    console.debug(e)
   }
 
   const panelWidth = local.panelWidth as number | undefined
-  console.debug('panelWidth:', panelWidth)
+  // console.debug('panelWidth:', panelWidth)
   const panelHeight = local.panelHeight as number | undefined
-  console.debug('panelHeight:', panelHeight)
+  // console.debug('panelHeight:', panelHeight)
   const width = panelWidth || defaultWidth // NOSONAR
   const height = panelHeight || defaultHeight // NOSONAR
-  console.debug(`width, height:`, width, height)
+  // console.debug(`width, height:`, width, height)
   const url = chrome.runtime.getURL(panelPath)
-  console.debug('url:', url)
+  // console.debug('url:', url)
   const panel = await chrome.windows.create({ type, url, width, height })
-  console.debug('panel:', panel)
+  // console.debug('panel:', panel)
   if (panel) {
     console.debug(`%c Created new window: ${panel.id}`, 'color: Magenta')
     chrome.storage.local.set({ lastPanelID: panel.id }).catch(console.warn)
@@ -111,7 +111,7 @@ export async function activateOrOpen(url: string, open = true) {
   console.debug('activateOrOpen:', url, open)
   // Note: To Get Tab from Tabs (requires host permissions or tabs)
   const tabs = await chrome.tabs.query({ currentWindow: true })
-  console.debug('tabs:', tabs)
+  // console.debug('tabs:', tabs)
   for (const tab of tabs) {
     if (tab.url === url) {
       console.debug('%cTab found, activating:', 'color: Lime', tab)
@@ -122,13 +122,13 @@ export async function activateOrOpen(url: string, open = true) {
     console.debug('%cTab not found, opening url:', 'color: Yellow', url)
     return await chrome.tabs.create({ active: true, url })
   }
-  console.warn('tab not found and open not set!')
+  console.warn('tab not found and open not set for url:', url)
 }
 
 export function clickOpen(e: Event, close = false) {
   const target = e.currentTarget as HTMLAnchorElement
   let url = target.href
-  console.log('clickOpen:', close, url)
+  console.debug('clickOpen:', close, url)
   if (!url || url === '#') return
   if (url.startsWith('/')) {
     url = chrome.runtime.getURL(url)

@@ -3,13 +3,13 @@ import { showToast } from '@/composables/useToast.ts'
 import { Hosts } from '@/utils/hosts.ts'
 
 // TODO: Cleanup this function...
-export async function importCredentials(data: any) {
+export async function importCredentials(data: any) /* NOSONAR */ {
   // NOTE: Copied from VanillaJS...
   console.debug('importCredentials:', data)
   const hosts: Record<string, string> = {}
   let count = 0
   let total
-  if ('credentialsArray' in data) {
+  if (data?.credentialsArray) {
     // Basic Authentication (nanfgbiblbcagfodkfeinbbhijihckml)
     console.debug('Processing - %c Basic Authentication', 'color: SpringGreen')
     total = data.credentialsArray.length
