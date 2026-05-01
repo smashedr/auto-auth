@@ -124,7 +124,7 @@ onMounted(() => {
   if (!modalEl.value) return
 
   modal.value = Modal.getOrCreateInstance(modalEl.value)
-  console.log('modal:', modal.value)
+  // console.log('modal:', modal.value)
 
   modalEl.value?.addEventListener('shown.bs.modal', () => {
     if (isAdding.value) {

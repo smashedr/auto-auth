@@ -7,12 +7,12 @@ let tabEnabled = false
 export default defineContentScript({
   matches: ['*://*/*'],
   main() {
-    console.log(`%c ${chrome.runtime.id}: content/index.ts`, 'color: Lime')
+    console.log(`%c${chrome.runtime.id} - Loaded Content Script`, 'color: SpringGreen')
 
     url = new URL(window.location.href)
 
     if (!chrome.storage.sync.onChanged.hasListener(onChanged)) {
-      console.debug('Adding storage.onChanged Listener')
+      // console.debug('Adding storage.onChanged Listener')
       chrome.storage.sync.onChanged.addListener(onChanged)
     }
 
@@ -21,38 +21,34 @@ export default defineContentScript({
 })
 
 async function onChanged(changes: Record<string, any>) {
-  console.debug('content/index.ts - onChanged:', changes)
+  // console.debug('content/index.ts - onChanged:', changes)
   const items = changes[url.host[0]] // NOTE: Lazy Typing... in changes
   if (!items) return
   const oldCreds = items.oldValue?.[url.host]
   const newCreds = items.newValue?.[url.host]
-  if (oldCreds !== newCreds) {
-    await processCreds(newCreds)
-  }
+  if (oldCreds !== newCreds) await processCreds(newCreds)
 }
 
 async function processCreds(creds: any) {
-  console.debug('%cStart processCreds:', 'color: SpringGreen', creds)
+  // console.debug('%c processCreds:', 'color: LightSkyBlue', creds)
   if (creds) {
     tabEnabled = true
     if (creds === 'ignored') {
-      console.debug('%cSite is currently ignored.', 'color: Yellow')
+      console.debug('%cIgnored - Site is set to ignored.', 'color: Gold')
       await chrome.runtime.sendMessage({
         badgeText: i18n.t('content.badge.off'),
         badgeColor: 'yellow',
       })
     } else {
-      console.debug('%cFound credentials for site.', 'color: LimeGreen')
+      console.debug('%cEnabled - Credentials found for site.', 'color: MediumSpringGreen')
       await chrome.runtime.sendMessage({
         badgeText: i18n.t('content.badge.on'),
         badgeColor: 'green',
       })
     }
   } else if (tabEnabled) {
-    console.debug('%cSite has been removed.', 'color: OrangeRed')
+    console.debug('%cDisabled - Site credentials have been removed.', 'color: Tomato')
     tabEnabled = false
-    await chrome.runtime.sendMessage({
-      badgeText: '',
-    })
+    await chrome.runtime.sendMessage({ badgeText: '' })
   }
 }

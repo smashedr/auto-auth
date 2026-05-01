@@ -151,6 +151,7 @@ jobs:
       # NOTE: The web-ext sign command uploads and submits for review
 
       #- name: "Mozilla AMO Publish"
+      #  # https://extensionworkshop.com/documentation/develop/web-ext-command-reference/#web-ext-sign
       #  env:
       #    FIREFOX_API_KEY: ${{ secrets.FIREFOX_API_KEY }}
       #    FIREFOX_API_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
@@ -164,6 +165,8 @@ jobs:
       #      --upload-source-code="${{ env.PACKAGE_NAME }}-${{ github.event.release.tag_name }}-sources.zip"
 
       # NOTE: This only submits for review! Need automation to upload signed release...
+      # NOTE: Firefox allows signing listed addons with unlisted channel for beta...
+      #   https://extensionworkshop.com/documentation/develop/getting-started-with-web-ext/#signing-test-version-listed
 
   check:
     name: "Check"

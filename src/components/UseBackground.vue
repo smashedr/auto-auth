@@ -2,7 +2,7 @@
 import { onMounted, onUnmounted, ref, useTemplateRef } from 'vue'
 import { type Options, getOptions } from '@/utils/options.ts'
 
-const bgRef = ref<'bgNone' | 'bgPicture' | 'bgVideo'>('bgNone')
+const bgRef = ref<RadioBackground>('bgNone')
 const pictureURL = ref('')
 const videoURL = ref('')
 
