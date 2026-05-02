@@ -1,5 +1,6 @@
 import { i18n } from '#imports'
 import { defineContentScript } from 'wxt/utils/define-content-script'
+import { Hosts } from '@/utils/hosts.ts'
 
 let url: URL
 let tabEnabled = false
@@ -16,7 +17,9 @@ export default defineContentScript({
       chrome.storage.sync.onChanged.addListener(onChanged)
     }
 
-    chrome.runtime.sendMessage({ host: url.host }).then(processCreds).catch(console.error)
+    // // NOTE: Using Hosts.get since this is now bundled with vite...
+    // chrome.runtime.sendMessage({ host: url.host }).then(processCreds).catch(console.error)
+    Hosts.get(url.host).then(processCreds).catch(console.error)
   },
 })
 
