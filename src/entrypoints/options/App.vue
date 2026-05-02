@@ -15,6 +15,8 @@ import AddHostButton from '@/components/AddHostButton.vue'
 import PageHeader from '@/components/PageHeader.vue'
 import UseBackground from '@/components/UseBackground.vue'
 
+// console.debug('%c options/App.vue', 'color: Lime')
+
 useTitle(i18n.t('options.title'))
 </script>
 

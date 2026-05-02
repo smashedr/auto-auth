@@ -15,12 +15,12 @@ import OptionsForm from '@/components/OptionsForm.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
 import HostModal from '@/components/HostModal.vue'
 
-console.debug('%c popup/App.vue', 'color: Lime')
+// console.debug('%c popup/App.vue', 'color: Lime')
 
 // TODO: Chrome: auto-width - Firefox: 360px - Mobile: 100%
 const isBrowser = isFirefox ? '360px' : null
 const width = computed(() => (isMobile ? '100%' : isBrowser))
-console.log('width:', width.value)
+// console.log('width:', width.value)
 
 const options = useOptions()
 
@@ -64,7 +64,6 @@ async function onSubmit(host: string, user: string, pass: string, original?: str
 }
 
 onMounted(async () => {
-  console.log('%cMOUNTED: popup/App.vue', 'color: Lime')
   const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
   console.debug('tab:', tab)
   if (!tab.url) return
@@ -77,8 +76,8 @@ onMounted(async () => {
   savedCreds.value = creds
   usernameRef.value = parseCreds(creds)[0]
 
-  console.log('hostnameRef.value:', hostnameRef.value)
-  console.log('usernameRef.value:', usernameRef.value)
+  console.debug('hostnameRef.value:', hostnameRef.value)
+  console.debug('usernameRef.value:', usernameRef.value)
 })
 </script>
 
