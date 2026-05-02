@@ -77,6 +77,8 @@ Additionally, you can request features, report issues, start discussions and cha
 [![Discussions](https://img.shields.io/badge/discussions-blue?style=for-the-badge&logo=livechat&logoColor=white)](https://github.com/cssnr/auto-auth/discussions)
 [![Discord](https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/wXy6m2X8wY)
 
+I added a [TODO.md](TODO.md) that I will populate with remaining items as this is almost done!
+
 ## Contributing
 
 See the [CONTRIBUTING.md](#contributing-ov-file) for more details.
