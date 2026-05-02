@@ -7,7 +7,7 @@ import { onAuthRequired, webRequestFinished } from './auth.ts'
 import { updateIcon } from './icons.ts'
 import { updateContextMenus } from './menus.ts'
 
-// TODO: Confirm config can be defined at the top-level and reliably used in methods...
+// TODO: NOTE: The config object builds to r() at runtime...
 const config = getAppConfig()
 const banner = `%c\
    .---.  ${config.name} v${config.version}

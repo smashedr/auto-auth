@@ -6,7 +6,7 @@
 
 - Relocate `submitHost` in [index.ts](src/utils/index.ts)
 - Confirm `getAppConfig()` usage in top-level of [index.ts](src/entrypoints/background/index.ts)
-  - This builds to a `r().` query and **should** work without issue...
+  - This builds to `r()` at runtime and **should** work without issue...
 
 # Completed
 
