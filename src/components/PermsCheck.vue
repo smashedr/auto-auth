@@ -75,7 +75,7 @@ onUnmounted(() => {
   <div v-if="!hasPerms || showAlert || showRemove">
     <div v-if="!hasPerms" class="text-center d-grid gap-2">
       <button
-        class="btn btn-lg btn-success"
+        class="btn btn-lg btn-warning"
         type="button"
         data-bs-toggle="tooltip"
         data-bs-placement="top"

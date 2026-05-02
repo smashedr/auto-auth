@@ -68,13 +68,13 @@ async function onSubmit(host: string, user: string, pass: string, original?: str
 onMounted(async () => {
   const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
   // console.debug('tab:', tab)
-  if (!tab.url) return console.log('No URL for Tab - No Access.')
+  if (!tab.url) return console.debug('No URL for Tab - No Access.')
   const url = new URL(tab.url)
   // console.debug('url.host:', url.host)
   hostnameRef.value = url.host
   const creds = await Hosts.get(url.host)
   // console.debug('creds:', creds)
-  if (!creds) return console.log('No Saved Creds for Host.')
+  if (!creds) return console.debug('No Saved Creds for Host.')
   savedCreds.value = creds
   usernameRef.value = parseCreds(creds)[0]
   // console.debug('hostnameRef.value:', hostnameRef.value)

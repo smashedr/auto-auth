@@ -147,8 +147,8 @@ onMounted(() => {
   //   console.log('hide.bs.modal')
   // })
 
-  modalEl.value.addEventListener('hidden.bs.modal', (event) => {
-    console.log('hidden.bs.modal', event)
+  modalEl.value.addEventListener('hidden.bs.modal', () => {
+    // console.log('hidden.bs.modal', event)
     originalHost.value = ''
     hostRef.value = ''
     userRef.value = ''
