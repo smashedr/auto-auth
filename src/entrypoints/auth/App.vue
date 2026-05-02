@@ -35,7 +35,7 @@ const isProcessing = ref(false)
 watch(
   options,
   (opts) => {
-    console.log('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
+    // console.log('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
     const tempSave = sessionStorage.getItem(hostRef.value)
     console.log('tempSave:', tempSave)
     if (tempSave) {
@@ -47,8 +47,8 @@ watch(
   { once: true },
 )
 
-watch(saveCreds, (newVal) => {
-  console.log('watch - saveCreds:', newVal)
+watch(saveCreds, () => {
+  // console.log('watch - saveCreds:', newVal)
   saveCredsChange()
 })
 

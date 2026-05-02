@@ -8,8 +8,18 @@ import { onAuthRequired, webRequestFinished } from './auth.ts'
 import { updateIcon } from './icons.ts'
 import { updateContextMenus } from './menus.ts'
 
+const config = getAppConfig()
+const banner = `%c\
+   .---.  Auto Auth v${config.version}
+ //    |\\________________
+ooo()  | ________   _   _)
+ \\\\    |/        | | | |
+   \`---'         "-" |_| %c
+${config.githubUrl}`
+
 export default defineBackground(() => {
-  console.log(`Loaded: %c${chrome.runtime.id}`, 'Color: Cyan')
+  // console.log(`Loaded: %c${chrome.runtime.id}`, 'Color: PaleGreen')
+  console.log(`${banner}`, 'color: MediumSeaGreen', 'color: MediumSlateBlue')
 
   chrome.runtime.onInstalled.addListener(onInstalled)
   chrome.runtime.onStartup.addListener(onStartup)
@@ -60,7 +70,7 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
     }
   } else if (details.reason === chrome.runtime.OnInstalledReason.UPDATE) {
     if (options.showUpdate && manifest.version !== details.previousVersion) {
-      const config = getAppConfig()
+      // const config = getAppConfig()
       const url = `${config.githubUrl}/releases/tag/${manifest.version}`
       await chrome.tabs.create({ active: false, url })
     }
@@ -82,7 +92,7 @@ async function onStartup() {
 }
 
 function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
-  console.log('%c background/index.ts - onChanged:', 'color: Cyan', changes)
+  console.log('%c background/index.ts - onChanged:', 'color: SeaGreen', changes)
   if (changes?.options) {
     const oldValue = changes.options?.oldValue as Options | undefined
     const newValue = changes.options?.newValue as Options | undefined
@@ -108,7 +118,7 @@ function onMessage(
   sendResponse: Function,
 ) {
   const tabId = message.tabId || sender.tab?.id
-  console.log(`onMessage: tabId: ${tabId} - message:`, message)
+  console.debug(`background/index.ts - onMessage: tabId: ${tabId} - message:`, message)
   // message - must be a non-null object
   if (!message || typeof message !== 'object') return console.warn('invalid message')
   if (tabId && Object.hasOwn(message, 'badgeColor')) {
@@ -153,7 +163,7 @@ async function onClicked(ctx: chrome.contextMenus.OnClickData, tab?: chrome.tabs
   } else if (ctx.menuItemId === 'openSidePanel') {
     openSidePanel()
   } else {
-    console.error(`Unknown ctx.menuItemId: ${ctx.menuItemId}`)
+    console.warn(`Unknown ctx.menuItemId: ${ctx.menuItemId}`)
   }
 }
 

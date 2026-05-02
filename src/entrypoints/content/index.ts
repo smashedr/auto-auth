@@ -7,7 +7,7 @@ let tabEnabled = false
 export default defineContentScript({
   matches: ['*://*/*'],
   main() {
-    console.log(`%c${chrome.runtime.id} - Loaded Content Script`, 'color: SpringGreen')
+    console.debug('%cLoaded Content Script:', 'color: SpringGreen', chrome.runtime.id)
 
     url = new URL(window.location.href)
 

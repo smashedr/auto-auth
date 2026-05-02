@@ -27,11 +27,11 @@ const hasPerms = ref(true)
 const manifest = chrome.runtime.getManifest()
 // NOTE: origins defined: background/index.ts, background/icons.ts
 const origins = manifest.host_permissions
-console.debug('PermsCheck.vue - origins:', origins)
+// console.debug('PermsCheck.vue - origins:', origins)
 
 async function updatePerms() {
   hasPerms.value = await chrome.permissions.contains({ origins })
-  console.debug('updatePerms:', hasPerms.value)
+  // console.debug('updatePerms:', hasPerms.value)
 }
 
 async function grantPerms(event: Event) {
