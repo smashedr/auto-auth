@@ -136,7 +136,7 @@ async function onCommand(command: string, tab?: chrome.tabs.Tab) {
   } else if (command === 'openSidePanel') {
     openSidePanel()
   } else {
-    console.warn(`Unknown Command: ${command}`)
+    console.warn(`Unknown command: ${command}`)
   }
 }
 
@@ -179,7 +179,7 @@ async function setDefaultOptions(defaultOptions: object) {
   }
   if (changed) {
     await chrome.storage.sync.set({ options })
-    console.log('changed options:', options)
+    console.log('chrome.storage.sync.set:', options)
   }
   return options
 }
