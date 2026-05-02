@@ -42,7 +42,7 @@ const computedHosts = computed(() =>
 
 // DUPLICATION: popup/App.vue
 function deleteClick(host: string) {
-  console.log('HostsTable.vue - deleteClick:', host)
+  console.debug('HostsTable.vue - deleteClick:', host)
   if (options.value.confirmDelete) {
     deleteModal.value?.show(host)
   } else {
@@ -52,9 +52,10 @@ function deleteClick(host: string) {
 
 // DUPLICATION: popup/App.vue
 async function deleteHost(host: string) {
-  console.log('HostsTable.vue - deleteHost:', host)
-  const creds = hosts.value[host]
-  console.log('creds:', creds) // NOTE: Check if validation is needed...
+  console.debug('HostsTable.vue - deleteHost:', host)
+  // TODO: Determine if creds need to be validated here...
+  // const creds = hosts.value[host]
+  // console.log('creds:', creds)
   try {
     await Hosts.delete(host)
     showToast(`${i18n.t('ui.text.removed')}: ${host}`, 'success')
@@ -65,7 +66,7 @@ async function deleteHost(host: string) {
 }
 
 function onEdit(host: string, field: string, value: string) {
-  console.log('HostsTable.vue - onEdit:', host, field, value)
+  console.debug('HostsTable.vue - onEdit:', host, field, value)
   const creds = hosts.value[host]
   // console.log('creds:', creds)
   if (!creds) return showToast('Credentials Not Found.', 'warning')
@@ -95,10 +96,10 @@ function onEdit(host: string, field: string, value: string) {
 }
 
 function columnsChange(event: Event) {
-  console.debug('HostsTable.vue - columnsChange:', event)
+  // console.debug('HostsTable.vue - columnsChange:', event)
   const target = event.target as HTMLInputElement
-  console.debug('target.id:', target.id)
-  console.debug('target.checked:', target.checked)
+  // console.debug('target.id:', target.id)
+  // console.debug('target.checked:', target.checked)
   saveKeyValue(target.id, target.checked)
 }
 

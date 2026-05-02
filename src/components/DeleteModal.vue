@@ -23,7 +23,7 @@ function hide() {
 }
 
 function onDelete() {
-  console.log('DeleteModal.vue - onDelete:', hostRef.value)
+  // console.debug('DeleteModal.vue - onDelete:', hostRef.value)
   emit('delete', hostRef.value)
   hide()
 }

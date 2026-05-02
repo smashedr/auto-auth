@@ -63,6 +63,7 @@ function hide() {
   Modal.getInstance(modalEl.value)?.hide()
 }
 
+// TODO: Logging
 async function onSubmit() {
   console.log('HostModal.vue - onSubmit:', hostRef.value, userRef.value, passRef.value, originalHost.value)
 
@@ -90,11 +91,11 @@ async function onSubmit() {
   }
 
   // username
-  console.log('username:', userRef.value)
   // NOTE: Consider validating username as a convince to the user...
+  console.log('username:', userRef.value)
 
   // password
-  console.log('password:', passRef.value)
+  // console.log('password:', passRef.value)
   if (!passRef.value) {
     console.debug('No password')
     passwordEl.value?.focus()
@@ -142,9 +143,9 @@ onMounted(() => {
     showAlert.value = true
   })
 
-  modalEl.value?.addEventListener('hide.bs.modal', () => {
-    console.log('hide.bs.modal')
-  })
+  // modalEl.value?.addEventListener('hide.bs.modal', () => {
+  //   console.log('hide.bs.modal')
+  // })
 
   modalEl.value.addEventListener('hidden.bs.modal', (event) => {
     console.log('hidden.bs.modal', event)

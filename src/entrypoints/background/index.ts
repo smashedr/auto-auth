@@ -7,7 +7,7 @@ import { onAuthRequired, webRequestFinished } from './auth.ts'
 import { updateIcon } from './icons.ts'
 import { updateContextMenus } from './menus.ts'
 
-// TODO: NOTE: The config object builds to r() at runtime...
+// TODO: NOTE: The config object builds to r() for runtime...
 const config = getAppConfig()
 const banner = `%c\
    .---.  ${config.name} v${config.version}

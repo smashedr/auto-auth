@@ -17,8 +17,8 @@ const inputValue = ref(props.value)
 const inputEl = ref<HTMLInputElement | null>(null)
 
 function startEdit() {
-  if (!props.editable) return console.log('%c startEdit: no clickEdit', 'color: LightCoral')
-  if (isEditing.value) return console.log('%c startEdit: not isEditing', 'color: LightCoral')
+  if (!props.editable) return console.log('%cEditing Disabled', 'color: LightCoral') // TODO: Logging
+  if (isEditing.value) return console.log('%cDuplicate Start Event', 'color: Plum') // TODO: Logging
   // console.log('%c startEdit:', 'color: Lime', inputValue.value)
   inputValue.value = props.value
   isEditing.value = true
@@ -30,10 +30,10 @@ function startEdit() {
 
 function finishEdit() {
   // console.log('%c finishEdit:', 'color: Lime', event)
-  if (!isEditing.value) return console.log('%cNot isEditing.value', 'color: Yellow')
+  if (!isEditing.value) return console.log('%cDuplicate Finish Event', 'color: Plum') // TODO: Logging
   isEditing.value = false
-  if (inputValue.value === props.value) return console.log('%cUnchanged:', 'color: Bisque', inputValue.value)
-  console.log(`%cEdit ${props.field}`, 'color: Tomato', `"${inputValue.value}"`, 'for host:', props.host)
+  if (inputValue.value === props.value) return console.log('%cUnchanged:', 'color: Bisque', inputValue.value) // TODO: Logging
+  console.log(`%cEdit ${props.field}:`, 'color: Lime', `"${inputValue.value}"`, 'for host:', props.host)
   emit('edit', props.host, props.field, inputValue.value)
 }
 </script>

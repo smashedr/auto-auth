@@ -33,7 +33,7 @@ function setBackground(options: Options) {
 }
 
 async function onChanged(changes: Record<string, any>) {
-  console.log('BackgroundForm.vue - onChanged:', changes)
+  // console.log('BackgroundForm.vue - onChanged:', changes)
   if (!changes?.options?.oldValue || !changes?.options?.newValue) return
   if (
     changes.options.oldValue.radioBackground !== changes.options.newValue.radioBackground ||

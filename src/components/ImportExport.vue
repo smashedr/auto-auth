@@ -30,9 +30,9 @@ function textFileDownload(filename: string, text: string) {
   element.remove()
 }
 
-async function importHostsClick(event: Event) {
-  console.debug('importHostsClick:', event)
-  console.debug('hostsInput.value:', hostsInput.value)
+async function importHostsClick() {
+  // console.debug('importHostsClick:', event)
+  console.debug('importHostsClick - hostsInput.value:', hostsInput.value)
   hostsInput.value?.click()
 }
 
@@ -44,7 +44,6 @@ async function hostsInputChange(event: Event) {
     if (!file) return showToast(i18n.t('ui.text.errorReadingFile'), 'error')
     const text = await file.text()
     const data = JSON.parse(text)
-    console.debug('data:', data)
     await importCredentials(data)
   } catch (e) {
     console.log('Import error:', e)

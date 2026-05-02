@@ -29,7 +29,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
     for (const [key, value] of Object.entries(data)) {
       // console.debug(`key: "${key}":`, value)
       if (!key) {
-        console.debug(`No hostname for cres: ${value}`)
+        console.debug(`No hostname for value: ${value}`)
         continue
       }
       try {
@@ -54,7 +54,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
         }
         count += 1
       } catch (e) {
-        console.log(`Error processing: ${key}`, 'color: Red', e)
+        console.log(`%cError processing: ${key}`, 'color: Red', e)
       }
     }
   }
@@ -70,7 +70,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
 function getHost(hostname: string) {
   let host = hostname.toLowerCase().trim()
   host = host.includes('://') ? host : 'https://' + host
-  console.debug('host:', host)
+  // console.debug('host:', host)
   const url = new URL(host)
   console.debug('url.host:', url.host)
   if (!url.host) {

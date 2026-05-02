@@ -31,6 +31,7 @@ export function openOptions(close = false) {
     .catch(console.warn)
 }
 
+// NOTE: NOT IN USE - for adding a page.html for managing hosts...
 export async function openPage(close = false, path = 'auth.html') {
   console.debug('openPage:', path)
   const page = chrome.runtime.getURL(path)
@@ -78,7 +79,7 @@ export async function openExtPanel(close = false) {
         // console.debug('tabs:', tabs)
         // console.debug('tabs[0]?.windowId:', tabs[0]?.windowId)
         if (panel.id != tabs[0]?.windowId) {
-          console.debug('%c Panel found:', 'color: SpringGreen', panel.id)
+          console.debug('%cPanel found:', 'color: SpringGreen', panel.id)
           await chrome.windows.update(panel.id, { focused: true })
           if (close) window.close()
           return
@@ -101,7 +102,7 @@ export async function openExtPanel(close = false) {
   const panel = await chrome.windows.create({ type, url, width, height })
   // console.debug('panel:', panel)
   if (panel) {
-    console.debug(`%c Created new window: ${panel.id}`, 'color: Magenta')
+    console.debug(`%cCreated new window: ${panel.id}`, 'color: Magenta')
     chrome.storage.local.set({ lastPanelID: panel.id }).catch(console.warn)
   }
   if (close) window.close()

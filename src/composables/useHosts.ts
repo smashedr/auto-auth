@@ -12,7 +12,7 @@ export function useHosts(): Ref<HostsRecord> {
     const keys = Object.keys(changes)
     // console.log('useHosts - keys:', keys)
     if (keys.some((key) => key.length === 1)) {
-      console.log('%c composables/useHosts.ts - hosts updated ', 'color: LightSkyBlue')
+      // console.log('%c composables/useHosts.ts - hosts updated ', 'color: LightSkyBlue')
       hosts.value = await Hosts.all()
     }
   }
