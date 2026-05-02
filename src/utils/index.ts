@@ -26,7 +26,7 @@ export async function submitHost(
   pass: string,
   original?: string,
 ) {
-  console.log('submitHost:', host, user, pass, original)
+  // console.log('submitHost:', host, user, pass, original)
   try {
     // NOTE: Update Hosts.set to handle this logic...
     if (original) {

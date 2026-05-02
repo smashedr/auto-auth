@@ -8,6 +8,7 @@ import { onAuthRequired, webRequestFinished } from './auth.ts'
 import { updateIcon } from './icons.ts'
 import { updateContextMenus } from './menus.ts'
 
+// TODO: Confirm config can be defined at the top-level and reliably used in methods...
 const config = getAppConfig()
 const banner = `%c\
    .---.  Auto Auth v${config.version}
@@ -31,18 +32,13 @@ export default defineBackground(() => {
   chrome.permissions.onAdded.addListener(onAdded)
   chrome.permissions.onRemoved.addListener(onRemoved)
 
+  const filter = { urls: ['<all_urls>'] }
   // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webRequest/onAuthRequired
-  chrome.webRequest.onAuthRequired.addListener(onAuthRequired, { urls: ['<all_urls>'] }, [
-    'asyncBlocking',
-  ])
+  chrome.webRequest.onAuthRequired.addListener(onAuthRequired, filter, ['asyncBlocking'])
   // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webRequest/onCompleted
-  chrome.webRequest.onCompleted.addListener(webRequestFinished, {
-    urls: ['<all_urls>'],
-  })
+  chrome.webRequest.onCompleted.addListener(webRequestFinished, filter)
   // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webRequest/onErrorOccurred
-  chrome.webRequest.onErrorOccurred.addListener(webRequestFinished, {
-    urls: ['<all_urls>'],
-  })
+  chrome.webRequest.onErrorOccurred.addListener(webRequestFinished, filter)
 })
 
 async function onInstalled(details: chrome.runtime.InstalledDetails) {
@@ -92,20 +88,17 @@ async function onStartup() {
 }
 
 function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
-  console.log('%c background/index.ts - onChanged:', 'color: SeaGreen', changes)
+  // console.log('%c background/index.ts - onChanged:', 'color: SeaGreen', changes)
   if (changes?.options) {
     const oldValue = changes.options?.oldValue as Options | undefined
     const newValue = changes.options?.newValue as Options | undefined
     // if (!oldValue || !newValue) return console.log('missing oldValue or newValue')
     if (!oldValue) return console.log('onChanged: missing options oldValue')
     if (!newValue) return console.warn('onChanged: missing options newValue')
-
     if (oldValue?.contextMenu !== newValue.contextMenu) {
       updateContextMenus(newValue.contextMenu).catch(console.warn)
     }
-
     if (oldValue.tempDisabled !== newValue.tempDisabled) {
-      console.debug('%c Toggle tempDisabled:', 'color: Yellow', newValue.tempDisabled)
       updateIcon(newValue).catch(console.warn)
     }
   }
@@ -114,13 +107,12 @@ function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
 function onMessage(
   message: any,
   sender: chrome.runtime.MessageSender,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  sendResponse: Function,
+  sendResponse: (response?: any) => void,
 ) {
   const tabId = message.tabId || sender.tab?.id
   console.debug(`background/index.ts - onMessage: tabId: ${tabId} - message:`, message)
-  // message - must be a non-null object
   if (!message || typeof message !== 'object') return console.warn('invalid message')
+
   if (tabId && Object.hasOwn(message, 'badgeColor')) {
     console.debug(`setBadgeBackgroundColor: ${message.badgeColor}`)
     chrome.action
@@ -198,7 +190,7 @@ async function setDefaultOptions(defaultOptions: object) {
 
 async function setUninstall() {
   // NOTE: Calling this setUninstallURL and using getAppConfig breaks WXT
-  const config = getAppConfig()
+  // const config = getAppConfig()
   const url = new URL(config.uninstallUrl)
   url.searchParams.append('version', config.version)
   url.searchParams.append('id', chrome.runtime.id)

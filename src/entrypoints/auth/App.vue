@@ -15,6 +15,8 @@ import UseBackground from '@/components/UseBackground.vue'
 
 // console.debug('%c auth/App.vue', 'color: Lime')
 
+const config = getAppConfig()
+
 const options = useOptions()
 
 const userRef = ref('')
@@ -71,7 +73,6 @@ async function submitAuth(event: Event) {
   } else {
     const session = await getSession()
     console.log('session:', session)
-
     session[hostRef.value] = `${userRef.value}:${passRef.value}`
     console.log('session:', session)
     await chrome.storage.session.set({ session })
@@ -102,8 +103,6 @@ function saveCredsChange(event?: Event) {
   console.debug('saveCredsChange:', event)
   sessionStorage.setItem(hostRef.value, saveCreds.value ? '1' : '0')
 }
-
-const config = getAppConfig()
 
 onMounted(async () => {
   // NOTE: Copied from VanillaJS...

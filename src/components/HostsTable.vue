@@ -66,10 +66,10 @@ async function deleteHost(host: string) {
 function onEdit(host: string, field: string, value: string) {
   console.log('HostsTable.vue - onEdit:', host, field, value)
   const creds = hosts.value[host]
-  console.log('creds:', creds)
+  // console.log('creds:', creds)
   if (!creds) return showToast('Credentials Not Found.', 'warning')
   const [username, password] = parseCreds(creds)
-  console.log('username, password:', username, password)
+  // console.log('username, password:', username, password)
   switch (field) {
     case 'host': {
       if (!value) return showToast('Hostname is Required.', 'warning')
@@ -207,18 +207,27 @@ const columnCount = computed(() => {
           </td>
 
           <!-- Host -->
-          <InputCell
-            :host="host"
-            field="host"
-            :value="host"
-            :visible="true"
-            :editable="options.clickEdit"
-            @edit="onEdit"
-          />
+          <td v-if="creds === 'ignored'" class="text-truncate text-warning-emphasis">
+            {{ host }}
+          </td>
+          <template v-else>
+            <td v-if="!options.clickEdit" class="text-truncate">
+              <a :href="`https://${host}`" target="_blank" class="link-body-emphasis">{{ host }}</a>
+            </td>
+            <InputCell
+              v-else
+              :host="host"
+              field="host"
+              :value="host"
+              :visible="true"
+              :editable="options.clickEdit"
+              @edit="onEdit"
+            />
+          </template>
 
           <!-- User -->
           <template v-if="options.usernameShown">
-            <td v-if="creds === 'ignored'" class="text-truncate text-warning fst-italic fw-bold">
+            <td v-if="creds === 'ignored'" class="text-truncate text-warning-emphasis fst-italic">
               {{ i18n.t('ui.text.ignored') }}
             </td>
             <InputCell

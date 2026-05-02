@@ -19,7 +19,7 @@ const inputEl = ref<HTMLInputElement | null>(null)
 function startEdit() {
   if (!props.editable) return console.log('%c startEdit: no clickEdit', 'color: LightCoral')
   if (isEditing.value) return console.log('%c startEdit: not isEditing', 'color: LightCoral')
-  console.log('%c startEdit:', 'color: Lime', inputValue.value)
+  // console.log('%c startEdit:', 'color: Lime', inputValue.value)
   inputValue.value = props.value
   isEditing.value = true
   nextTick(() => {
@@ -28,13 +28,12 @@ function startEdit() {
   })
 }
 
-function finishEdit(event: Event) {
-  console.log('%c finishEdit:', 'color: Lime', event)
-  console.log('event.type:', event.type)
-  if (!isEditing.value) return console.log('%c finishEdit return', 'color: Yellow')
+function finishEdit() {
+  // console.log('%c finishEdit:', 'color: Lime', event)
+  if (!isEditing.value) return console.log('%cNot isEditing.value', 'color: Yellow')
   isEditing.value = false
-  if (inputValue.value === props.value) return console.log('%c Unchanged:', 'color: Bisque', inputValue.value)
-  console.log(`Edit: %c${props.field}:`, 'color: Lime', `"${inputValue.value}" / host: ${props.host}`)
+  if (inputValue.value === props.value) return console.log('%cUnchanged:', 'color: Bisque', inputValue.value)
+  console.log(`%cEdit ${props.field}`, 'color: Tomato', `"${inputValue.value}"`, 'for host:', props.host)
   emit('edit', props.host, props.field, inputValue.value)
 }
 </script>
