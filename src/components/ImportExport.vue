@@ -48,7 +48,8 @@ async function hostsInputChange(event: Event) {
     await importCredentials(data)
   } catch (e) {
     console.log('Import error:', e)
-    if (e instanceof Error) showToast(`${i18n.t('ui.text.importError')}: ${e.message}`, 'warning')
+    const message = e instanceof Error ? e.message : 'Unknown Error'
+    showToast(`${i18n.t('ui.text.importError')}: ${message}`, 'warning')
   }
 }
 </script>

@@ -34,10 +34,9 @@ export async function submitHost(
     } else {
       await Hosts.set(host, `${user}:${pass}`)
     }
-
     showToast(`${i18n.t('ui.action.addEdit')}: ${host}`, 'success')
   } catch (e) {
-    if (e instanceof Error)
-      showToast(`${i18n.t('ui.text.addEditError')}: ${e.message}`, 'danger')
+    const message = e instanceof Error ? e.message : 'Unknown Error'
+    showToast(`${i18n.t('ui.text.addEditError')}: ${message}`, 'danger')
   }
 }
