@@ -3,6 +3,7 @@ import { i18n } from '#imports'
 import { useOptions } from '@/composables/useOptions.ts'
 import FormSwitch from '@/components/FormSwitch.vue'
 import BackgroundForm from '@/components/BackgroundForm.vue'
+import HorizontalRule from '@/components/HorizontalRule.vue'
 
 withDefaults(
   defineProps<{
@@ -32,8 +33,10 @@ const options = useOptions()
         </template>
       </form>
     </div>
+
     <div v-if="show.includes('background')" class="row m-0">
-      <h6>{{ i18n.t('options.authPageBackground') }}</h6>
+      <HorizontalRule class="p-0 my-2">{{ i18n.t('options.authPageBackground') }}</HorizontalRule>
+      <!--<h6>{{ i18n.t('options.authPageBackground') }}</h6>-->
       <BackgroundForm />
     </div>
   </div>

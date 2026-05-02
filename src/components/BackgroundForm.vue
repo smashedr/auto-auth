@@ -2,7 +2,6 @@
 import { i18n } from '#imports'
 import { useOptions } from '@/composables/useOptions.ts'
 import { saveKeyValue } from '@/utils/options.ts'
-import HorizontalRule from '@/components/HorizontalRule.vue'
 
 const options = useOptions()
 
@@ -11,7 +10,6 @@ const options = useOptions()
 
 <template>
   <div>
-    <HorizontalRule>New Tab Background</HorizontalRule>
     <form @change="saveKeyValue('radioBackground', options.radioBackground)">
       <div class="d-flex flex-column flex-md-row ms-1 ms-md-3">
         <div class="form-check form-check-inline mb-2 mb-md-0">
