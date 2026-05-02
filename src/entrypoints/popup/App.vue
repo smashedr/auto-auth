@@ -44,8 +44,9 @@ function deleteClick(host: string) {
 // DUPLICATION: HostsTable.vue
 async function deleteHost(host: string) {
   console.log('popup/App.vue - deleteHost:', host)
-  const creds = await Hosts.get(host)
-  console.log('creds:', creds) // NOTE: Check if validation is needed...
+  // TODO: Determine if creds need to be validated here...
+  // const creds = hosts.value[host]
+  // console.log('creds:', creds)
   try {
     await Hosts.delete(host)
     savedCreds.value = ''
@@ -66,19 +67,18 @@ async function onSubmit(host: string, user: string, pass: string, original?: str
 
 onMounted(async () => {
   const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
-  console.debug('tab:', tab)
-  if (!tab.url) return
+  // console.debug('tab:', tab)
+  if (!tab.url) return console.log('No URL for Tab - No Access.')
   const url = new URL(tab.url)
-  console.debug('url.host:', url.host)
+  // console.debug('url.host:', url.host)
   hostnameRef.value = url.host
   const creds = await Hosts.get(url.host)
-  console.debug('creds:', creds)
-  if (!creds) return
+  // console.debug('creds:', creds)
+  if (!creds) return console.log('No Saved Creds for Host.')
   savedCreds.value = creds
   usernameRef.value = parseCreds(creds)[0]
-
-  console.debug('hostnameRef.value:', hostnameRef.value)
-  console.debug('usernameRef.value:', usernameRef.value)
+  // console.debug('hostnameRef.value:', hostnameRef.value)
+  // console.debug('usernameRef.value:', usernameRef.value)
 })
 </script>
 
