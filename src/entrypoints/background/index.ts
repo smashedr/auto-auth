@@ -3,15 +3,14 @@ import { isFirefox } from '@/utils/system.ts'
 import { defineBackground } from 'wxt/utils/define-background'
 import { openExtPanel, openPopup, openSidePanel } from '@/utils/extension.ts'
 import { type Options, defaultOptions, getOptions } from '@/utils/options.ts'
-import { Hosts } from '@/utils/hosts.ts'
 import { onAuthRequired, webRequestFinished } from './auth.ts'
 import { updateIcon } from './icons.ts'
 import { updateContextMenus } from './menus.ts'
 
-// TODO: Confirm config can be defined at the top-level and reliably used in methods...
+// TODO: NOTE: The config object builds to r() at runtime...
 const config = getAppConfig()
 const banner = `%c\
-   .---.  Auto Auth v${config.version}
+   .---.  ${config.name} v${config.version}
  //    |\\________________
 ooo()  | ________   _   _)
  \\\\    |/        | | | |
@@ -104,11 +103,7 @@ function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
   }
 }
 
-function onMessage(
-  message: any,
-  sender: chrome.runtime.MessageSender,
-  sendResponse: (response?: any) => void,
-) {
+function onMessage(message: any, sender: chrome.runtime.MessageSender) {
   const tabId = message.tabId || sender.tab?.id
   console.debug(`background/index.ts - onMessage: tabId: ${tabId} - message:`, message)
   if (!message || typeof message !== 'object') return console.warn('invalid message')
@@ -125,10 +120,11 @@ function onMessage(
       .setBadgeText({ tabId: tabId, text: message.badgeText })
       .catch(console.warn)
   }
-  if (message.host) {
-    Hosts.get(message.host).then((creds) => sendResponse(creds))
-    return true
-  }
+  // // NOTE: Using Hosts.get since this is now bundled with vite...
+  // if (message.host) {
+  //   Hosts.get(message.host).then((creds) => sendResponse(creds))
+  //   return true
+  // }
 }
 
 async function onCommand(command: string, tab?: chrome.tabs.Tab) {
@@ -140,7 +136,7 @@ async function onCommand(command: string, tab?: chrome.tabs.Tab) {
   } else if (command === 'openSidePanel') {
     openSidePanel()
   } else {
-    console.warn(`Unknown Command: ${command}`)
+    console.warn(`Unknown command: ${command}`)
   }
 }
 
@@ -183,7 +179,7 @@ async function setDefaultOptions(defaultOptions: object) {
   }
   if (changed) {
     await chrome.storage.sync.set({ options })
-    console.log('changed options:', options)
+    console.log('chrome.storage.sync.set:', options)
   }
   return options
 }

@@ -1,5 +1,6 @@
 import { i18n } from '#imports'
 import { defineContentScript } from 'wxt/utils/define-content-script'
+import { Hosts } from '@/utils/hosts.ts'
 
 let url: URL
 let tabEnabled = false
@@ -7,7 +8,7 @@ let tabEnabled = false
 export default defineContentScript({
   matches: ['*://*/*'],
   main() {
-    console.debug('%cLoaded Content Script:', 'color: SpringGreen', chrome.runtime.id)
+    console.debug('%cContent Script Loaded:', 'color: MediumSeaGreen', chrome.runtime.id)
 
     url = new URL(window.location.href)
 
@@ -16,7 +17,9 @@ export default defineContentScript({
       chrome.storage.sync.onChanged.addListener(onChanged)
     }
 
-    chrome.runtime.sendMessage({ host: url.host }).then(processCreds).catch(console.error)
+    // // NOTE: Using Hosts.get since this is now bundled with vite...
+    // chrome.runtime.sendMessage({ host: url.host }).then(processCreds).catch(console.error)
+    Hosts.get(url.host).then(processCreds).catch(console.error)
   },
 })
 
@@ -30,7 +33,7 @@ async function onChanged(changes: Record<string, any>) {
 }
 
 async function processCreds(creds: any) {
-  // console.debug('%c processCreds:', 'color: LightSkyBlue', creds)
+  console.debug('processCreds - tabEnabled:', tabEnabled, '- creds:', creds)
   if (creds) {
     tabEnabled = true
     if (creds === 'ignored') {
@@ -40,7 +43,7 @@ async function processCreds(creds: any) {
         badgeColor: 'yellow',
       })
     } else {
-      console.debug('%cEnabled - Site Credentials Found.', 'color: MediumSpringGreen')
+      console.debug('%cEnabled - Site Credentials Found.', 'color: LimeGreen')
       await chrome.runtime.sendMessage({
         badgeText: i18n.t('content.badge.on'),
         badgeColor: 'green',

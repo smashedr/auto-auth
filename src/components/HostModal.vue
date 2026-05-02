@@ -79,7 +79,7 @@ async function onSubmit() {
   // existing
   if (isAdding.value) {
     const existing = await Hosts.get(hostRef.value)
-    console.debug('existing:', existing)
+    // console.debug('existing:', existing)
     if (existing) {
       console.debug('Existing Host:', hostRef.value)
       hostnameEl.value?.focus()
