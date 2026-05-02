@@ -4,6 +4,21 @@
 
 - :robot:
 
+## Items
+
+- Confirm Ignored Host Management is Satisfactory
+- Validate All English Translations
+- Add Additional Locales
+
+## Before Merge
+
+- Cleanup All **TODO**
+- Cleanup All Logging
+- Update [README.md](README.md)
+- Update [wxt.config.ts](wxt.config.ts)
+- Update [app.config.ts](src/app.config.ts)
+- Update [release.yaml](.github/workflows/release.yaml)
+
 # Completed
 
 - Confirm `getAppConfig()` usage in top-level of [index.ts](src/entrypoints/background/index.ts)
