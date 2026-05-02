@@ -7,7 +7,7 @@ let tabEnabled = false
 export default defineContentScript({
   matches: ['*://*/*'],
   main() {
-    console.log(`%c${chrome.runtime.id} - Loaded Content Script`, 'color: SpringGreen')
+    console.debug('%cLoaded Content Script:', 'color: SpringGreen', chrome.runtime.id)
 
     url = new URL(window.location.href)
 
@@ -34,20 +34,20 @@ async function processCreds(creds: any) {
   if (creds) {
     tabEnabled = true
     if (creds === 'ignored') {
-      console.debug('%cIgnored - Site is set to ignored.', 'color: Gold')
+      console.debug('%cIgnored - Site is Ignored!', 'color: Gold')
       await chrome.runtime.sendMessage({
         badgeText: i18n.t('content.badge.off'),
         badgeColor: 'yellow',
       })
     } else {
-      console.debug('%cEnabled - Credentials found for site.', 'color: MediumSpringGreen')
+      console.debug('%cEnabled - Site Credentials Found.', 'color: MediumSpringGreen')
       await chrome.runtime.sendMessage({
         badgeText: i18n.t('content.badge.on'),
         badgeColor: 'green',
       })
     }
   } else if (tabEnabled) {
-    console.debug('%cDisabled - Site credentials have been removed.', 'color: Tomato')
+    console.debug('%cDisabled - Site Credentials Removed.', 'color: Tomato')
     tabEnabled = false
     await chrome.runtime.sendMessage({ badgeText: '' })
   }

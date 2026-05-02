@@ -14,11 +14,13 @@ import AddHostButton from '@/components/AddHostButton.vue'
 import ImportText from '@/components/ImportText.vue'
 import HorizontalRule from '@/components/HorizontalRule.vue'
 
+// console.debug('%c popout/App.vue', 'color: Lime')
+
 useTitle(i18n.t('ui.action.extensionPanel'))
 
 async function windowResize() {
   const size = { panelWidth: window.outerWidth, panelHeight: window.outerHeight }
-  console.debug('windowResize:', size)
+  // console.debug('windowResize:', size)
   await chrome.storage.local.set(size).catch(console.warn)
 }
 

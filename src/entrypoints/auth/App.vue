@@ -13,6 +13,8 @@ import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
 import UseBackground from '@/components/UseBackground.vue'
 
+// console.debug('%c auth/App.vue', 'color: Lime')
+
 const options = useOptions()
 
 const userRef = ref('')
@@ -35,7 +37,7 @@ const isProcessing = ref(false)
 watch(
   options,
   (opts) => {
-    console.log('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
+    // console.log('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
     const tempSave = sessionStorage.getItem(hostRef.value)
     console.log('tempSave:', tempSave)
     if (tempSave) {
@@ -47,8 +49,8 @@ watch(
   { once: true },
 )
 
-watch(saveCreds, (newVal) => {
-  console.log('watch - saveCreds:', newVal)
+watch(saveCreds, () => {
+  // console.log('watch - saveCreds:', newVal)
   saveCredsChange()
 })
 
@@ -102,48 +104,47 @@ function saveCredsChange(event?: Event) {
 }
 
 const config = getAppConfig()
-console.log('config:', config)
 
 onMounted(async () => {
   // NOTE: Copied from VanillaJS...
   const searchParams = new URLSearchParams(window.location.search)
   const fail = searchParams.get('fail')
-  console.log('fail:', fail)
+  console.debug('fail:', fail)
   isFailure.value = !!fail
-  console.log('isFailure.value:', isFailure.value)
+  console.debug('isFailure.value:', isFailure.value)
   const urlParam = searchParams.get('url')
-  console.log('urlParam:', urlParam)
+  console.debug('urlParam:', urlParam)
   if (!urlParam) return
 
   const url = new URL(urlParam)
-  console.log('url:', url)
+  console.debug('url:', url)
   hostRef.value = url.host
   hrefRef.value = url.href
 
   document.title = `${i18n.t('auth.title')} ${hostRef.value}`
 
   const creds = await Hosts.get(hostRef.value)
-  console.log('creds:', creds)
+  console.debug('creds:', creds)
 
   const session = await getSession()
-  console.log('session:', session)
+  console.debug('session:', session)
 
   if (creds) {
-    console.log('if creds:', creds)
+    console.debug('if creds:', creds)
     hasSavedCreds.value = true
     if (creds !== 'ignored') {
       const [username, password] = parseCreds(creds)
       userRef.value = username
-      console.log('usernameEl.value:', usernameEl.value)
+      console.debug('usernameEl.value:', usernameEl.value)
       await nextTick()
       usernameEl.value?.select()
       passRef.value = password
     }
   } else if (hostRef.value in session) {
-    console.log('else hostRef.value in session:', hostRef.value)
+    console.debug('else hostRef.value in session:', hostRef.value)
     const [username, password] = parseCreds(session[hostRef.value])
     userRef.value = username
-    console.log('usernameEl.value:', usernameEl.value)
+    console.debug('usernameEl.value:', usernameEl.value)
     await nextTick()
     usernameEl.value?.select()
     passRef.value = password

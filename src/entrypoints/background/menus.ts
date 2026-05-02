@@ -16,20 +16,20 @@ const contexts: chrome.contextMenus.CreateProperties[] = config.map((entry) => (
 }))
 
 export async function updateContextMenus(enabled?: boolean) {
-  console.debug('%cupdateContextMenus:', `color: ${enabled ? 'Lime' : 'Yellow'}`, enabled)
+  // console.debug('%cupdateContextMenus:', `color: ${enabled ? 'Lime' : 'Tomato'}`, enabled)
   if (!chrome.contextMenus) return console.debug('Skipping: chrome.contextMenus')
 
   chrome.contextMenus.removeAll().then(() => {
     contexts.forEach((item) => {
       const entry = { ...item }
       const contexts = [...(entry.contexts ?? [])]
-      // console.log('contexts:', contexts)
+      // console.debug('contexts:', contexts)
       if (!enabled) {
         const idx = contexts?.indexOf('page')
         if (idx !== undefined && idx != -1) contexts?.splice(idx, 1)
       }
       entry.contexts = contexts as [chrome.contextMenus.ContextType]
-      console.log(`entry: ${entry.id}`, entry.contexts)
+      // console.debug(`entry: ${entry.id}`, entry.contexts)
       chrome.contextMenus.create(entry)
     })
   })
