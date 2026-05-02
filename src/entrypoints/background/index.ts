@@ -10,7 +10,7 @@ import { updateContextMenus } from './menus.ts'
 // TODO: Confirm config can be defined at the top-level and reliably used in methods...
 const config = getAppConfig()
 const banner = `%c\
-   .---.  Auto Auth v${config.version}
+   .---.  ${config.name} v${config.version}
  //    |\\________________
 ooo()  | ________   _   _)
  \\\\    |/        | | | |
