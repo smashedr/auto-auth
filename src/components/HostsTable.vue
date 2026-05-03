@@ -61,7 +61,7 @@ async function deleteHost(host: string) {
     await Hosts.delete(host)
     showToast(`${i18n.t('ui.text.removed')}: ${host}`, 'success')
   } catch (e) {
-    const message = e instanceof Error ? e.message : 'Unknown Error'
+    const message = e instanceof Error ? e.message : i18n.t('import.errorUnknown')
     showToast(`${i18n.t('ui.text.deleteHostError')}: ${message}`, 'danger')
   }
 }
@@ -70,28 +70,36 @@ function onEdit(host: string, field: string, value: string) {
   debug('HostsTable.vue - onEdit:', host, field, value)
   const creds = hosts.value[host]
   debug('creds:', creds)
-  if (!creds) return showToast('Credentials Not Found.', 'warning')
+  if (!creds) return showToast(i18n.t('ui.text.noCredentialsImport'), 'warning')
   const [username, password] = parseCreds(creds)
   debug('username, password:', username, password)
+
   switch (field) {
     case 'host': {
-      if (!value) return showToast('Hostname is Required.', 'warning')
+      if (!value) {
+        const message = `${i18n.t('ui.text.hostname')} ${i18n.t('ui.text.required')}`
+        return showToast(message, 'warning')
+      }
       const hostname = validateHostname(value)
-      if (!hostname) return showToast('Invalid Hostname.', 'warning')
-      submitHost(hostname, username, password, host)
-      break
+      if (!hostname) {
+        const message = `${i18n.t('ui.text.hostname')} ${i18n.t('ui.text.invalid')}`
+        return showToast(message, 'warning')
+      }
+      // TODO: Add check for existing host with new hostname
+      return submitHost(hostname, username, password, host)
     }
     case 'user': {
-      submitHost(host, value, password, host)
-      break
+      return submitHost(host, value, password, host)
     }
     case 'pass': {
-      if (!value) return showToast('Password is Required.', 'warning')
-      submitHost(host, username, value, host)
-      break
+      if (!value) {
+        const message = `${i18n.t('ui.text.password')} ${i18n.t('ui.text.required')}`
+        return showToast(message, 'warning')
+      }
+      return submitHost(host, username, value, host)
     }
     default: {
-      showToast(`Unknown Field: ${field}`, 'warning')
+      return showToast(i18n.t('import.errorUnknown'), 'warning')
     }
   }
 }

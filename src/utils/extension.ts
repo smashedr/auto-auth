@@ -47,7 +47,7 @@ export async function openPopup() {
   try {
     await chrome.action.openPopup()
   } catch (e) {
-    debug(e)
+    debug('catch:', e)
   }
 }
 
@@ -89,7 +89,7 @@ export async function openExtPanel(close = false) {
       }
     }
   } catch (e) {
-    debug(e)
+    debug('catch:', e)
   }
 
   const panelWidth = local.panelWidth as number | undefined

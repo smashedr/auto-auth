@@ -17,7 +17,7 @@ const contexts: chrome.contextMenus.CreateProperties[] = config.map((entry) => (
 }))
 
 export async function updateContextMenus(enabled?: boolean) {
-  debug('%cupdateContextMenus:', `color: ${enabled ? 'Lime' : 'Tomato'}`, enabled)
+  debug('updateContextMenus - enabled:', enabled)
   if (!chrome.contextMenus) return console.log('Skipping: chrome.contextMenus')
 
   chrome.contextMenus.removeAll().then(() => {

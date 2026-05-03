@@ -2,18 +2,18 @@
 
 ## Bugs
 
+- Editing a host to an existing host deletes the existing host silently
 - Edit Host Modal does not check if credentials changed when saving
 - Not possible to ignore a host without being at the login page
 
 ## Needs Investigation
 
 - Confirm usage of `watch()` in [App.vue](src/entrypoints/auth/App.vue)
+- Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
+- Implement or Delete [HostsOffscreen.vue](src/components/HostsOffscreen.vue)
 
 ## Confirmed Items
 
-- Cleanup Modal Refs in [HostModal.vue](src/components/HostModal.vue)
-- Cleanup Logging in [creds.ts](src/utils/creds.ts)
-- Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
 - Confirm Ignored Host Management is Satisfactory
 - Validate All English Translations
 - Add Additional Locales
@@ -28,6 +28,10 @@
 
 # Completed
 
+- Cleanup Logging in [creds.ts](src/utils/creds.ts)
+  - Should be good enough
+- Cleanup Modal Refs in [HostModal.vue](src/components/HostModal.vue)
+  - Both are used, element for event listener and modal for .\_config
 - Verify onAuthRequired in [auth.ts](src/entrypoints/background/auth.ts)
   - This works identically to the VanillaJS version
 - Add reusable tab update function to [App.vue](src/entrypoints/auth/App.vue)

@@ -92,7 +92,7 @@ async function ignoreHost() {
   await Hosts.set(hostRef.value, 'ignored')
   console.log('%cHost Ignored:', 'color: Gold', hrefRef.value)
 
-  // document.body.remove() // NOTE: Determine why this was called...
+  // document.body.remove() // TODO: Determine why this was called previously...
 
   await updateTab(hrefRef.value)
 }

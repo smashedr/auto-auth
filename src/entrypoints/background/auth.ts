@@ -3,7 +3,6 @@ import { getOptions, getSession } from '@/utils/options.ts'
 import { Hosts } from '@/utils/hosts.ts'
 
 // TODO: Logging
-// TODO: Verify these functions all work as expected...
 
 const pendingRequests: string[] = []
 
@@ -32,7 +31,7 @@ async function processRequest(
   asyncCallback?: (response: chrome.webRequest.BlockingResponse) => void,
 ) {
   if (!asyncCallback) throw new Error('onAuthRequired: asyncCallback is required')
-  console.log('onAuthRequired:', details)
+  console.debug('onAuthRequired:', details)
 
   const options = await getOptions()
   if (options.tempDisabled) {
