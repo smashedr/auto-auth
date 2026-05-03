@@ -2,6 +2,8 @@ import { parseCreds } from '@/utils/creds.ts'
 import { getOptions, getSession } from '@/utils/options.ts'
 import { Hosts } from '@/utils/hosts.ts'
 
+// TODO: Logging
+
 const pendingRequests: string[] = []
 
 export function onAuthRequired(
@@ -9,7 +11,7 @@ export function onAuthRequired(
   asyncCallback?: (response: chrome.webRequest.BlockingResponse) => void,
 ): chrome.webRequest.BlockingResponse | undefined {
   processRequest(details, asyncCallback).catch(console.warn)
-  return // NOSONAR
+  return undefined // returned so asyncCallback can be called
 }
 
 export function webRequestFinished(
@@ -32,7 +34,7 @@ async function processRequest(
   asyncCallback?: (response: chrome.webRequest.BlockingResponse) => void,
 ) {
   if (!asyncCallback) throw new Error('onAuthRequired: asyncCallback is required')
-  console.debug('onAuthRequired:', details)
+  console.log('onAuthRequired:', details)
 
   const options = await getOptions()
   if (options.tempDisabled) {
@@ -44,7 +46,7 @@ async function processRequest(
     return asyncCallback({})
   }
   const url = new URL(details.url)
-  // console.debug('url.host:', url.host)
+  // console.log('url.host:', url.host)
 
   const hijackRequest = (failed = false): void => {
     if (details.tabId === -1) {
@@ -87,7 +89,7 @@ async function processRequest(
     console.log(`%cSending Saved Creds for: ${details.requestId}`, 'color: LimeGreen')
     const [username, password] = parseCreds(creds)
     const authCredentials: chrome.webRequest.AuthCredentials = { username, password }
-    // console.debug('authCredentials:', authCredentials)
+    // console.log('authCredentials:', authCredentials)
     return asyncCallback({ authCredentials })
   }
 
@@ -99,7 +101,7 @@ async function processRequest(
     console.log(`%cSending Session Creds for: ${details.requestId}`, 'color: SpringGreen')
     const [username, password] = parseCreds(session[url.host])
     const authCredentials: chrome.webRequest.AuthCredentials = { username, password }
-    // console.debug('authCredentials:', authCredentials)
+    // console.log('authCredentials:', authCredentials)
     return asyncCallback({ authCredentials })
   }
 

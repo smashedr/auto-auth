@@ -34,7 +34,7 @@ const hostModal = ref<InstanceType<typeof HostModal> | null>(null)
 
 // DUPLICATION: HostsTable.vue
 function deleteClick(host: string) {
-  console.log('HostsTable.vue - deleteClick:', host)
+  debug('popup/App.vue - deleteClick:', host)
   if (options.value.confirmDelete) {
     deleteModal.value?.show(host)
   } else {
@@ -44,14 +44,14 @@ function deleteClick(host: string) {
 
 // DUPLICATION: HostsTable.vue
 async function deleteHost(host: string) {
-  console.log('popup/App.vue - deleteHost:', host)
+  debug('popup/App.vue - deleteHost:', host)
   // TODO: Determine if creds need to be validated here...
   // const creds = hosts.value[host]
-  // console.log('creds:', creds)
+  // debug('creds:', creds)
   try {
     await Hosts.delete(host)
-    savedCreds.value = ''
-    usernameRef.value = ''
+    savedCreds.value = '' // NOTE: These 2 lines are only differences
+    usernameRef.value = '' // NOTE: These 2 lines are only differences
     showToast(`${i18n.t('ui.text.removed')}: ${host}`, 'success')
   } catch (e) {
     const message = e instanceof Error ? e.message : 'Unknown Error'
@@ -69,17 +69,15 @@ async function onSubmit(host: string, user: string, pass: string, original?: str
 onMounted(async () => {
   const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
   debug('tab:', tab)
-  if (!tab.url) return console.debug('No URL for Tab - No Access.')
+  if (!tab.url) return debug('No URL for Tab - No Access.')
   const url = new URL(tab.url)
-  // console.debug('url.host:', url.host)
+  debug('url:', url)
   hostnameRef.value = url.host
   const creds = await Hosts.get(url.host)
   debug('creds:', creds)
-  if (!creds) return console.debug('No Saved Creds for Host.')
+  if (!creds) return debug('No Saved Creds for Host.')
   savedCreds.value = creds
   usernameRef.value = parseCreds(creds)[0]
-  // console.debug('hostnameRef.value:', hostnameRef.value)
-  // console.debug('usernameRef.value:', usernameRef.value)
 })
 </script>
 

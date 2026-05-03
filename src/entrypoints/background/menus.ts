@@ -1,4 +1,5 @@
 import { i18n } from '#imports'
+import { debug } from '@/utils/logger.ts'
 
 const config: chrome.contextMenus.CreateProperties[] = [
   { contexts: ['action', 'page'], id: 'openPopup' },
@@ -16,20 +17,20 @@ const contexts: chrome.contextMenus.CreateProperties[] = config.map((entry) => (
 }))
 
 export async function updateContextMenus(enabled?: boolean) {
-  // console.debug('%cupdateContextMenus:', `color: ${enabled ? 'Lime' : 'Tomato'}`, enabled)
-  if (!chrome.contextMenus) return console.debug('Skipping: chrome.contextMenus')
+  debug('%cupdateContextMenus:', `color: ${enabled ? 'Lime' : 'Tomato'}`, enabled)
+  if (!chrome.contextMenus) return console.log('Skipping: chrome.contextMenus')
 
   chrome.contextMenus.removeAll().then(() => {
     contexts.forEach((item) => {
       const entry = { ...item }
       const contexts = [...(entry.contexts ?? [])]
-      // console.debug('contexts:', contexts)
+      debug('contexts:', contexts)
       if (!enabled) {
         const idx = contexts?.indexOf('page')
         if (idx !== undefined && idx != -1) contexts?.splice(idx, 1)
       }
       entry.contexts = contexts as [chrome.contextMenus.ContextType]
-      // console.debug(`entry: ${entry.id}`, entry.contexts)
+      debug(`entry: ${entry.id}`, entry.contexts)
       chrome.contextMenus.create(entry)
     })
   })

@@ -63,7 +63,7 @@
 
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
     const storedTheme = getStoredTheme()
-    console.debug('prefers-color-scheme: change:', storedTheme)
+    // console.debug('prefers-color-scheme: change:', storedTheme)
     if (storedTheme === 'auto') {
       const preferred = getPreferredTheme()
       setTheme(preferred)

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
 import { ref, onMounted, onUnmounted } from 'vue'
+import { debug } from '@/utils/logger.ts'
 import { useToast } from '@/composables/useToast.ts'
 import { clickOpen } from '@/utils/extension.ts'
 import { isFirefox } from '@/utils/system.ts'
@@ -29,25 +30,25 @@ const hasPerms = ref(true)
 const manifest = chrome.runtime.getManifest()
 // NOTE: origins defined: background/index.ts, background/icons.ts
 const origins = manifest.host_permissions
-// console.debug('PermsCheck.vue - origins:', origins)
+// debug('PermsCheck.vue - origins:', origins)
 
 async function updatePerms() {
   hasPerms.value = await chrome.permissions.contains({ origins })
-  // console.debug('updatePerms:', hasPerms.value)
+  debug('updatePerms:', hasPerms.value)
 }
 
 async function grantPerms(event: Event) {
-  console.debug('grantPerms:', event)
+  debug('grantPerms:', event)
   requestPerms().catch(console.log)
   if (props.closeWindow) window.close()
 }
 
 async function revokePerms(event: Event) {
-  console.debug('revokePerms:', event)
+  debug('revokePerms:', event)
   // NOTE: This was modified to remove origins and not permissions...
   try {
     const permissions = await chrome.permissions.getAll()
-    console.debug('permissions:', permissions)
+    debug('permissions:', permissions)
     await chrome.permissions.remove({ origins })
     await updatePerms()
   } catch (e) {
