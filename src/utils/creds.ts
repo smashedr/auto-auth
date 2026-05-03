@@ -12,7 +12,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
   let total
   if (data?.credentialsArray) {
     // Basic Authentication (nanfgbiblbcagfodkfeinbbhijihckml)
-    console.log('Processing - %c Basic Authentication', 'color: SpringGreen')
+    console.log('Processing - %c Basic Authentication', 'color: Gold')
     total = data.credentialsArray.length
     for (const item of data.credentialsArray) {
       try {
@@ -21,7 +21,8 @@ export async function importCredentials(data: any) /* NOSONAR */ {
         hosts[key] = `${item.login}:${item.password}`
         count += 1
       } catch (e) {
-        console.log(`Error processing item:`, 'color: Red', item, e)
+        const message = e instanceof Error ? e.message : 'Unknown Error'
+        console.log(`%c${message}:`, 'color: Red', item)
       }
     }
   } else {
@@ -55,25 +56,23 @@ export async function importCredentials(data: any) /* NOSONAR */ {
         }
         count += 1
       } catch (e) {
-        console.log(`%cError processing: ${key}`, 'color: Red', e)
+        const message = e instanceof Error ? e.message : 'Unknown Error'
+        console.log(`${key}: %c${message}`, 'color: Red')
       }
     }
   }
   debug('hosts:', hosts)
   await Hosts.update(hosts)
-  const type = count ? 'success' : 'warning'
-  showToast(
-    `${i18n.t('ui.action.importUpdate')} ${count}/${total} ${i18n.t('ui.text.hosts')}.`,
-    type,
-  )
+  const message = `${i18n.t('ui.action.importUpdate')} ${count}/${total} ${i18n.t('ui.text.hosts')}.`
+  showToast(message, count ? 'success' : 'warning')
 }
 
 function getHost(hostname: string) {
   let host = hostname.toLowerCase().trim()
   host = host.includes('://') ? host : 'https://' + host
-  // console.debug('host:', host)
+  // debug('host:', host)
   const url = new URL(host)
-  // console.debug('url.host:', url.host)
+  // debug('url.host:', url.host)
   if (!url.host) {
     throw new Error(`Invalid Hostname: ${hostname}`)
   }
@@ -81,12 +80,12 @@ function getHost(hostname: string) {
 }
 
 export function parseCreds(creds: string): [string, string] {
-  // console.debug('parseCreds:', creds)
+  // debug('parseCreds:', creds)
   const i = creds.indexOf(':')
   if (i === -1) return [creds, '']
   const username = creds.slice(0, i)
   const password = creds.slice(i + 1)
-  // console.debug('username:', username)
-  // console.debug('password:', password)
+  // debug('username:', username)
+  // debug('password:', password)
   return [username, password]
 }
