@@ -2,7 +2,6 @@
 
 ## Bugs
 
-- Edit Host Modal does not check if credentials changed when saving
 - Not possible to ignore a host without being at the login page
 
 ## Needs Investigation
@@ -27,6 +26,8 @@
 
 # Completed
 
+- Edit Host Modal does not check if credentials changed when saving
+  - Add method to check
 - Editing a host to an existing host deletes the existing host silently
   - Add check on the HostModal and HostTable
 - Cleanup Logging in [creds.ts](src/utils/creds.ts)

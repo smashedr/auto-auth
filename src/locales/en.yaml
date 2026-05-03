@@ -51,6 +51,7 @@ ui:
 
     addEditError: Add/Edit Error
     importError: Import Error
+    noChanges: No Changes
 
     deleteHostError: Delete Host Error
     errorReadingFile: Error Reading File

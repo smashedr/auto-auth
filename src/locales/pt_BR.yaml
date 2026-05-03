@@ -51,6 +51,7 @@ ui:
 
     addEditError: Erro ao Adicionar/Editar
     importError: Erro de Importação
+    noChanges: Sem alterações
 
     deleteHostError: Erro ao Excluir Host
     errorReadingFile: Erro ao Ler Arquivo
