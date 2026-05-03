@@ -2,6 +2,7 @@
 
 ## Bugs
 
+- Verify onAuthRequired in [auth.ts](src/entrypoints/background/auth.ts) E2E
 - Edit Host Modal does not check if credentials changed when saving
 - Not possible to ignore a host without being at the login screen
 

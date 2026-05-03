@@ -14,6 +14,8 @@ import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
 import UseBackground from '@/components/UseBackground.vue'
 
+// TODO: Logging
+
 // debug('%c auth/App.vue', 'color: Lime')
 
 const config = getAppConfig()

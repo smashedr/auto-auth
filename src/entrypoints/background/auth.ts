@@ -3,6 +3,7 @@ import { getOptions, getSession } from '@/utils/options.ts'
 import { Hosts } from '@/utils/hosts.ts'
 
 // TODO: Logging
+// TODO: Verify these functions all work as expected...
 
 const pendingRequests: string[] = []
 
@@ -21,7 +22,7 @@ export function webRequestFinished(
 ): void {
   const index = pendingRequests.indexOf(requestDetails.requestId)
   if (index > -1) {
-    console.log(`%cRemoving pendingRequests: ${requestDetails.requestId}`, 'color: Khaki')
+    console.log('%cRemoving requestId:', 'color: RosyBrown', requestDetails.requestId)
     pendingRequests.splice(index, 1)
   }
 }
@@ -39,7 +40,7 @@ async function processRequest(
     return asyncCallback({})
   }
   if (options.ignoreProxy && details.statusCode === 407) {
-    console.log('%cIgnoring Proxy Authentication!', 'color: Yellow')
+    console.log('%cIgnoring Proxy Authentication!', 'color: Gold')
     return asyncCallback({})
   }
   const url = new URL(details.url)
@@ -47,12 +48,13 @@ async function processRequest(
 
   const hijackRequest = (failed = false): void => {
     if (details.tabId === -1) {
-      console.warn(`Unable to process tab:`, details)
+      console.warn('Unable to process tab:', details)
       return asyncCallback({})
     }
     console.log(
-      `Cancel Request and Hijack w/ failed: %c${failed}`,
-      `color: ${failed ? 'Yellow' : 'Lime'}`,
+      '%cHijack Request w/ failed:',
+      `color: ${failed ? 'Tomato' : 'Lime'}`,
+      failed,
     )
     const auth = new URL(chrome.runtime.getURL('auth.html'))
     auth.searchParams.append('url', details.url)
@@ -65,7 +67,7 @@ async function processRequest(
 
   // Check if Request Already Processed
   if (pendingRequests.includes(details.requestId)) {
-    console.log(`%cAlready Processed Request ID: ${details.requestId}`, 'color: Orange')
+    console.log('%cAlready Processed requestId:', 'color: Orange', details.requestId)
     hijackRequest(true)
   }
   pendingRequests.push(details.requestId)
@@ -76,14 +78,10 @@ async function processRequest(
   // Check for Saved Credentials
   if (creds) {
     if (creds === 'ignored') {
-      console.log(
-        `%cHost is Set to Ignored: %c${url.host}`,
-        'color: Yellow',
-        'color: Violet',
-      )
+      console.log('%cIgnored Host:', 'color: Gold', url.host)
       return asyncCallback({})
     }
-    console.log(`%cSending Saved Creds for: ${details.requestId}`, 'color: LimeGreen')
+    console.log('%cSending Saved Creds for:', 'color: LimeGreen', details.requestId)
     const [username, password] = parseCreds(creds)
     const authCredentials: chrome.webRequest.AuthCredentials = { username, password }
     // console.log('authCredentials:', authCredentials)
@@ -92,10 +90,10 @@ async function processRequest(
 
   // Check for Temporary Credentials
   const session = await getSession()
-  console.log('session:', session)
+  // console.log('session:', session)
 
   if (url.host in session) {
-    console.log(`%cSending Session Creds for: ${details.requestId}`, 'color: SpringGreen')
+    console.log('%cSending Session Creds for:', 'color: SpringGreen', details.requestId)
     const [username, password] = parseCreds(session[url.host])
     const authCredentials: chrome.webRequest.AuthCredentials = { username, password }
     // console.log('authCredentials:', authCredentials)
@@ -103,6 +101,6 @@ async function processRequest(
   }
 
   // New Request Without Credentials
-  console.log(`%cNo Credentials for Request: ${details.requestId}`, 'color: DeepSkyBlue')
+  console.log('%cNo Credentials for:', 'color: DeepSkyBlue', details.requestId)
   hijackRequest()
 }
