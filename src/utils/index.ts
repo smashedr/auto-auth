@@ -38,7 +38,7 @@ export async function submitHost(
     }
     showToast(`${i18n.t('ui.action.addEdit')}: ${host}`, 'success')
   } catch (e) {
-    const message = e instanceof Error ? e.message : 'Unknown Error'
+    const message = e instanceof Error ? e.message : i18n.t('import.errorUnknown')
     showToast(`${i18n.t('ui.text.addEditError')}: ${message}`, 'danger')
   }
 }

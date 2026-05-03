@@ -2,6 +2,7 @@
 
 ## Bugs
 
+- Editing a host to an existing host deletes the existing host silently
 - Edit Host Modal does not check if credentials changed when saving
 - Not possible to ignore a host without being at the login page
 

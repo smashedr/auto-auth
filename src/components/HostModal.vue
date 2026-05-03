@@ -91,6 +91,8 @@ async function onSubmit() {
     }
   }
 
+  // TODO: Add check for existing host with new hostRef.value
+
   // username
   // NOTE: Consider validating username as a convince to the user...
   debug('username:', userRef.value)
@@ -112,6 +114,7 @@ function hostnameChange() {
   debug('HostModal.vue - hostnameChange')
   onceChange()
   if (!validateHostname(hostRef.value)) hostInvalid.value = 'Invalid Hostname or URL.'
+  // TODO: Add check for existing host with new hostRef.value
 }
 
 function onceChange() {

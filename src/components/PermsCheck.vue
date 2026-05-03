@@ -51,7 +51,7 @@ async function revokePerms(event: Event) {
     await updatePerms()
   } catch (e) {
     console.error(e) // TODO: Logging - error will be nasty
-    const message = e instanceof Error ? e.message : 'Unknown Error'
+    const message = e instanceof Error ? e.message : i18n.t('import.errorUnknown')
     showToast(message, 'danger')
   }
 }

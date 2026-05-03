@@ -28,12 +28,14 @@ ui:
     urlCopied: URL Copiada para a Área de Transferência
 
   text:
-    or: ou
-    removed: Removido
-
-    ignored: Ignorado
     host: Host
     hosts: Hosts
+    ignored: Ignorado
+    invalid: Inválido
+    or: ou
+    removed: Removido
+    required: Obrigatório
+
     hostname: Nome do Host
     username: Nome de Usuário
     password: Senha
@@ -58,9 +60,6 @@ ui:
     showHidePassword: Mostrar/Ocultar Senha
     extensionDisabled: Extensão Temporariamente Desativada
     unsavedChanges: Alterações Não Salvas Detectadas.
-
-  toast:
-    notChanged: Valor Não Alterado # TODO: NOT USED
 
 form:
   host:

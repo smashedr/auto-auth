@@ -21,7 +21,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
         hosts[key] = `${item.login}:${item.password}`
         count += 1
       } catch (e) {
-        const message = e instanceof Error ? e.message : 'Unknown Error'
+        const message = e instanceof Error ? e.message : i18n.t('import.errorUnknown')
         console.log(`%c${message}:`, 'color: Red', item) // TODO: Logging
       }
     }
@@ -56,7 +56,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
         }
         count += 1
       } catch (e) {
-        const message = e instanceof Error ? e.message : 'Unknown Error'
+        const message = e instanceof Error ? e.message : i18n.t('import.errorUnknown')
         console.log(`${key}: %c${message}`, 'color: Red')
       }
     }
