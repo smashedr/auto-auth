@@ -14,8 +14,7 @@ useTitle(i18n.t('permissions.title'))
 
 const manifest = chrome.runtime.getManifest()
 
-async function onAdded(permissions: chrome.permissions.Permissions) {
-  console.debug('onAdded:', permissions)
+async function onAdded() {
   if (document.hasFocus()) {
     await chrome.runtime.openOptionsPage()
     window.close()

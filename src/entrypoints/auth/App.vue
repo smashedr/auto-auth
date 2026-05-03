@@ -40,7 +40,7 @@ const isProcessing = ref(false)
 watch(
   options,
   (opts) => {
-    // console.log('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
+    // console.debug('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
     const tempSave = sessionStorage.getItem(hostRef.value)
     debug('tempSave:', tempSave)
     if (tempSave) {
@@ -104,7 +104,7 @@ async function ignoreHost() {
 }
 
 function saveCredsChange(event?: Event) {
-  console.debug('saveCredsChange:', event)
+  debug('saveCredsChange:', event)
   sessionStorage.setItem(hostRef.value, saveCreds.value ? '1' : '0')
 }
 

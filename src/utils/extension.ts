@@ -5,7 +5,7 @@ import { debug } from '@/utils/logger.ts'
 export function openSidePanel(close?: boolean) {
   debug('openSidePanel - close:', close)
   if (chrome.sidePanel) {
-    // console.debug('chrome.sidePanel')
+    // debug('chrome.sidePanel')
     chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
       chrome.sidePanel
         .open({ windowId: tab.windowId })
@@ -15,7 +15,7 @@ export function openSidePanel(close?: boolean) {
         .catch(console.warn)
     })
   } else if (chrome.sidebarAction) {
-    // console.debug('chrome.sidebarAction')
+    // debug('chrome.sidebarAction')
     chrome.sidebarAction.open()
     if (close) window.close()
   } else {
@@ -47,7 +47,7 @@ export async function openPopup() {
   try {
     await chrome.action.openPopup()
   } catch (e) {
-    console.debug(e)
+    console.log(e)
   }
 }
 
@@ -74,14 +74,14 @@ export async function openExtPanel(close = false) {
     if (lastPanelID) {
       // NOTE: This throws if lastPanelID is not an existing window ID
       const panel = await chrome.windows.get(lastPanelID)
-      // console.debug('panel', panel)
-      // console.debug('panel?.id', panel?.id)
+      // debug('panel', panel)
+      // debug('panel?.id', panel?.id)
       if (panel?.id) {
         const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
-        // console.debug('tabs:', tabs)
-        // console.debug('tabs[0]?.windowId:', tabs[0]?.windowId)
+        // debug('tabs:', tabs)
+        // debug('tabs[0]?.windowId:', tabs[0]?.windowId)
         if (panel.id != tabs[0]?.windowId) {
-          console.debug('%cPanel found:', 'color: SpringGreen', panel.id)
+          console.log('%cPanel found:', 'color: SpringGreen', panel.id)
           await chrome.windows.update(panel.id, { focused: true })
           if (close) window.close()
           return
@@ -89,22 +89,22 @@ export async function openExtPanel(close = false) {
       }
     }
   } catch (e) {
-    console.debug(e)
+    console.log(e)
   }
 
   const panelWidth = local.panelWidth as number | undefined
-  // console.debug('panelWidth:', panelWidth)
+  // debug('panelWidth:', panelWidth)
   const panelHeight = local.panelHeight as number | undefined
-  // console.debug('panelHeight:', panelHeight)
+  // debug('panelHeight:', panelHeight)
   const width = panelWidth || defaultWidth // NOSONAR
   const height = panelHeight || defaultHeight // NOSONAR
-  // console.debug(`width, height:`, width, height)
+  // debug(`width, height:`, width, height)
   const url = chrome.runtime.getURL(panelPath)
-  // console.debug('url:', url)
+  // debug('url:', url)
   const panel = await chrome.windows.create({ type, url, width, height })
-  // console.debug('panel:', panel)
+  // debug('panel:', panel)
   if (panel) {
-    console.debug(`%cCreated new window: ${panel.id}`, 'color: Magenta')
+    console.log(`%cCreated new window: ${panel.id}`, 'color: Magenta')
     chrome.storage.local.set({ lastPanelID: panel.id }).catch(console.warn)
   }
   if (close) window.close()
@@ -114,15 +114,15 @@ export async function activateOrOpen(url: string, open = true) {
   debug('activateOrOpen:', url, open)
   // Note: To Get Tab from Tabs (requires host permissions or tabs)
   const tabs = await chrome.tabs.query({ currentWindow: true })
-  // console.debug('tabs:', tabs)
+  // debug('tabs:', tabs)
   for (const tab of tabs) {
     if (tab.url === url) {
-      console.debug('%cTab found, activating:', 'color: Lime', tab)
+      console.log('%cTab found, activating:', 'color: Lime', tab)
       return await chrome.tabs.update(tab.id, { active: true })
     }
   }
   if (open) {
-    console.debug('%cTab not found, opening url:', 'color: Yellow', url)
+    console.log('%cTab not found, opening url:', 'color: Yellow', url)
     return await chrome.tabs.create({ active: true, url })
   }
   console.warn('tab not found and open not set for url:', url)

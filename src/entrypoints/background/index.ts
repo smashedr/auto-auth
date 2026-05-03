@@ -1,6 +1,7 @@
 import { getAppConfig } from '#imports'
 import { isFirefox } from '@/utils/system.ts'
 import { defineBackground } from 'wxt/utils/define-background'
+import { debug } from '@/utils/logger.ts'
 import { openExtPanel, openPopup, openSidePanel } from '@/utils/extension.ts'
 import { type Options, defaultOptions, getOptions } from '@/utils/options.ts'
 import { onAuthRequired, webRequestFinished } from './auth.ts'
@@ -44,7 +45,7 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
   console.log('onInstalled:', details)
 
   const options = await setDefaultOptions(defaultOptions)
-  console.debug('options:', options)
+  debug('options:', options)
   updateIcon(options).catch(console.warn)
   updateContextMenus(options.contextMenu).catch(console.warn)
   setUninstall().catch(console.warn)
@@ -56,7 +57,7 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
     const hasPerms = await chrome.permissions.contains({
       origins: manifest.host_permissions,
     })
-    console.debug('hasPerms:', hasPerms)
+    debug('hasPerms:', hasPerms)
     if (hasPerms) {
       await chrome.runtime.openOptionsPage()
     } else {
@@ -73,21 +74,21 @@ async function onInstalled(details: chrome.runtime.InstalledDetails) {
 }
 
 async function onStartup() {
-  console.log('onStartup')
+  debug('onStartup')
 
   const options = await getOptions()
-  console.debug('options:', options)
+  debug('options:', options)
   updateIcon(options).catch(console.warn)
 
   if (isFirefox) {
-    console.log('Firefox Startup Workarounds')
+    debug('Firefox Startup Workarounds')
     updateContextMenus(options.contextMenu).catch(console.warn)
     setUninstall().catch(console.warn)
   }
 }
 
 function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
-  // console.log('%c background/index.ts - onChanged:', 'color: SeaGreen', changes)
+  debug('%c background/index.ts - onChanged:', 'color: SeaGreen', changes)
   if (changes?.options) {
     const oldValue = changes.options?.oldValue as Options | undefined
     const newValue = changes.options?.newValue as Options | undefined
@@ -105,17 +106,17 @@ function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
 
 function onMessage(message: any, sender: chrome.runtime.MessageSender) {
   const tabId = message.tabId || sender.tab?.id
-  // console.debug(`background/index.ts - onMessage: tabId: ${tabId} - message:`, message)
+  debug(`background/index.ts - onMessage: tabId: ${tabId} - message:`, message)
   if (!message || typeof message !== 'object') return console.warn('invalid message')
 
   if (tabId && Object.hasOwn(message, 'badgeColor')) {
-    // console.debug(`setBadgeBackgroundColor: ${message.badgeColor}`)
+    debug(`setBadgeBackgroundColor: ${message.badgeColor}`)
     chrome.action
       .setBadgeBackgroundColor({ tabId: tabId, color: message.badgeColor })
       .catch(console.warn)
   }
   if (tabId && Object.hasOwn(message, 'badgeText')) {
-    // console.debug(`setBadgeText: ${message.badgeText}`)
+    debug(`setBadgeText: ${message.badgeText}`)
     chrome.action
       .setBadgeText({ tabId: tabId, text: message.badgeText })
       .catch(console.warn)
@@ -128,7 +129,7 @@ function onMessage(message: any, sender: chrome.runtime.MessageSender) {
 }
 
 async function onCommand(command: string, tab?: chrome.tabs.Tab) {
-  console.debug('onCommand:', command, tab)
+  debug('onCommand:', command, tab)
   if (command === 'openOptions') {
     await chrome.runtime.openOptionsPage()
   } else if (command === 'openExtPanel') {
@@ -141,7 +142,7 @@ async function onCommand(command: string, tab?: chrome.tabs.Tab) {
 }
 
 async function onClicked(ctx: chrome.contextMenus.OnClickData, tab?: chrome.tabs.Tab) {
-  console.debug('onClicked:', ctx, tab)
+  debug('onClicked:', ctx, tab)
   if (ctx.menuItemId === 'openOptions') {
     await chrome.runtime.openOptionsPage()
   } else if (ctx.menuItemId === 'openPopup') {
@@ -156,17 +157,17 @@ async function onClicked(ctx: chrome.contextMenus.OnClickData, tab?: chrome.tabs
 }
 
 export async function onAdded(permissions: chrome.permissions.Permissions) {
-  console.debug('onAdded', permissions)
+  debug('onAdded', permissions)
   await updateIcon()
 }
 
 export async function onRemoved(permissions: chrome.permissions.Permissions) {
-  console.debug('onRemoved', permissions)
+  debug('onRemoved', permissions)
   await updateIcon()
 }
 
 async function setDefaultOptions(defaultOptions: object) {
-  console.log('setDefaultOptions', defaultOptions)
+  debug('setDefaultOptions', defaultOptions)
   const options = await getOptions()
   let changed = false
   for (const [key, value] of Object.entries(defaultOptions)) {
@@ -179,7 +180,7 @@ async function setDefaultOptions(defaultOptions: object) {
   }
   if (changed) {
     await chrome.storage.sync.set({ options })
-    console.log('chrome.storage.sync.set:', options)
+    debug('chrome.storage.sync.set:', options)
   }
   return options
 }
@@ -190,6 +191,6 @@ async function setUninstall() {
   const url = new URL(config.uninstallUrl)
   url.searchParams.append('version', config.version)
   url.searchParams.append('id', chrome.runtime.id)
-  console.log('setUninstallURL:', url.href)
+  debug('setUninstallURL:', url.href)
   await chrome.runtime.setUninstallURL(url.href)
 }

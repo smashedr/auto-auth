@@ -10,6 +10,8 @@
 
 ## Confirmed Items
 
+- Cleanup Logging in [creds.ts](src/utils/creds.ts)
+- Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
 - Confirm Ignored Host Management is Satisfactory
 - Validate All English Translations
 - Add Additional Locales
@@ -17,7 +19,6 @@
 ## Before Merge
 
 - Cleanup All **TODO**
-- Cleanup All Logging
 - Update [README.md](README.md)
 - Update [wxt.config.ts](wxt.config.ts)
 - Update [app.config.ts](src/app.config.ts)

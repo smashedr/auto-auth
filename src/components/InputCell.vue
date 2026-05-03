@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
+import { debug } from '@/utils/logger.ts'
 
 const props = defineProps<{
   host: string
@@ -17,9 +18,9 @@ const inputValue = ref(props.value)
 const inputEl = ref<HTMLInputElement | null>(null)
 
 function startEdit() {
-  if (!props.editable) return console.log('%cEditing Disabled', 'color: LightCoral')
-  if (isEditing.value) return console.log('%cDuplicate Start Event', 'color: Plum')
-  // console.log('%c startEdit:', 'color: Lime', inputValue.value)
+  if (!props.editable) return debug('%cEditing Disabled', 'color: LightCoral')
+  if (isEditing.value) return debug('%cDuplicate Start Event', 'color: Plum')
+  debug('%c startEdit:', 'color: Lime', inputValue.value)
   inputValue.value = props.value
   isEditing.value = true
   nextTick(() => {
@@ -29,11 +30,11 @@ function startEdit() {
 }
 
 function finishEdit() {
-  // console.log('%c finishEdit:', 'color: Lime', event)
-  if (!isEditing.value) return console.log('%cDuplicate Finish Event', 'color: Plum')
+  debug('%c finishEdit:', 'color: Lime')
+  if (!isEditing.value) return debug('%cDuplicate Finish Event', 'color: Plum')
   isEditing.value = false
-  if (inputValue.value === props.value) return console.log('%cUnchanged:', 'color: Bisque', inputValue.value) // TODO: Logging
-  console.log(`%cEdit ${props.field}:`, 'color: Lime', `"${inputValue.value}"`, 'for host:', props.host) // TODO: Logging
+  if (inputValue.value === props.value) return debug('%cUnchanged:', 'color: Bisque', inputValue.value)
+  debug(`%cEdit ${props.field}:`, 'color: Lime', `"${inputValue.value}"`, 'for host:', props.host)
   emit('edit', props.host, props.field, inputValue.value)
 }
 </script>
