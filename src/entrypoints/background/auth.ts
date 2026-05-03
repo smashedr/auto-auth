@@ -3,7 +3,6 @@ import { getOptions, getSession } from '@/utils/options.ts'
 import { Hosts } from '@/utils/hosts.ts'
 
 // TODO: Logging
-// TODO: Verify these functions all work as expected...
 
 const pendingRequests: string[] = []
 

@@ -33,7 +33,6 @@ async function importClick() {
   try {
     // NOTE: This should NOT throw, but just in case...
     await importCredentials(data)
-    // TODO: Confirm the Modal usage is required here...
     if (modalEl.value) Modal.getInstance(modalEl.value)?.hide()
     textRef.value = ''
   } catch (e) {
@@ -50,14 +49,15 @@ function clearClick() {
 }
 
 onMounted(() => {
-  modalEl.value?.addEventListener('shown.bs.modal', () => {
+  if (!modalEl.value) return console.error('no modalEl')
+  modalEl.value.addEventListener('shown.bs.modal', () => {
     textareaEl.value?.focus()
     textareaEl.value?.select()
   })
-  modalEl.value?.addEventListener('hide.bs.modal', () => {
+  modalEl.value.addEventListener('hide.bs.modal', () => {
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
   })
-  modalEl.value?.addEventListener('hidden.bs.modal', () => (invalidText.value = ''))
+  modalEl.value.addEventListener('hidden.bs.modal', () => (invalidText.value = ''))
 })
 </script>
 

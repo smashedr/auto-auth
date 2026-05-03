@@ -8,7 +8,6 @@ import { onAuthRequired, webRequestFinished } from './auth.ts'
 import { updateIcon } from './icons.ts'
 import { updateContextMenus } from './menus.ts'
 
-// TODO: NOTE: The config object builds to r() for runtime...
 const config = getAppConfig()
 const banner = `%c\
    .---.  ${config.name} v${config.version}
@@ -92,10 +91,7 @@ function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
   if (changes?.options) {
     const oldValue = changes.options?.oldValue as Options | undefined
     const newValue = changes.options?.newValue as Options | undefined
-    // if (!oldValue || !newValue) return console.log('missing oldValue or newValue')
-    // TODO: Logging
-    if (!oldValue) return console.log('onChanged: missing options oldValue')
-    if (!newValue) return console.warn('onChanged: missing options newValue')
+    if (!oldValue || !newValue) return debug('missing oldValue or newValue')
     if (oldValue?.contextMenu !== newValue.contextMenu) {
       updateContextMenus(newValue.contextMenu).catch(console.warn)
     }

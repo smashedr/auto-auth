@@ -9,6 +9,7 @@
 
 - Confirm usage of `watch()` in [App.vue](src/entrypoints/auth/App.vue)
 - Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
+- Implement or Delete [HostsOffscreen.vue](src/components/HostsOffscreen.vue)
 
 ## Confirmed Items
 
