@@ -20,7 +20,7 @@ useTitle(i18n.t('ui.action.extensionPanel'))
 
 async function windowResize() {
   const size = { panelWidth: window.outerWidth, panelHeight: window.outerHeight }
-  // debug('windowResize:', size)
+  // console.debug('windowResize:', size)
   await chrome.storage.local.set(size).catch(console.warn)
 }
 
@@ -30,7 +30,7 @@ onMounted(() => {
   window.addEventListener('resize', debounceWindowResize)
   chrome.windows.getCurrent().then((window) => {
     chrome.storage.local.set({ lastPanelID: window.id }).then(() => {
-      console.log('%cSet lastPanelID:', 'color: SpringGreen', window.id)
+      // console.debug('%cSet lastPanelID:', 'color: SpringGreen', window.id)
     })
   })
 })

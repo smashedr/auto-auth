@@ -93,6 +93,7 @@ function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
     const oldValue = changes.options?.oldValue as Options | undefined
     const newValue = changes.options?.newValue as Options | undefined
     // if (!oldValue || !newValue) return console.log('missing oldValue or newValue')
+    // TODO: Logging
     if (!oldValue) return console.log('onChanged: missing options oldValue')
     if (!newValue) return console.warn('onChanged: missing options newValue')
     if (oldValue?.contextMenu !== newValue.contextMenu) {
@@ -107,8 +108,9 @@ function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
 function onMessage(message: any, sender: chrome.runtime.MessageSender) {
   const tabId = message.tabId || sender.tab?.id
   debug(`background/index.ts - onMessage: tabId: ${tabId} - message:`, message)
-  if (!message || typeof message !== 'object') return console.warn('invalid message')
-
+  if (!message || typeof message !== 'object') {
+    return console.warn('invalid message:', message)
+  }
   if (tabId && Object.hasOwn(message, 'badgeColor')) {
     debug(`setBadgeBackgroundColor: ${message.badgeColor}`)
     chrome.action

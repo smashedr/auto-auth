@@ -2,7 +2,9 @@
 
 ## Bugs
 
-- :robot:
+- Verify onAuthRequired in [auth.ts](src/entrypoints/background/auth.ts) E2E
+- Edit Host Modal does not check if credentials changed when saving
+- Not possible to ignore a host without being at the login screen
 
 ## Needs Investigation
 
@@ -26,6 +28,10 @@
 
 # Completed
 
+- Add reusable tab update function to [App.vue](src/entrypoints/auth/App.vue)
+  - Added`updateTab` function
+- Update All Logging
+  - Added a logging module with `debug` function [logger.ts](src/utils/logger.ts)
 - Confirm `getAppConfig()` usage in top-level of [index.ts](src/entrypoints/background/index.ts)
   - This builds to `r()` for runtime and **should** work without issue...
 - Editing an ignored host's hostname makes it not ignored

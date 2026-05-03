@@ -40,7 +40,7 @@ async function onChanged(changes: Record<string, any>) {
     changes.options.oldValue.pictureURL !== changes.options.newValue.pictureURL ||
     changes.options.oldValue.videoURL !== changes.options.newValue.videoURL
   ) {
-    console.log('%cBackground Change Detected.', 'color: LightSkyBlue')
+    // console.log('%cBackground Change Detected.', 'color: LightSkyBlue')
     setBackground(changes.options.newValue)
   }
 }
