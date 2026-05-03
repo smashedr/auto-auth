@@ -43,7 +43,9 @@ async function hostsInputChange(event: Event) {
     const file = target.files?.item(0)
     if (!file) return showToast(i18n.t('ui.text.errorReadingFile'), 'error')
     const text = await file.text()
+    debug('text:', text)
     const data = JSON.parse(text)
+    debug('data:', data)
     await importCredentials(data)
   } catch (e) {
     console.log('Import error:', e)
