@@ -72,26 +72,24 @@ async function onSubmit() {
   if (!hostname) {
     hostnameEl.value?.focus()
     hostnameEl.value?.select()
-    hostInvalid.value = 'Invalid Hostname or URL.'
+    hostInvalid.value = i18n.t('ui.text.hostUrlInvalid')
     return
   }
   hostRef.value = hostname
   debug('hostname:', hostRef.value)
 
   // existing
-  if (isAdding.value) {
+  if (isAdding.value || hostRef.value !== originalHost.value) {
     const existing = await Hosts.get(hostRef.value)
     debug('existing:', existing)
     if (existing) {
       debug('Existing Host:', hostRef.value)
       hostnameEl.value?.focus()
       hostnameEl.value?.select()
-      hostInvalid.value = 'Hostname Already Exists. Edit or Delete First.'
+      hostInvalid.value = i18n.t('ui.text.hostnameExists')
       return
     }
   }
-
-  // TODO: Add check for existing host with new hostRef.value
 
   // username
   // NOTE: Consider validating username as a convince to the user...
@@ -102,7 +100,7 @@ async function onSubmit() {
   if (!passRef.value) {
     debug('No password')
     passwordEl.value?.focus()
-    passInvalid.value = 'Password Required.'
+    passInvalid.value = `${i18n.t('ui.text.password')} ${i18n.t('ui.text.password')}`
     return
   }
 
@@ -113,8 +111,8 @@ async function onSubmit() {
 function hostnameChange() {
   debug('HostModal.vue - hostnameChange')
   onceChange()
-  if (!validateHostname(hostRef.value)) hostInvalid.value = 'Invalid Hostname or URL.'
-  // TODO: Add check for existing host with new hostRef.value
+  if (!validateHostname(hostRef.value)) hostInvalid.value = i18n.t('ui.text.hostUrlInvalid')
+  // NOTE: Add check for existing host with new hostRef.value, currently happens on submit
 }
 
 function onceChange() {

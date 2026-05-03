@@ -74,6 +74,8 @@ function onEdit(host: string, field: string, value: string) {
   const [username, password] = parseCreds(creds)
   debug('username, password:', username, password)
 
+  if (field === 'host' && value in hosts.value) return showToast(i18n.t('ui.text.hostnameExists'), 'warning')
+
   switch (field) {
     case 'host': {
       if (!value) {
@@ -85,7 +87,6 @@ function onEdit(host: string, field: string, value: string) {
         const message = `${i18n.t('ui.text.hostname')} ${i18n.t('ui.text.invalid')}`
         return showToast(message, 'warning')
       }
-      // TODO: Add check for existing host with new hostname
       return submitHost(hostname, username, password, host)
     }
     case 'user': {
@@ -102,6 +103,19 @@ function onEdit(host: string, field: string, value: string) {
       return showToast(i18n.t('import.errorUnknown'), 'warning')
     }
   }
+}
+
+function onSubmit(host: string, user: string, pass: string, original?: string) {
+  debug('onSubmit')
+
+  if (host in hosts.value) {
+    const creds = hosts.value[host]
+    debug('creds:', creds)
+    const [username, password] = parseCreds(creds)
+    if (username == user && password == pass) return showToast(i18n.t('ui.text.noChanges'), 'warning')
+  }
+
+  submitHost(host, user, pass, original)
 }
 
 function columnsChange(event: Event) {
@@ -290,5 +304,5 @@ const columnCount = computed(() => {
   </div>
 
   <DeleteModal ref="deleteModal" @delete="deleteHost" />
-  <HostModal ref="hostModal" @submit="submitHost" />
+  <HostModal ref="hostModal" @submit="onSubmit" />
 </template>

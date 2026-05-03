@@ -51,6 +51,7 @@ ui:
 
     addEditError: Add/Edit Error
     importError: Import Error
+    noChanges: No Changes
 
     deleteHostError: Delete Host Error
     errorReadingFile: Error Reading File
@@ -61,6 +62,9 @@ ui:
     showHidePassword: Show/Hide Password
     extensionDisabled: Extension Temporarily Disabled
     unsavedChanges: Unsaved Changes Detected.
+
+    hostUrlInvalid: Invalid Hostname or URL
+    hostnameExists: Hostname Already Exists. Edit or Delete First
 
 form:
   host:

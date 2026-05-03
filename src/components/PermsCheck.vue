@@ -50,7 +50,7 @@ async function revokePerms(event: Event) {
     await chrome.permissions.remove({ origins })
     await updatePerms()
   } catch (e) {
-    console.error(e) // TODO: Logging - error will be nasty
+    // console.error(e)
     const message = e instanceof Error ? e.message : i18n.t('import.errorUnknown')
     showToast(message, 'danger')
   }

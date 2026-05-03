@@ -15,14 +15,14 @@ export async function importCredentials(data: any) /* NOSONAR */ {
     console.log('Processing - %c Basic Authentication', 'color: Gold')
     total = data.credentialsArray.length
     for (const item of data.credentialsArray) {
+      debug('item:', item)
       try {
-        debug('item:', item)
         const key = getHost(item.url)
         hosts[key] = `${item.login}:${item.password}`
         count += 1
       } catch (e) {
         const message = e instanceof Error ? e.message : i18n.t('import.errorUnknown')
-        console.log(`%c${message}:`, 'color: Red', item) // TODO: Logging
+        console.log(`%c${message}:`, 'color: Red')
       }
     }
   } else {
