@@ -20,7 +20,7 @@ const inputEl = ref<HTMLInputElement | null>(null)
 function startEdit() {
   if (!props.editable) return debug('%cEditing Disabled', 'color: LightCoral')
   if (isEditing.value) return debug('%cDuplicate Start Event', 'color: Plum')
-  debug('%c startEdit:', 'color: Lime', inputValue.value)
+  debug('%cStart Edit:', 'color: Lime', inputValue.value)
   inputValue.value = props.value
   isEditing.value = true
   nextTick(() => {
@@ -30,7 +30,7 @@ function startEdit() {
 }
 
 function finishEdit() {
-  debug('%c finishEdit:', 'color: Lime')
+  debug('%cFinish Edit', 'color: Lime')
   if (!isEditing.value) return debug('%cDuplicate Finish Event', 'color: Plum')
   isEditing.value = false
   if (inputValue.value === props.value) return debug('%cUnchanged:', 'color: Bisque', inputValue.value)

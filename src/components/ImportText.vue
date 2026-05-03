@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, useTemplateRef } from 'vue'
 import { Modal } from 'bootstrap'
 import { debug } from '@/utils/logger.ts'
 import { importCredentials } from '@/utils/creds.ts'
@@ -9,13 +9,13 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const modalEl = ref<HTMLElement | null>(null)
-const textareaEl = ref<HTMLTextAreaElement | null>(null)
+const modalEl = useTemplateRef('modalEl')
+const textareaEl = useTemplateRef('textareaEl')
 const textRef = ref('')
 const invalidText = ref('')
 
 async function importClick() {
-  // console.debug('importClick:', event)
+  // debug('importClick:', event)
   debug('importClick - textRef.value:', textRef.value)
   if (!textRef.value) {
     textareaEl.value?.focus()
@@ -33,6 +33,7 @@ async function importClick() {
   try {
     // NOTE: This should NOT throw, but just in case...
     await importCredentials(data)
+    // TODO: Confirm the Modal usage is required here...
     if (modalEl.value) Modal.getInstance(modalEl.value)?.hide()
     textRef.value = ''
   } catch (e) {
@@ -49,18 +50,14 @@ function clearClick() {
 }
 
 onMounted(() => {
-  if (!modalEl.value) return
-  // const modal = Modal.getOrCreateInstance(modalEl.value)
-  // console.log('modal:', modal)
   modalEl.value?.addEventListener('shown.bs.modal', () => {
-    // console.log('shown.bs.modal')
     textareaEl.value?.focus()
     textareaEl.value?.select()
   })
-  modalEl.value.addEventListener('hidden.bs.modal', () => {
-    // console.log('hidden.bs.modal')
-    invalidText.value = ''
+  modalEl.value?.addEventListener('hide.bs.modal', () => {
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
   })
+  modalEl.value?.addEventListener('hidden.bs.modal', () => (invalidText.value = ''))
 })
 </script>
 

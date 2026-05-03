@@ -2,9 +2,8 @@
 
 ## Bugs
 
-- Verify onAuthRequired in [auth.ts](src/entrypoints/background/auth.ts) E2E
 - Edit Host Modal does not check if credentials changed when saving
-- Not possible to ignore a host without being at the login screen
+- Not possible to ignore a host without being at the login page
 
 ## Needs Investigation
 
@@ -12,6 +11,7 @@
 
 ## Confirmed Items
 
+- Cleanup Modal Refs in [HostModal.vue](src/components/HostModal.vue)
 - Cleanup Logging in [creds.ts](src/utils/creds.ts)
 - Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
 - Confirm Ignored Host Management is Satisfactory
@@ -28,6 +28,8 @@
 
 # Completed
 
+- Verify onAuthRequired in [auth.ts](src/entrypoints/background/auth.ts)
+  - This works identically to the VanillaJS version
 - Add reusable tab update function to [App.vue](src/entrypoints/auth/App.vue)
   - Added`updateTab` function
 - Update All Logging

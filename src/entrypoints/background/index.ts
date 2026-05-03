@@ -88,7 +88,7 @@ async function onStartup() {
 }
 
 function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
-  debug('%c background/index.ts - onChanged:', 'color: SeaGreen', changes)
+  debug('background/index.ts - onChanged:', changes)
   if (changes?.options) {
     const oldValue = changes.options?.oldValue as Options | undefined
     const newValue = changes.options?.newValue as Options | undefined
