@@ -56,6 +56,7 @@ ui:
     errorReadingFile: Error Reading File
     errorLoadingPage: Error Loading Page
     noCredentialsExport: No Credentials to Export
+    noCredentialsImport: No Credentials to Import
     noSavedCreds: No Saved Credentials
     showHidePassword: Show/Hide Password
     extensionDisabled: Extension Temporarily Disabled

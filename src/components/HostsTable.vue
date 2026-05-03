@@ -70,9 +70,10 @@ function onEdit(host: string, field: string, value: string) {
   debug('HostsTable.vue - onEdit:', host, field, value)
   const creds = hosts.value[host]
   debug('creds:', creds)
-  if (!creds) return showToast('Credentials Not Found.', 'warning')
+  if (!creds) return showToast(i18n.t('ui.text.noCredentialsImport'), 'warning')
   const [username, password] = parseCreds(creds)
   debug('username, password:', username, password)
+
   switch (field) {
     case 'host': {
       if (!value) {
@@ -81,7 +82,8 @@ function onEdit(host: string, field: string, value: string) {
       }
       const hostname = validateHostname(value)
       if (!hostname) {
-        return showToast('Invalid Hostname.', 'warning')
+        const message = `${i18n.t('ui.text.hostname')} ${i18n.t('ui.text.invalid')}`
+        return showToast(message, 'warning')
       }
       // TODO: Add check for existing host with new hostname
       return submitHost(hostname, username, password, host)
@@ -97,7 +99,7 @@ function onEdit(host: string, field: string, value: string) {
       return submitHost(host, username, value, host)
     }
     default: {
-      showToast(`Unknown Field: ${field}`, 'warning')
+      return showToast(i18n.t('import.errorUnknown'), 'warning')
     }
   }
 }
