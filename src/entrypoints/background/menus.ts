@@ -24,13 +24,13 @@ export async function updateContextMenus(enabled?: boolean) {
     contexts.forEach((item) => {
       const entry = { ...item }
       const contexts = [...(entry.contexts ?? [])]
-      debug('contexts:', contexts)
+      // debug('contexts:', contexts)
       if (!enabled) {
         const idx = contexts?.indexOf('page')
         if (idx !== undefined && idx != -1) contexts?.splice(idx, 1)
       }
       entry.contexts = contexts as [chrome.contextMenus.ContextType]
-      debug(`entry: ${entry.id}`, entry.contexts)
+      // debug(`entry: ${entry.id}`, entry.contexts)
       chrome.contextMenus.create(entry)
     })
   })

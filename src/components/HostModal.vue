@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
-import { onMounted, ref, useId } from 'vue'
+import { onMounted, ref, useId, useTemplateRef } from 'vue'
 import { Modal } from 'bootstrap'
 import { debug } from '@/utils/logger.ts'
 import { copyToast } from '@/utils/index.ts'
@@ -22,7 +22,8 @@ const emit = defineEmits(['submit'])
 
 const id = useId()
 
-const modalEl = ref<HTMLElement | null>(null)
+// TODO: Use modal or modalEl.value NOT BOTH...
+const modalEl = useTemplateRef('modalEl')
 const modal = ref<Modal | any | null>(null) // NOTE: Lazy Typing...
 
 const hostnameEl = ref<HTMLInputElement | null>(null)
@@ -60,8 +61,7 @@ function show(host?: string, creds?: string) {
 }
 
 function hide() {
-  if (!modalEl.value) return
-  Modal.getInstance(modalEl.value)?.hide()
+  if (modalEl.value) Modal.getInstance(modalEl.value)?.hide()
 }
 
 async function onSubmit() {
@@ -122,6 +122,7 @@ function onceChange() {
 }
 
 onMounted(() => {
+  // TODO: Use modal or modalEl.value NOT BOTH...
   if (!modalEl.value) return
   modal.value = Modal.getOrCreateInstance(modalEl.value)
 
@@ -136,17 +137,13 @@ onMounted(() => {
     }
   })
 
-  modalEl.value?.addEventListener('hidePrevented.bs.modal', () => {
-    // console.log('hidePrevented.bs.modal')
-    showAlert.value = true
+  modalEl.value?.addEventListener('hidePrevented.bs.modal', () => (showAlert.value = true))
+
+  modalEl.value?.addEventListener('hide.bs.modal', () => {
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
   })
 
-  // modalEl.value?.addEventListener('hide.bs.modal', () => {
-  //   console.log('hide.bs.modal')
-  // })
-
-  modalEl.value.addEventListener('hidden.bs.modal', () => {
-    // console.log('hidden.bs.modal', event)
+  modalEl.value?.addEventListener('hidden.bs.modal', () => {
     originalHost.value = ''
     hostRef.value = ''
     userRef.value = ''

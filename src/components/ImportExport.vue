@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
-import { ref } from 'vue'
+import { onMounted, ref, useTemplateRef } from 'vue'
 import { debug } from '@/utils/logger.ts'
 import { importCredentials } from '@/utils/creds.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { Hosts } from '@/utils/hosts.ts'
 
+const modalEl = useTemplateRef('modalEl')
 const hostsInput = ref()
 
 async function exportHosts() {
@@ -52,11 +53,18 @@ async function hostsInputChange(event: Event) {
     showToast(`${i18n.t('ui.text.importError')}: ${message}`, 'warning')
   }
 }
+
+onMounted(() => {
+  modalEl.value?.addEventListener('hide.bs.modal', () => {
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
+  })
+})
 </script>
 
 <template>
   <div>
     <a
+      ref="modalEl"
       id="export-hosts"
       class="link-body-emphasis text-decoration-none d-inline-block"
       role="button"

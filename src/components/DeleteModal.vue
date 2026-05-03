@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
-import { ref } from 'vue'
+import { onMounted, ref, useTemplateRef } from 'vue'
 import { Modal } from 'bootstrap'
 
 defineExpose({ show })
 
 const emit = defineEmits(['delete'])
 
-const modalEl = ref<HTMLElement | null>(null)
-
+const modalEl = useTemplateRef('modalEl')
 const hostRef = ref('')
 
 function show(host: string) {
@@ -26,6 +25,12 @@ function onDelete() {
   emit('delete', hostRef.value)
   hide()
 }
+
+onMounted(() => {
+  modalEl.value?.addEventListener('hide.bs.modal', () => {
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
+  })
+})
 </script>
 
 <template>
