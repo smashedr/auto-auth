@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { i18n, getAppConfig } from '#imports'
 import { nextTick, onMounted, ref, watch } from 'vue'
+import { debug } from '@/utils/logger.ts'
 import { copyToast } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
 import { openOptions } from '@/utils/extension.ts'
@@ -41,7 +42,7 @@ watch(
   (opts) => {
     // console.log('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
     const tempSave = sessionStorage.getItem(hostRef.value)
-    console.log('tempSave:', tempSave)
+    debug('tempSave:', tempSave)
     if (tempSave) {
       saveCreds.value = !!Number.parseInt(tempSave)
     } else {
@@ -51,37 +52,39 @@ watch(
   { once: true },
 )
 
+// TODO: Determine if this is the best use of watch()
 watch(saveCreds, () => {
-  // console.log('watch - saveCreds:', newVal)
+  debug('watch - saveCreds')
+  // TODO: Determine if this is the best use of saveCredsChange (see additional usage below)
   saveCredsChange()
 })
 
 async function submitAuth(event: Event) {
-  console.debug('submitAuth:', event)
+  debug('submitAuth:', event)
   isProcessing.value = true
 
-  console.debug('hostRef.value:', hostRef.value)
-  console.debug('userRef.value:', userRef.value)
-  console.debug('passRef.value:', passRef.value)
+  debug('hostRef.value:', hostRef.value)
+  debug('userRef.value:', userRef.value)
+  debug('passRef.value:', passRef.value)
 
-  console.debug('options.value.defaultSave:', options.value.defaultSave)
-  console.debug('saveCreds.value:', saveCreds.value)
+  debug('saveCreds.value:', saveCreds.value)
+  debug('options.value.defaultSave:', options.value.defaultSave)
 
   if (saveCreds.value) {
     await Hosts.set(hostRef.value, `${userRef.value}:${passRef.value}`)
     console.log('%cCredentials Saved.', 'color: LimeGreen', `Loading: ${hrefRef.value}`)
   } else {
     const session = await getSession()
-    console.log('session:', session)
+    debug('session:', session)
     session[hostRef.value] = `${userRef.value}:${passRef.value}`
-    console.log('session:', session)
+    debug('session:', session)
     await chrome.storage.session.set({ session })
     console.log('%cCredentials Saved for Session Only.', 'color: SpringGreen', `Loading: ${hrefRef.value}`)
   }
   const tab = await chrome.tabs.getCurrent()
-  console.debug('tab:', tab)
+  debug('tab:', tab)
   if (!tab?.id) {
-    // NOTE: Consider handling this better, but it should never happen...
+    // NOTE: Consider handling this better? But it should never happen...
     isProcessing.value = false
     return showToast(i18n.t('ui.text.errorLoadingPage'), 'danger')
   }
@@ -89,12 +92,13 @@ async function submitAuth(event: Event) {
 }
 
 async function ignoreHost() {
-  console.debug('ignoreHost:', hostRef.value)
+  debug('ignoreHost:', hostRef.value)
   await Hosts.set(hostRef.value, 'ignored')
+  console.log('%cHost Ignored:', 'color: Gold', hrefRef.value)
 
   // document.body.remove() // NOTE: Determine why this was called...
   const tab = await chrome.tabs.getCurrent()
-  console.debug('tab:', tab)
+  debug('tab:', tab)
   if (!tab?.id) return console.error('no tab.id') // NOTE: HANDLE ERROR
   await chrome.tabs.update(tab.id, { url: hrefRef.value })
 }
@@ -108,52 +112,53 @@ onMounted(async () => {
   // NOTE: Copied from VanillaJS...
   const searchParams = new URLSearchParams(window.location.search)
   const fail = searchParams.get('fail')
-  console.debug('fail:', fail)
+  debug('fail:', fail)
   isFailure.value = !!fail
-  console.debug('isFailure.value:', isFailure.value)
   const urlParam = searchParams.get('url')
-  console.debug('urlParam:', urlParam)
+  debug('urlParam:', urlParam)
   if (!urlParam) return
 
+  // TODO: Check if error handling is needed here...
   const url = new URL(urlParam)
-  console.debug('url:', url)
+  debug('url:', url)
   hostRef.value = url.host
   hrefRef.value = url.href
 
   document.title = `${i18n.t('auth.title')} ${hostRef.value}`
 
   const creds = await Hosts.get(hostRef.value)
-  console.debug('creds:', creds)
+  debug('creds:', creds)
+  // console.debug('creds:', creds ? 'Yes' : 'No')
 
   const session = await getSession()
-  console.debug('session:', session)
+  debug('session:', session)
 
   if (creds) {
-    console.debug('if creds:', creds)
+    debug('if creds:', creds)
     hasSavedCreds.value = true
     if (creds !== 'ignored') {
       const [username, password] = parseCreds(creds)
       userRef.value = username
-      console.debug('usernameEl.value:', usernameEl.value)
+      debug('usernameEl.value:', usernameEl.value)
       await nextTick()
       usernameEl.value?.select()
       passRef.value = password
     }
   } else if (hostRef.value in session) {
-    console.debug('else hostRef.value in session:', hostRef.value)
+    debug('else hostRef.value in session:', hostRef.value)
     const [username, password] = parseCreds(session[hostRef.value])
     userRef.value = username
-    console.debug('usernameEl.value:', usernameEl.value)
+    debug('usernameEl.value:', usernameEl.value)
     await nextTick()
     usernameEl.value?.select()
     passRef.value = password
   }
 
   const link = document.querySelector<HTMLLinkElement>('link[rel*="icon"]')
-  console.debug('link:', link)
+  // console.debug('link:', link)
   if (!link) return
   link.href = `${url.origin}/favicon.ico`
-  console.debug('link.href:', link.href)
+  // console.debug('link.href:', link.href)
 })
 </script>
 

@@ -18,12 +18,11 @@ function show(host: string) {
 }
 
 function hide() {
-  if (!modalEl.value) return
+  if (!modalEl.value) return console.error('no modalEl')
   Modal.getInstance(modalEl.value)?.hide()
 }
 
 function onDelete() {
-  // console.debug('DeleteModal.vue - onDelete:', hostRef.value)
   emit('delete', hostRef.value)
   hide()
 }

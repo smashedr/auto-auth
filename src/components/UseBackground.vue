@@ -9,7 +9,7 @@ const videoURL = ref('')
 const video = useTemplateRef('video')
 
 function setBackground(options: Options) {
-  console.log('setBackground:', options.radioBackground)
+  // console.log('setBackground:', options.radioBackground)
   if (!video.value) return console.warn('no video element')
 
   bgRef.value = options.radioBackground
@@ -40,7 +40,7 @@ async function onChanged(changes: Record<string, any>) {
     changes.options.oldValue.pictureURL !== changes.options.newValue.pictureURL ||
     changes.options.oldValue.videoURL !== changes.options.newValue.videoURL
   ) {
-    console.log('%c Background Change Detected.', 'color: LightSkyBlue')
+    console.log('%cBackground Change Detected.', 'color: LightSkyBlue')
     setBackground(changes.options.newValue)
   }
 }

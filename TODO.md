@@ -4,7 +4,11 @@
 
 - :robot:
 
-## Items
+## Needs Investigation
+
+- Confirm usage of `watch()` in [App.vue](src/entrypoints/auth/App.vue)
+
+## Confirmed Items
 
 - Confirm Ignored Host Management is Satisfactory
 - Validate All English Translations

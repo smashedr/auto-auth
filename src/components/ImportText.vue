@@ -2,6 +2,7 @@
 import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
 import { Modal } from 'bootstrap'
+import { debug } from '@/utils/logger.ts'
 import { importCredentials } from '@/utils/creds.ts'
 
 defineOptions({
@@ -15,7 +16,7 @@ const invalidText = ref('')
 
 async function importClick() {
   // console.debug('importClick:', event)
-  console.debug('importClick - textRef.value:', textRef.value)
+  debug('importClick - textRef.value:', textRef.value)
   if (!textRef.value) {
     textareaEl.value?.focus()
     return
@@ -54,6 +55,7 @@ onMounted(() => {
   // const modal = Modal.getOrCreateInstance(modalEl.value)
   // console.log('modal:', modal)
   modalEl.value?.addEventListener('shown.bs.modal', () => {
+    // console.log('shown.bs.modal')
     textareaEl.value?.focus()
     textareaEl.value?.select()
   })
