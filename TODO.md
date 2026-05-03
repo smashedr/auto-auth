@@ -2,9 +2,15 @@
 
 ## Bugs
 
+### New
+
+- :robot:
+
+### Existing
+
 - Not possible to ignore a host without being at the login page
 
-## Needs Investigation
+### Needs Investigation
 
 - Confirm usage of `watch()` in [App.vue](src/entrypoints/auth/App.vue)
 - Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
