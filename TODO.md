@@ -8,10 +8,10 @@
 ## Needs Investigation
 
 - Confirm usage of `watch()` in [App.vue](src/entrypoints/auth/App.vue)
+- Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
 
 ## Confirmed Items
 
-- Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
 - Confirm Ignored Host Management is Satisfactory
 - Validate All English Translations
 - Add Additional Locales

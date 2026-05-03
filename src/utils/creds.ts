@@ -22,7 +22,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
         count += 1
       } catch (e) {
         const message = e instanceof Error ? e.message : 'Unknown Error'
-        console.log(`%c${message}:`, 'color: Red', item)
+        console.log(`%c${message}:`, 'color: Red', item) // TODO: Logging
       }
     }
   } else {
