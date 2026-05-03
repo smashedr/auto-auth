@@ -22,9 +22,8 @@ const emit = defineEmits(['submit'])
 
 const id = useId()
 
-// TODO: Use modal or modalEl.value NOT BOTH...
 const modalEl = useTemplateRef('modalEl')
-const modal = ref<Modal | any | null>(null) // NOTE: Lazy Typing...
+const modal = ref<Modal | any | null>(null) // any: to access modal._config
 
 const hostnameEl = ref<HTMLInputElement | null>(null)
 const usernameEl = ref<HTMLInputElement | null>(null)
@@ -45,7 +44,7 @@ const isAdding = ref(false)
 const noUsername = ref(false)
 
 function show(host?: string, creds?: string) {
-  if (!modalEl.value) return console.error('no modalEl')
+  if (!modal.value) return console.error('no modalEl')
 
   if (host && creds) {
     originalHost.value = host
@@ -57,11 +56,12 @@ function show(host?: string, creds?: string) {
     isAdding.value = true
   }
 
-  Modal.getOrCreateInstance(modalEl.value).show()
+  modal.value.show()
 }
 
 function hide() {
-  if (modalEl.value) Modal.getInstance(modalEl.value)?.hide()
+  if (!modal.value) return console.error('no modalEl')
+  modal.value.hide()
 }
 
 async function onSubmit() {
@@ -122,7 +122,6 @@ function onceChange() {
 }
 
 onMounted(() => {
-  // TODO: Use modal or modalEl.value NOT BOTH...
   if (!modalEl.value) return
   modal.value = Modal.getOrCreateInstance(modalEl.value)
 

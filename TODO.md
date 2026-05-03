@@ -11,7 +11,6 @@
 
 ## Confirmed Items
 
-- Cleanup Modal Refs in [HostModal.vue](src/components/HostModal.vue)
 - Cleanup Logging in [creds.ts](src/utils/creds.ts)
 - Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
 - Confirm Ignored Host Management is Satisfactory
@@ -28,6 +27,8 @@
 
 # Completed
 
+- Cleanup Modal Refs in [HostModal.vue](src/components/HostModal.vue)
+  - Both are used, element for event listener and modal for .\_config
 - Verify onAuthRequired in [auth.ts](src/entrypoints/background/auth.ts)
   - This works identically to the VanillaJS version
 - Add reusable tab update function to [App.vue](src/entrypoints/auth/App.vue)
