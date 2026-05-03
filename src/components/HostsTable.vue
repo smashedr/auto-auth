@@ -2,6 +2,7 @@
 import { i18n } from '#imports'
 import { computed, ref } from 'vue'
 import { isMobile } from '@/utils/system.ts'
+import { debug } from '@/utils/logger.ts'
 import { submitHost } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
 import { saveKeyValue } from '@/utils/options.ts'
@@ -42,7 +43,7 @@ const computedHosts = computed(() =>
 
 // DUPLICATION: popup/App.vue
 function deleteClick(host: string) {
-  console.log('HostsTable.vue - deleteClick:', host)
+  debug('HostsTable.vue - deleteClick:', host)
   if (options.value.confirmDelete) {
     deleteModal.value?.show(host)
   } else {
@@ -52,9 +53,10 @@ function deleteClick(host: string) {
 
 // DUPLICATION: popup/App.vue
 async function deleteHost(host: string) {
-  console.log('HostsTable.vue - deleteHost:', host)
-  const creds = hosts.value[host]
-  console.log('creds:', creds) // NOTE: Check if validation is needed...
+  debug('HostsTable.vue - deleteHost:', host)
+  // TODO: Determine if creds need to be validated here...
+  // const creds = hosts.value[host]
+  // console.log('creds:', creds)
   try {
     await Hosts.delete(host)
     showToast(`${i18n.t('ui.text.removed')}: ${host}`, 'success')
@@ -65,12 +67,12 @@ async function deleteHost(host: string) {
 }
 
 function onEdit(host: string, field: string, value: string) {
-  console.log('HostsTable.vue - onEdit:', host, field, value)
+  debug('HostsTable.vue - onEdit:', host, field, value)
   const creds = hosts.value[host]
-  // console.log('creds:', creds)
+  debug('creds:', creds)
   if (!creds) return showToast('Credentials Not Found.', 'warning')
   const [username, password] = parseCreds(creds)
-  // console.log('username, password:', username, password)
+  debug('username, password:', username, password)
   switch (field) {
     case 'host': {
       if (!value) return showToast('Hostname is Required.', 'warning')
@@ -95,10 +97,10 @@ function onEdit(host: string, field: string, value: string) {
 }
 
 function columnsChange(event: Event) {
-  console.debug('HostsTable.vue - columnsChange:', event)
+  debug('HostsTable.vue - columnsChange:', event)
   const target = event.target as HTMLInputElement
-  console.debug('target.id:', target.id)
-  console.debug('target.checked:', target.checked)
+  debug('target.id:', target.id)
+  debug('target.checked:', target.checked)
   saveKeyValue(target.id, target.checked)
 }
 

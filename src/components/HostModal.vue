@@ -2,6 +2,7 @@
 import { i18n } from '#imports'
 import { onMounted, ref, useId } from 'vue'
 import { Modal } from 'bootstrap'
+import { debug } from '@/utils/logger.ts'
 import { copyToast } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
 import { Hosts, validateHostname } from '@/utils/hosts.ts'
@@ -64,7 +65,7 @@ function hide() {
 }
 
 async function onSubmit() {
-  console.log('HostModal.vue - onSubmit:', hostRef.value, userRef.value, passRef.value, originalHost.value)
+  debug('HostModal.vue - onSubmit:', hostRef.value, userRef.value, passRef.value, originalHost.value)
 
   // hostname
   const hostname = validateHostname(hostRef.value)
@@ -75,13 +76,14 @@ async function onSubmit() {
     return
   }
   hostRef.value = hostname
+  debug('hostname:', hostRef.value)
 
   // existing
   if (isAdding.value) {
     const existing = await Hosts.get(hostRef.value)
-    // console.debug('existing:', existing)
+    debug('existing:', existing)
     if (existing) {
-      console.debug('Existing Host:', hostRef.value)
+      debug('Existing Host:', hostRef.value)
       hostnameEl.value?.focus()
       hostnameEl.value?.select()
       hostInvalid.value = 'Hostname Already Exists. Edit or Delete First.'
@@ -90,31 +92,30 @@ async function onSubmit() {
   }
 
   // username
-  console.log('username:', userRef.value)
   // NOTE: Consider validating username as a convince to the user...
+  debug('username:', userRef.value)
 
   // password
-  console.log('password:', passRef.value)
+  debug('password:', passRef.value)
   if (!passRef.value) {
-    console.debug('No password')
+    debug('No password')
     passwordEl.value?.focus()
     passInvalid.value = 'Password Required.'
     return
   }
 
-  console.log('Adding Host:', hostRef.value)
   emit('submit', hostRef.value, userRef.value, passRef.value, originalHost.value)
   hide()
 }
 
 function hostnameChange() {
-  console.log('HostModal.vue - hostnameChange')
+  debug('HostModal.vue - hostnameChange')
   onceChange()
   if (!validateHostname(hostRef.value)) hostInvalid.value = 'Invalid Hostname or URL.'
 }
 
 function onceChange() {
-  console.log('HostModal.vue - onceChange')
+  debug('HostModal.vue - onceChange')
   if (!modal.value) return
   modal.value._config.backdrop = 'static'
   unsavedChanges.value = true
@@ -122,9 +123,7 @@ function onceChange() {
 
 onMounted(() => {
   if (!modalEl.value) return
-
   modal.value = Modal.getOrCreateInstance(modalEl.value)
-  // console.log('modal:', modal.value)
 
   modalEl.value?.addEventListener('shown.bs.modal', () => {
     if (isAdding.value) {
@@ -138,16 +137,16 @@ onMounted(() => {
   })
 
   modalEl.value?.addEventListener('hidePrevented.bs.modal', () => {
-    console.log('hidePrevented.bs.modal')
+    // console.log('hidePrevented.bs.modal')
     showAlert.value = true
   })
 
-  modalEl.value?.addEventListener('hide.bs.modal', () => {
-    console.log('hide.bs.modal')
-  })
+  // modalEl.value?.addEventListener('hide.bs.modal', () => {
+  //   console.log('hide.bs.modal')
+  // })
 
-  modalEl.value.addEventListener('hidden.bs.modal', (event) => {
-    console.log('hidden.bs.modal', event)
+  modalEl.value.addEventListener('hidden.bs.modal', () => {
+    // console.log('hidden.bs.modal', event)
     originalHost.value = ''
     hostRef.value = ''
     userRef.value = ''

@@ -53,17 +53,18 @@ export class Hosts {
 
 // NOTE: Moved from components/HostModal.vue and exported
 export function validateHostname(hostname: string): string | undefined {
+  // console.log('validateHostname:', hostname)
   try {
     let value = hostname
-    console.debug('value1:', value)
+    // console.log('value1:', value)
     if (!value.includes('://')) {
       value = `https://${value}`
     }
-    console.debug('value2:', value)
+    // console.log('value2:', value)
     const url = new URL(value)
-    console.log(`url.hostname: "${url.hostname}"`, url)
+    // console.log(`url.hostname: "${url.hostname}"`, url)
     return url.hostname
   } catch (e) {
-    console.debug(e)
+    console.log(e)
   }
 }

@@ -2,6 +2,7 @@
 import { i18n } from '#imports'
 import { onMounted, ref } from 'vue'
 import { Modal } from 'bootstrap'
+import { debug } from '@/utils/logger.ts'
 import { importCredentials } from '@/utils/creds.ts'
 
 defineOptions({
@@ -13,9 +14,9 @@ const textareaEl = ref<HTMLTextAreaElement | null>(null)
 const textRef = ref('')
 const invalidText = ref('')
 
-async function importClick(event: Event) {
-  console.debug('importClick:', event)
-  console.debug('textRef:', textRef.value)
+async function importClick() {
+  // console.debug('importClick:', event)
+  debug('importClick - textRef.value:', textRef.value)
   if (!textRef.value) {
     textareaEl.value?.focus()
     return
@@ -24,7 +25,7 @@ async function importClick(event: Event) {
   try {
     data = JSON.parse(textRef.value)
   } catch (e) {
-    console.debug('JSON.parse error:', e)
+    console.log('JSON.parse error:', e)
     let err = i18n.t('import.errorJson')
     if (e instanceof Error) err += `: ${e}`
     invalidText.value = err
@@ -36,7 +37,7 @@ async function importClick(event: Event) {
     if (modalEl.value) Modal.getInstance(modalEl.value)?.hide()
     textRef.value = ''
   } catch (e) {
-    console.debug('importCredentials error:', e)
+    console.log('importCredentials error:', e)
     let err = i18n.t('import.errorUnknown')
     if (e instanceof Error) err += `: ${e}`
     invalidText.value = err
@@ -54,11 +55,12 @@ onMounted(() => {
   // const modal = Modal.getOrCreateInstance(modalEl.value)
   // console.log('modal:', modal)
   modalEl.value?.addEventListener('shown.bs.modal', () => {
+    // console.log('shown.bs.modal')
     textareaEl.value?.focus()
     textareaEl.value?.select()
   })
   modalEl.value.addEventListener('hidden.bs.modal', () => {
-    console.log('hidden.bs.modal')
+    // console.log('hidden.bs.modal')
     invalidText.value = ''
   })
 })

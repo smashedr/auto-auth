@@ -33,7 +33,7 @@ async function onChanged(changes: Record<string, any>) {
 }
 
 async function processCreds(creds: any) {
-  console.debug('processCreds - tabEnabled:', tabEnabled, '- creds:', creds)
+  // console.debug('processCreds - tabEnabled:', tabEnabled, '- creds:', creds)
   if (creds) {
     tabEnabled = true
     if (creds === 'ignored') {

@@ -7,7 +7,7 @@ import { onAuthRequired, webRequestFinished } from './auth.ts'
 import { updateIcon } from './icons.ts'
 import { updateContextMenus } from './menus.ts'
 
-// TODO: NOTE: The config object builds to r() at runtime...
+// TODO: NOTE: The config object builds to r() for runtime...
 const config = getAppConfig()
 const banner = `%c\
    .---.  ${config.name} v${config.version}
@@ -105,17 +105,17 @@ function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
 
 function onMessage(message: any, sender: chrome.runtime.MessageSender) {
   const tabId = message.tabId || sender.tab?.id
-  console.debug(`background/index.ts - onMessage: tabId: ${tabId} - message:`, message)
+  // console.debug(`background/index.ts - onMessage: tabId: ${tabId} - message:`, message)
   if (!message || typeof message !== 'object') return console.warn('invalid message')
 
   if (tabId && Object.hasOwn(message, 'badgeColor')) {
-    console.debug(`setBadgeBackgroundColor: ${message.badgeColor}`)
+    // console.debug(`setBadgeBackgroundColor: ${message.badgeColor}`)
     chrome.action
       .setBadgeBackgroundColor({ tabId: tabId, color: message.badgeColor })
       .catch(console.warn)
   }
   if (tabId && Object.hasOwn(message, 'badgeText')) {
-    console.debug(`setBadgeText: ${message.badgeText}`)
+    // console.debug(`setBadgeText: ${message.badgeText}`)
     chrome.action
       .setBadgeText({ tabId: tabId, text: message.badgeText })
       .catch(console.warn)

@@ -5,6 +5,8 @@ import { useToast } from '@/composables/useToast.ts'
 import { clickOpen } from '@/utils/extension.ts'
 import { isFirefox } from '@/utils/system.ts'
 
+// TODO: Logging
+
 const { showToast } = useToast()
 
 const props = withDefaults(
@@ -49,7 +51,7 @@ async function revokePerms(event: Event) {
     await chrome.permissions.remove({ origins })
     await updatePerms()
   } catch (e) {
-    console.log(e)
+    console.error(e)
     const message = e instanceof Error ? e.message : 'Unknown Error'
     showToast(message, 'danger')
   }
@@ -75,7 +77,7 @@ onUnmounted(() => {
   <div v-if="!hasPerms || showAlert || showRemove">
     <div v-if="!hasPerms" class="text-center d-grid gap-2">
       <button
-        class="btn btn-lg btn-success"
+        class="btn btn-lg btn-warning"
         type="button"
         data-bs-toggle="tooltip"
         data-bs-placement="top"

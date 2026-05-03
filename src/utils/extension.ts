@@ -1,7 +1,9 @@
+import { debug } from '@/utils/logger.ts'
+
 // NOTE: All functions below are ported from VanillaJS
 
 export function openSidePanel(close?: boolean) {
-  console.debug('openSidePanel - close:', close)
+  debug('openSidePanel - close:', close)
   if (chrome.sidePanel) {
     // console.debug('chrome.sidePanel')
     chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
@@ -22,7 +24,7 @@ export function openSidePanel(close?: boolean) {
 }
 
 export function openOptions(close = false) {
-  console.debug('openOptions')
+  debug('openOptions')
   chrome.runtime
     .openOptionsPage()
     .then(() => {
@@ -31,15 +33,16 @@ export function openOptions(close = false) {
     .catch(console.warn)
 }
 
+// NOTE: NOT IN USE - for adding a page.html for managing hosts...
 export async function openPage(close = false, path = 'auth.html') {
-  console.debug('openPage:', path)
+  debug('openPage:', path)
   const page = chrome.runtime.getURL(path)
   await activateOrOpen(page)
   if (close) window.close()
 }
 
 export async function openPopup() {
-  console.debug('openPopup')
+  debug('openPopup')
   // Note: This fails if popup is already open (ex. double clicks)
   try {
     await chrome.action.openPopup()
@@ -49,7 +52,7 @@ export async function openPopup() {
 }
 
 export async function openExtPanel(close = false) {
-  console.debug('openExtPanel:', close)
+  debug('openExtPanel:', close)
 
   const panelPath = 'popout.html'
   const [defaultWidth, defaultHeight] = [390, 600]
@@ -62,10 +65,10 @@ export async function openExtPanel(close = false) {
     'panelWidth',
     'panelHeight',
   ])
-  // console.debug('local:', local)
+  debug('local:', local)
 
   const lastPanelID = local.lastPanelID as number | undefined
-  // console.debug('lastPanelID:', lastPanelID)
+  debug('lastPanelID:', lastPanelID)
 
   try {
     if (lastPanelID) {
@@ -78,7 +81,7 @@ export async function openExtPanel(close = false) {
         // console.debug('tabs:', tabs)
         // console.debug('tabs[0]?.windowId:', tabs[0]?.windowId)
         if (panel.id != tabs[0]?.windowId) {
-          console.debug('%c Panel found:', 'color: SpringGreen', panel.id)
+          console.debug('%cPanel found:', 'color: SpringGreen', panel.id)
           await chrome.windows.update(panel.id, { focused: true })
           if (close) window.close()
           return
@@ -101,14 +104,14 @@ export async function openExtPanel(close = false) {
   const panel = await chrome.windows.create({ type, url, width, height })
   // console.debug('panel:', panel)
   if (panel) {
-    console.debug(`%c Created new window: ${panel.id}`, 'color: Magenta')
+    console.debug(`%cCreated new window: ${panel.id}`, 'color: Magenta')
     chrome.storage.local.set({ lastPanelID: panel.id }).catch(console.warn)
   }
   if (close) window.close()
 }
 
 export async function activateOrOpen(url: string, open = true) {
-  console.debug('activateOrOpen:', url, open)
+  debug('activateOrOpen:', url, open)
   // Note: To Get Tab from Tabs (requires host permissions or tabs)
   const tabs = await chrome.tabs.query({ currentWindow: true })
   // console.debug('tabs:', tabs)
@@ -128,7 +131,7 @@ export async function activateOrOpen(url: string, open = true) {
 export function clickOpen(e: Event, close = false) {
   const target = e.currentTarget as HTMLAnchorElement
   let url = target.href
-  console.debug('clickOpen:', close, url)
+  debug('clickOpen:', close, url)
   if (!url || url === '#') return
   if (url.startsWith('/')) {
     url = chrome.runtime.getURL(url)

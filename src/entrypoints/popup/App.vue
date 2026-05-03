@@ -2,6 +2,7 @@
 import { i18n } from '#imports'
 import { computed, onMounted, ref } from 'vue'
 import { isFirefox, isMobile } from '@/utils/system.ts'
+import { debug } from '@/utils/logger.ts'
 import { submitHost } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
 import { openOptions } from '@/utils/extension.ts'
@@ -20,7 +21,7 @@ import HostModal from '@/components/HostModal.vue'
 // TODO: Chrome: auto-width - Firefox: 360px - Mobile: 100%
 const isBrowser = isFirefox ? '360px' : null
 const width = computed(() => (isMobile ? '100%' : isBrowser))
-// console.log('width:', width.value)
+debug('width:', width.value)
 
 const options = useOptions()
 
@@ -44,8 +45,9 @@ function deleteClick(host: string) {
 // DUPLICATION: HostsTable.vue
 async function deleteHost(host: string) {
   console.log('popup/App.vue - deleteHost:', host)
-  const creds = await Hosts.get(host)
-  console.log('creds:', creds) // NOTE: Check if validation is needed...
+  // TODO: Determine if creds need to be validated here...
+  // const creds = hosts.value[host]
+  // console.log('creds:', creds)
   try {
     await Hosts.delete(host)
     savedCreds.value = ''
@@ -58,7 +60,7 @@ async function deleteHost(host: string) {
 }
 
 async function onSubmit(host: string, user: string, pass: string, original?: string) {
-  console.log('popup/App.vue - onSubmit:', host, user, pass, original)
+  debug('popup/App.vue - onSubmit:', host, user, pass, original)
   await submitHost(host, user, pass, original)
   savedCreds.value = `${user}:${pass}`
   usernameRef.value = user
@@ -66,19 +68,18 @@ async function onSubmit(host: string, user: string, pass: string, original?: str
 
 onMounted(async () => {
   const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
-  console.debug('tab:', tab)
-  if (!tab.url) return
+  debug('tab:', tab)
+  if (!tab.url) return console.debug('No URL for Tab - No Access.')
   const url = new URL(tab.url)
-  console.debug('url.host:', url.host)
+  // console.debug('url.host:', url.host)
   hostnameRef.value = url.host
   const creds = await Hosts.get(url.host)
-  console.debug('creds:', creds)
-  if (!creds) return
+  debug('creds:', creds)
+  if (!creds) return console.debug('No Saved Creds for Host.')
   savedCreds.value = creds
   usernameRef.value = parseCreds(creds)[0]
-
-  console.debug('hostnameRef.value:', hostnameRef.value)
-  console.debug('usernameRef.value:', usernameRef.value)
+  // console.debug('hostnameRef.value:', hostnameRef.value)
+  // console.debug('usernameRef.value:', usernameRef.value)
 })
 </script>
 
