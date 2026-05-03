@@ -14,7 +14,7 @@ import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
 import UseBackground from '@/components/UseBackground.vue'
 
-// console.debug('%c auth/App.vue', 'color: Lime')
+// debug('%c auth/App.vue', 'color: Lime')
 
 const config = getAppConfig()
 
@@ -40,7 +40,7 @@ const isProcessing = ref(false)
 watch(
   options,
   (opts) => {
-    // console.debug('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
+    // debug('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
     const tempSave = sessionStorage.getItem(hostRef.value)
     debug('tempSave:', tempSave)
     if (tempSave) {
@@ -81,14 +81,8 @@ async function submitAuth(event: Event) {
     await chrome.storage.session.set({ session })
     console.log('%cCredentials Saved for Session Only.', 'color: SpringGreen', `Loading: ${hrefRef.value}`)
   }
-  const tab = await chrome.tabs.getCurrent()
-  debug('tab:', tab)
-  if (!tab?.id) {
-    // NOTE: Consider handling this better? But it should never happen...
-    isProcessing.value = false
-    return showToast(i18n.t('ui.text.errorLoadingPage'), 'danger')
-  }
-  await chrome.tabs.update(tab.id, { url: hrefRef.value })
+  await updateTab(hrefRef.value)
+  isProcessing.value = false
 }
 
 async function ignoreHost() {
@@ -98,11 +92,14 @@ async function ignoreHost() {
 
   // document.body.remove() // NOTE: Determine why this was called...
 
-  // TODO: Add function to get tab and update it...
+  await updateTab(hrefRef.value)
+}
+
+async function updateTab(url: string) {
   const tab = await chrome.tabs.getCurrent()
   debug('tab:', tab)
-  if (!tab?.id) return console.error('no tab.id') // NOTE: HANDLE ERROR
-  await chrome.tabs.update(tab.id, { url: hrefRef.value })
+  if (!tab?.id) return showToast(i18n.t('ui.text.errorLoadingPage'), 'danger')
+  await chrome.tabs.update(tab.id, { url })
 }
 
 function saveCredsChange(event?: Event) {
@@ -130,7 +127,6 @@ onMounted(async () => {
 
   const creds = await Hosts.get(hostRef.value)
   debug('creds:', creds)
-  // console.debug('creds:', creds ? 'Yes' : 'No')
 
   const session = await getSession()
   debug('session:', session)
@@ -157,10 +153,10 @@ onMounted(async () => {
   }
 
   const link = document.querySelector<HTMLLinkElement>('link[rel*="icon"]')
-  // console.debug('link:', link)
+  // debug('link:', link)
   if (!link) return
   link.href = `${url.origin}/favicon.ico`
-  // console.debug('link.href:', link.href)
+  // debug('link.href:', link.href)
 })
 </script>
 

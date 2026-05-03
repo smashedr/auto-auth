@@ -11,7 +11,6 @@
 
 ## Confirmed Items
 
-- Add reusable tab update function to [App.vue](src/entrypoints/auth/App.vue)
 - Cleanup Logging in [creds.ts](src/utils/creds.ts)
 - Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
 - Confirm Ignored Host Management is Satisfactory
@@ -28,6 +27,8 @@
 
 # Completed
 
+- Add reusable tab update function to [App.vue](src/entrypoints/auth/App.vue)
+  - Added`updateTab` function
 - Update All Logging
   - Added a logging module with `debug` function [logger.ts](src/utils/logger.ts)
 - Confirm `getAppConfig()` usage in top-level of [index.ts](src/entrypoints/background/index.ts)
