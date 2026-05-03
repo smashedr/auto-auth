@@ -6,8 +6,6 @@ import { useToast } from '@/composables/useToast.ts'
 import { clickOpen } from '@/utils/extension.ts'
 import { isFirefox } from '@/utils/system.ts'
 
-// TODO: Logging
-
 const { showToast } = useToast()
 
 const props = withDefaults(
@@ -39,7 +37,7 @@ async function updatePerms() {
 
 async function grantPerms(event: Event) {
   debug('grantPerms:', event)
-  requestPerms().catch(console.log)
+  requestPerms().catch(console.log) // TODO: Not sure why this would throw or why to log it...
   if (props.closeWindow) window.close()
 }
 
@@ -52,7 +50,7 @@ async function revokePerms(event: Event) {
     await chrome.permissions.remove({ origins })
     await updatePerms()
   } catch (e) {
-    console.error(e)
+    console.error(e) // TODO: Logging - error will be nasty
     const message = e instanceof Error ? e.message : 'Unknown Error'
     showToast(message, 'danger')
   }

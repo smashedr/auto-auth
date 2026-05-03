@@ -25,9 +25,8 @@ async function importClick() {
   try {
     data = JSON.parse(textRef.value)
   } catch (e) {
-    console.log('JSON.parse error:', e)
     let err = i18n.t('import.errorJson')
-    if (e instanceof Error) err += `: ${e}`
+    if (e instanceof Error) err += `: ${e.message}`
     invalidText.value = err
     return
   }
@@ -37,9 +36,8 @@ async function importClick() {
     if (modalEl.value) Modal.getInstance(modalEl.value)?.hide()
     textRef.value = ''
   } catch (e) {
-    console.log('importCredentials error:', e)
     let err = i18n.t('import.errorUnknown')
-    if (e instanceof Error) err += `: ${e}`
+    if (e instanceof Error) err += `: ${e.message}`
     invalidText.value = err
   }
 }

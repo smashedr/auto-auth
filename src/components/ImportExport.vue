@@ -31,7 +31,6 @@ function textFileDownload(filename: string, text: string) {
 }
 
 // async function importHostsClick() {
-//   // console.debug('importHostsClick:', event)
 //   console.debug('importHostsClick - hostsInput.value:', hostsInput.value)
 //   hostsInput.value?.click()
 // }
@@ -48,7 +47,7 @@ async function hostsInputChange(event: Event) {
     debug('data:', data)
     await importCredentials(data)
   } catch (e) {
-    console.log('Import error:', e)
+    console.log('Import error:', e) // TODO: Logging - error will be nasty
     const message = e instanceof Error ? e.message : 'Unknown Error'
     showToast(`${i18n.t('ui.text.importError')}: ${message}`, 'warning')
   }

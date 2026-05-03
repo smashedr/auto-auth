@@ -97,6 +97,8 @@ async function ignoreHost() {
   console.log('%cHost Ignored:', 'color: Gold', hrefRef.value)
 
   // document.body.remove() // NOTE: Determine why this was called...
+
+  // TODO: Add function to get tab and update it...
   const tab = await chrome.tabs.getCurrent()
   debug('tab:', tab)
   if (!tab?.id) return console.error('no tab.id') // NOTE: HANDLE ERROR

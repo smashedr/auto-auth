@@ -21,10 +21,7 @@ export function webRequestFinished(
 ): void {
   const index = pendingRequests.indexOf(requestDetails.requestId)
   if (index > -1) {
-    console.debug(
-      `%cRemoving pendingRequests: ${requestDetails.requestId}`,
-      'color: Khaki',
-    )
+    console.log(`%cRemoving pendingRequests: ${requestDetails.requestId}`, 'color: Khaki')
     pendingRequests.splice(index, 1)
   }
 }
@@ -106,9 +103,6 @@ async function processRequest(
   }
 
   // New Request Without Credentials
-  console.log(
-    `%cNo Credentials for Request ID: ${details.requestId}`,
-    'color: DeepSkyBlue',
-  )
+  console.log(`%cNo Credentials for Request: ${details.requestId}`, 'color: DeepSkyBlue')
   hijackRequest()
 }

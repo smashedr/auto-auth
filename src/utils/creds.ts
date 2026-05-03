@@ -12,7 +12,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
   let total
   if (data?.credentialsArray) {
     // Basic Authentication (nanfgbiblbcagfodkfeinbbhijihckml)
-    console.debug('Processing - %c Basic Authentication', 'color: SpringGreen')
+    console.log('Processing - %c Basic Authentication', 'color: SpringGreen')
     total = data.credentialsArray.length
     for (const item of data.credentialsArray) {
       try {
@@ -25,12 +25,12 @@ export async function importCredentials(data: any) /* NOSONAR */ {
       }
     }
   } else {
-    console.debug('Processing - %c AutoAuth/Native', 'color: SpringGreen')
+    console.log('Processing - %c AutoAuth/Native', 'color: SpringGreen')
     total = Object.keys(data).length
     for (const [key, value] of Object.entries(data)) {
       debug(`key: "${key}":`, value)
       if (!key) {
-        console.debug(`No hostname for value: ${value}`)
+        console.log(`No hostname for value: ${value}`)
         continue
       }
       try {

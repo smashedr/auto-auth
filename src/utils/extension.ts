@@ -2,7 +2,7 @@ import { debug } from '@/utils/logger.ts'
 
 // NOTE: All functions below are ported from VanillaJS
 
-export function openSidePanel(close?: boolean) {
+export function openSidePanel(close = false) {
   debug('openSidePanel - close:', close)
   if (chrome.sidePanel) {
     // debug('chrome.sidePanel')
@@ -47,7 +47,7 @@ export async function openPopup() {
   try {
     await chrome.action.openPopup()
   } catch (e) {
-    console.log(e)
+    debug(e)
   }
 }
 
@@ -81,7 +81,7 @@ export async function openExtPanel(close = false) {
         // debug('tabs:', tabs)
         // debug('tabs[0]?.windowId:', tabs[0]?.windowId)
         if (panel.id != tabs[0]?.windowId) {
-          console.log('%cPanel found:', 'color: SpringGreen', panel.id)
+          debug('%cPanel found:', 'color: SpringGreen', panel.id)
           await chrome.windows.update(panel.id, { focused: true })
           if (close) window.close()
           return
@@ -89,7 +89,7 @@ export async function openExtPanel(close = false) {
       }
     }
   } catch (e) {
-    console.log(e)
+    debug(e)
   }
 
   const panelWidth = local.panelWidth as number | undefined
@@ -104,7 +104,7 @@ export async function openExtPanel(close = false) {
   const panel = await chrome.windows.create({ type, url, width, height })
   // debug('panel:', panel)
   if (panel) {
-    console.log(`%cCreated new window: ${panel.id}`, 'color: Magenta')
+    debug(`%cCreated new window: ${panel.id}`, 'color: Magenta')
     chrome.storage.local.set({ lastPanelID: panel.id }).catch(console.warn)
   }
   if (close) window.close()
@@ -117,12 +117,12 @@ export async function activateOrOpen(url: string, open = true) {
   // debug('tabs:', tabs)
   for (const tab of tabs) {
     if (tab.url === url) {
-      console.log('%cTab found, activating:', 'color: Lime', tab)
+      debug('%cTab found, activating:', 'color: Lime', tab)
       return await chrome.tabs.update(tab.id, { active: true })
     }
   }
   if (open) {
-    console.log('%cTab not found, opening url:', 'color: Yellow', url)
+    debug('%cTab not found, opening url:', 'color: Yellow', url)
     return await chrome.tabs.create({ active: true, url })
   }
   console.warn('tab not found and open not set for url:', url)
