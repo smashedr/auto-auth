@@ -74,6 +74,8 @@ function onEdit(host: string, field: string, value: string) {
   const [username, password] = parseCreds(creds)
   debug('username, password:', username, password)
 
+  if (field === 'host' && value in hosts.value) return showToast(i18n.t('ui.text.hostnameExists'), 'warning')
+
   switch (field) {
     case 'host': {
       if (!value) {
@@ -85,7 +87,6 @@ function onEdit(host: string, field: string, value: string) {
         const message = `${i18n.t('ui.text.hostname')} ${i18n.t('ui.text.invalid')}`
         return showToast(message, 'warning')
       }
-      // TODO: Add check for existing host with new hostname
       return submitHost(hostname, username, password, host)
     }
     case 'user': {

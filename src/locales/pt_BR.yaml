@@ -62,6 +62,9 @@ ui:
     extensionDisabled: Extensão Temporariamente Desativada
     unsavedChanges: Alterações Não Salvas Detectadas.
 
+    hostUrlInvalid: Invalid Hostname or URL
+    hostnameExists: O hostname já existe. Edite ou exclua primeiro.
+
 form:
   host:
     columns: Colunas

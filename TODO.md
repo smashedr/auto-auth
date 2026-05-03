@@ -2,7 +2,6 @@
 
 ## Bugs
 
-- Editing a host to an existing host deletes the existing host silently
 - Edit Host Modal does not check if credentials changed when saving
 - Not possible to ignore a host without being at the login page
 
@@ -28,6 +27,8 @@
 
 # Completed
 
+- Editing a host to an existing host deletes the existing host silently
+  - Add check on the HostModal and HostTable
 - Cleanup Logging in [creds.ts](src/utils/creds.ts)
   - Should be good enough
 - Cleanup Modal Refs in [HostModal.vue](src/components/HostModal.vue)

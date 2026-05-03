@@ -45,6 +45,7 @@ function finishEdit() {
       v-if="isEditing"
       v-model="inputValue"
       ref="inputEl"
+      :name="field"
       :type="visible ? 'text' : 'password'"
       class="form-control form-control-sm table-input"
       @keyup.esc="isEditing = false"
