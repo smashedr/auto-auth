@@ -20,7 +20,7 @@ const options = useOptions()
 </script>
 
 <template>
-  <div class="d-flex flex-column gap-3">
+  <div class="d-flex flex-column gap-3 overflow-x-hidden">
     <div v-if="show.includes('switches')" class="row m-0">
       <form class="p-0">
         <template v-for="id in switches" :key="id">
@@ -34,7 +34,7 @@ const options = useOptions()
       </form>
     </div>
 
-    <div v-if="show.includes('background')" class="row m-0">
+    <div v-if="show.includes('background')">
       <HorizontalRule class="p-0 my-2">{{ i18n.t('options.authPageBackground') }}</HorizontalRule>
       <!--<h6>{{ i18n.t('options.authPageBackground') }}</h6>-->
       <BackgroundForm />

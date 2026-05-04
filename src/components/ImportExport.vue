@@ -12,7 +12,7 @@ const hostsInput = ref()
 async function exportHosts() {
   debug('exportHosts')
   const hosts = await Hosts.all()
-  // console.debug('hosts:', hosts)
+  // debug('hosts:', hosts)
   if (Object.keys(hosts).length === 0) {
     return showToast(i18n.t('ui.text.noCredentialsExport'), 'warning')
   }
@@ -32,7 +32,7 @@ function textFileDownload(filename: string, text: string) {
 }
 
 // async function importHostsClick() {
-//   console.debug('importHostsClick - hostsInput.value:', hostsInput.value)
+//   debug('importHostsClick - hostsInput.value:', hostsInput.value)
 //   hostsInput.value?.click()
 // }
 
