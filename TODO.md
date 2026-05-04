@@ -24,6 +24,7 @@
 
 ## Before Merge
 
+- Mobile Testing
 - Cleanup All **TODO**
 - Update [README.md](README.md)
 - Update [wxt.config.ts](wxt.config.ts)
