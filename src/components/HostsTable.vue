@@ -56,7 +56,7 @@ async function deleteHost(host: string) {
   debug('HostsTable.vue - deleteHost:', host)
   // TODO: Determine if creds need to be validated here...
   // const creds = hosts.value[host]
-  // console.log('creds:', creds)
+  // debug('creds:', creds)
   try {
     await Hosts.delete(host)
     showToast(`${i18n.t('ui.text.removed')}: ${host}`, 'success')
