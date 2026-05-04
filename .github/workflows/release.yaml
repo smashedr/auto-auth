@@ -123,9 +123,9 @@ jobs:
           text=$(echo "${RELEASE_BODY}" | sed '/^#/Q')
           echo "${text}"
 
-          echo "text<<EOF" >> $GITHUB_OUTPUT
-          echo "$text" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "text<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$text" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: "Debug Summary"
         continue-on-error: true
