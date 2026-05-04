@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
 import { useId } from 'vue'
+import { openOptions } from '@/utils/extension.ts'
 import ThemeSwitch from '@/components/ThemeSwitch.vue'
 import OptionsForm from '@/components/OptionsForm.vue'
 
@@ -32,6 +33,12 @@ const id = useId()
     </div>
     <div class="offcanvas-body p-2">
       <OptionsForm :compact="true" />
+
+      <div class="p-3">
+        <a class="btn btn-outline-info w-100" href="/options.html" @click.prevent="openOptions()">
+          <i class="fa-solid fa-sliders me-2"></i> {{ i18n.t('popup.moreOptions') }}</a
+        >
+      </div>
     </div>
   </div>
 </template>

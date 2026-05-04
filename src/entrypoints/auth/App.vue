@@ -16,8 +16,6 @@ import UseBackground from '@/components/UseBackground.vue'
 
 // TODO: Logging
 
-// debug('%c auth/App.vue', 'color: Lime')
-
 const config = getAppConfig()
 
 const options = useOptions()
@@ -27,7 +25,7 @@ const passRef = ref('')
 const hostRef = ref('')
 const hrefRef = ref('')
 
-const saveCreds = ref(false)
+const saveCreds = ref(false) // if credentials should be saved
 const hasSavedCreds = ref(false)
 const isFailure = ref(false)
 const noUsername = ref(false)
@@ -42,24 +40,14 @@ const isProcessing = ref(false)
 watch(
   options,
   (opts) => {
-    // debug('auth/App.vue %c watch: options:', 'color: OrangeRed', opts)
+    // NOTE: This runs once on loaded to set saveCreds but requires options to be set...
     const tempSave = sessionStorage.getItem(hostRef.value)
     debug('tempSave:', tempSave)
-    if (tempSave) {
-      saveCreds.value = !!Number.parseInt(tempSave)
-    } else {
-      saveCreds.value = opts.defaultSave
-    }
+    saveCreds.value = tempSave ? !!Number.parseInt(tempSave) : opts.defaultSave
+    watch(saveCreds, () => saveCredsChange())
   },
   { once: true },
 )
-
-// TODO: Determine if this is the best use of watch()
-watch(saveCreds, () => {
-  debug('watch - saveCreds')
-  // TODO: Determine if this is the best use of saveCredsChange (see additional usage below)
-  saveCredsChange()
-})
 
 async function submitAuth(event: Event) {
   debug('submitAuth:', event)
@@ -119,8 +107,7 @@ onMounted(async () => {
   debug('urlParam:', urlParam)
   if (!urlParam) return
 
-  // TODO: Check if error handling is needed here...
-  const url = new URL(urlParam)
+  const url = new URL(urlParam) // TODO: Check if error handling is needed here...
   debug('url:', url)
   hostRef.value = url.host
   hrefRef.value = url.href
