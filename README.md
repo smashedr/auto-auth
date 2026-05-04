@@ -6,6 +6,8 @@
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/auto-auth?label=firefox&logo=firefox)](https://addons.mozilla.org/addon/auto-auth)
 [![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/auto-auth?logo=github)](https://github.com/cssnr/auto-auth/releases/latest)
 [![GitHub Locales](https://img.shields.io/github/directory-file-count/smashedr/auto-auth/src/locales?type=file&extension=yaml&logo=libretranslate&label=locales)](https://github.com/smashedr/auto-auth/tree/master/src/locales)
+[![Deployment Chrome](https://img.shields.io/github/deployments/smashedr/auto-auth/chrome?logo=googlechrome&logoColor=white&label=chrome)](https://github.com/smashedr/auto-auth/deployments/chrome)
+[![Deployment Mozilla](https://img.shields.io/github/deployments/smashedr/auto-auth/mozilla?logo=firefox&logoColor=white&label=mozilla)](https://github.com/smashedr/auto-auth/deployments/mozilla)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_auto-auth&metric=alert_status&label=quality)](https://sonarcloud.io/summary/overall?id=cssnr_auto-auth)
 [![Workflow Build](https://img.shields.io/github/actions/workflow/status/cssnr/auto-auth/build.yaml?logo=norton&logoColor=white&label=build)](https://github.com/cssnr/auto-auth/actions/workflows/build.yaml)
 [![Workflow Lint](https://img.shields.io/github/actions/workflow/status/cssnr/auto-auth/lint.yaml?logo=norton&logoColor=white&label=lint)](https://github.com/cssnr/auto-auth/actions/workflows/lint.yaml)
