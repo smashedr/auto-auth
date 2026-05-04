@@ -16,11 +16,17 @@
 - Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
 - Implement or Delete [HostsOffscreen.vue](src/components/HostsOffscreen.vue)
 
-## Confirmed Items
+## Translations
 
-- Confirm Ignored Host Management is Satisfactory
-- Validate All English Translations
-- Add Additional Locales
+- [x] English `en`
+- [x] Korean `ko` - 한국어
+- [x] Japanese `ja` - 日本語
+- [ ] Russian `ru` - Русский
+- [ ] German `de` - Deutsch
+- [ ] Chinese (China) `zh_CN` - 中文（简体）
+- [ ] French `fr` - Français
+- [ ] Spanish `es` - Español
+- [x] Portuguese (Brazil) `pt_BR` - Português (Brasil)
 
 ## Before Merge
 
