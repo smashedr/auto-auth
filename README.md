@@ -5,6 +5,7 @@
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/gpoiggobidhogpmmlakahiaaegibnogm?label=chrome&logo=googlechrome)](https://chromewebstore.google.com/detail/gpoiggobidhogpmmlakahiaaegibnogm)
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/auto-auth?label=firefox&logo=firefox)](https://addons.mozilla.org/addon/auto-auth)
 [![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/auto-auth?logo=github)](https://github.com/cssnr/auto-auth/releases/latest)
+[![GitHub Locales](https://img.shields.io/github/directory-file-count/smashedr/auto-auth/src/locales?type=file&extension=yaml&logo=libretranslate&label=locales)](https://github.com/smashedr/auto-auth/tree/master/src/locales)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_auto-auth&metric=alert_status&label=quality)](https://sonarcloud.io/summary/overall?id=cssnr_auto-auth)
 [![Workflow Build](https://img.shields.io/github/actions/workflow/status/cssnr/auto-auth/build.yaml?logo=norton&logoColor=white&label=build)](https://github.com/cssnr/auto-auth/actions/workflows/build.yaml)
 [![Workflow Lint](https://img.shields.io/github/actions/workflow/status/cssnr/auto-auth/lint.yaml?logo=norton&logoColor=white&label=lint)](https://github.com/cssnr/auto-auth/actions/workflows/lint.yaml)
@@ -67,6 +68,7 @@ Additionally, please [report the issue](https://github.com/smashedr/auto-auth/is
 
 [![Framework](https://img.shields.io/badge/framework-wxt-darkgreen?style=for-the-badge&logo=wxt)](https://github.com/wxt-dev/wxt)
 [![GitHub Top Language](https://img.shields.io/github/languages/top/smashedr/auto-auth?style=for-the-badge&logo=devbox)](https://github.com/smashedr/auto-auth/tree/master/src)
+[![GitHub Locales](https://img.shields.io/github/directory-file-count/smashedr/auto-auth/src/locales?style=for-the-badge&type=file&extension=yaml&logo=libretranslate&label=locales)](https://github.com/smashedr/auto-auth/tree/master/src/locales)
 
 To get started, see the [CONTRIBUTING.md](#contributing-ov-file).
 
