@@ -133,9 +133,9 @@ options:
 content:
   # content/index.ts
   badge:
-    # ブラウザ拡張機能バッジテキスト。最大表示文字数: 3-4
-    on: ON
-    off: OFF
+    # Browser Extension Badge Text. Max Visible Characters: 3-4
+    on: オン
+    off: オフ
 
 ctx:
   # background/menus.ts
@@ -207,7 +207,7 @@ theme:
 option:
   # components/FormSwitch.vue
   toggle:
-    #label: 最大文字数 38
+    #label: Max Length 38
     contextMenu:
       label: 右クリックメニューを表示
       tip: 右クリックメニューにコンテキストメニューを表示します。

@@ -133,7 +133,7 @@ options:
 content:
   # content/index.ts
   badge:
-    # 브라우저 확장 프로그램 배지 텍스트. 최대 표시 글자 수: 3-4
+    # Browser Extension Badge Text. Max Visible Characters: 3-4
     on: 켜짐
     off: 꺼짐
 
@@ -207,7 +207,7 @@ theme:
 option:
   # components/FormSwitch.vue
   toggle:
-    #label: 최대 길이 38
+    #label: Max Length 38
     contextMenu:
       label: 우클릭 컨텍스트 메뉴 표시
       tip: 우클릭 메뉴에 컨텍스트 메뉴를 표시합니다.

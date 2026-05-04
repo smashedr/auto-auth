@@ -21,7 +21,7 @@
 - [x] English `en`
 - [x] Korean `ko` - 한국어
 - [x] Japanese `ja` - 日本語
-- [ ] Russian `ru` - Русский
+- [x] Russian `ru` - Русский
 - [ ] German `de` - Deutsch
 - [ ] Chinese (China) `zh_CN` - 中文（简体）
 - [ ] French `fr` - Français
