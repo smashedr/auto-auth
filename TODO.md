@@ -24,7 +24,7 @@
 - [x] Russian `ru` - Русский
 - [x] Chinese (China) `zh_CN` - 中文（简体）
 - [x] German `de` - Deutsch
-- [ ] French `fr` - Français
+- [x] French `fr` - Français
 - [ ] Spanish `es` - Español
 - [x] Portuguese (Brazil) `pt_BR` - Português (Brasil)
 
