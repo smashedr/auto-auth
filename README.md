@@ -33,13 +33,14 @@
 - [Development](#development)
 - [Contributing](#contributing)
 
-> [!CAUTION]  
-> Development version of [cssnr/auto-auth](https://github.com/cssnr/auto-auth).  
-> For progress, see the [Roadmap Issue](https://github.com/cssnr/auto-auth/issues/17).
-
-This is almost complete and ready for testing. To use the new version see the [Test Instructions](#test-instructions)
+This is almost complete and ready for testing.  
+To use the new version see the [Test Instructions](#test-instructions)
 
 [![Latest Release](https://img.shields.io/github/v/release/smashedr/auto-auth?style=for-the-badge&logo=github&color=brightgreen&label=download%20latest%20release)](https://github.com/smashedr/auto-auth/releases/latest)
+
+> [!CAUTION]  
+> Development version of [cssnr/auto-auth](https://github.com/cssnr/auto-auth).  
+> For more, see the [Roadmap Issue](https://github.com/cssnr/auto-auth/issues/17) or [TODO.md](TODO.md).
 
 ## Install
 
