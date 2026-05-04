@@ -114,6 +114,51 @@ jobs:
         with:
           name: artifacts
 
+      - name: "Parse Summary"
+        id: summary
+        continue-on-error: true
+        env:
+          RELEASE_BODY: ${{ github.event.release.body }}
+        run: |
+          text=$(echo "${RELEASE_BODY}" | sed '/^#/Q')
+          echo "${text}"
+
+          echo "text<<EOF" >> $GITHUB_OUTPUT
+          echo "$text" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: "Debug Summary"
+        continue-on-error: true
+        env:
+          text: ${{ steps.summary.outputs.text }}
+        run: |
+          echo "${text}"
+
+      - name: "Translate Release Notes"
+        id: translate
+        uses: smashedr/openai-translate-action@master
+        continue-on-error: true
+        #env:
+        #  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          text: ${{ steps.summary.outputs.text }}
+          #file: text.txt  # or a file
+          languages: "es-MX,fr"
+          token: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: "Debug Translation"
+        continue-on-error: true
+        env:
+          items: ${{ steps.translate.outputs.items }}
+          results: ${{ steps.translate.outputs.results }}
+          spanish: ${{ steps.translate.outputs.es-MX }}
+          french: ${{ steps.translate.outputs.fr }}
+        run: |
+          echo "results: ${results}"
+          echo "items: ${items}" | jq
+          echo "es-MX: ${spanish}"
+          echo "fr: ${french}"
+
       - name: "Generate Release Notes"
         env:
           RELEASE_NOTES: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }}
