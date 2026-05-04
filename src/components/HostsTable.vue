@@ -136,9 +136,7 @@ const columnCount = computed(() => {
 
 <template>
   <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center">
-    <ImportExport v-if="showImport" />
-
-    <div class="dropdown ms-sm-auto mt-2 mt-sm-0">
+    <div class="dropdown me-sm-auto mt-2 mt-sm-0">
       <a
         role="button"
         class="link-body-emphasis text-decoration-none d-inline-block"
@@ -204,6 +202,8 @@ const columnCount = computed(() => {
         </form>
       </div>
     </div>
+
+    <ImportExport v-if="showImport" />
   </div>
 
   <div class="rounded rounded-3 overflow-hidden">

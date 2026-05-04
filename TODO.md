@@ -12,7 +12,7 @@
 
 ### Needs Investigation
 
-- Confirm usage of `watch()` in [App.vue](src/entrypoints/auth/App.vue)
+- Cleanup Logging in [App.vue](src/entrypoints/auth/App.vue)
 - Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
 - Implement or Delete [HostsOffscreen.vue](src/components/HostsOffscreen.vue)
 
@@ -22,8 +22,8 @@
 - [x] Korean `ko` - 한국어
 - [x] Japanese `ja` - 日本語
 - [x] Russian `ru` - Русский
-- [ ] German `de` - Deutsch
-- [ ] Chinese (China) `zh_CN` - 中文（简体）
+- [x] Chinese (China) `zh_CN` - 中文（简体）
+- [x] German `de` - Deutsch
 - [ ] French `fr` - Français
 - [ ] Spanish `es` - Español
 - [x] Portuguese (Brazil) `pt_BR` - Português (Brasil)
@@ -31,6 +31,7 @@
 ## Before Merge
 
 - Mobile Testing
+- Highlight New Feature
 - Cleanup All **TODO**
 - Update [README.md](README.md)
 - Update [wxt.config.ts](wxt.config.ts)
@@ -39,6 +40,8 @@
 
 # Completed
 
+- Confirm usage of `watch()` in [App.vue](src/entrypoints/auth/App.vue)
+  - This was rolled up into the other watch and executes correctly
 - Edit Host Modal does not check if credentials changed when saving
   - Add method to check
 - Editing a host to an existing host deletes the existing host silently
