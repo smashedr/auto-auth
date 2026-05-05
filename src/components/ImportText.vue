@@ -28,6 +28,7 @@ async function importClick() {
     let err = i18n.t('import.errorJson')
     if (e instanceof Error) err += `: ${e.message}`
     invalidText.value = err
+    textareaEl.value?.focus()
     return
   }
   try {
