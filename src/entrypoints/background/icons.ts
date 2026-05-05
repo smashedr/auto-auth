@@ -3,14 +3,14 @@ import { type Options, getOptions } from '@/utils/options.ts'
 
 const getIcons = (color = '') => {
   // NOTE: Should be reusable for wxt.config.ts manifest generation...
-  color = color === 'green' ? '' : color
+  const name = color === 'green' ? '' : color
   return {
-    16: `/icons/${color}16.png`,
-    24: `/icons/${color}24.png`,
-    32: `/icons/${color}32.png`,
-    48: `/icons/${color}48.png`,
-    96: `/icons/${color}96.png`,
-    128: `/icons/${color}128.png`,
+    16: `/icons/${name}16.png`,
+    24: `/icons/${name}24.png`,
+    32: `/icons/${name}32.png`,
+    48: `/icons/${name}48.png`,
+    96: `/icons/${name}96.png`,
+    128: `/icons/${name}128.png`,
   }
 }
 
