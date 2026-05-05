@@ -54,7 +54,6 @@ function deleteClick(host: string) {
 // DUPLICATION: popup/App.vue
 async function deleteHost(host: string) {
   debug('HostsTable.vue - deleteHost:', host)
-  // TODO: Determine if creds need to be validated here...
   // const creds = hosts.value[host]
   // debug('creds:', creds)
   try {

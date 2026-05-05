@@ -12,6 +12,7 @@
 
 ### Needs Investigation
 
+- Check all `TODO: Logging`
 - Cleanup Logging in [App.vue](src/entrypoints/auth/App.vue)
 - Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
 - Implement or Delete [HostsOffscreen.vue](src/components/HostsOffscreen.vue)
@@ -25,14 +26,15 @@
 - [x] Chinese (China) `zh_CN` - 中文（简体）
 - [x] German `de` - Deutsch
 - [x] French `fr` - Français
-- [ ] Spanish `es` - Español
+- [x] Spanish `es` - Español
 - [x] Portuguese (Brazil) `pt_BR` - Português (Brasil)
+- [x] Portuguese (Portugal) `pt_PT` - Português (Portugal)
 
 ## Before Merge
 
 - Mobile Testing
 - Highlight New Feature
-- Cleanup All **TODO: UPDATE MERGE**
+- Cleanup All `TODO: UPDATE MERGE`
 - Update [README.md](README.md)
 - Update [wxt.config.ts](wxt.config.ts)
 - Update [app.config.ts](src/app.config.ts)
@@ -62,3 +64,5 @@
   - Made it unable to edit ignored host by clicking
 - Relocate `submitHost` in [index.ts](src/utils/index.ts)
   - This can live here for now, the file is still empty...
+
+Sonar Retarded Commit

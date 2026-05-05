@@ -1,7 +1,9 @@
+import { debug } from '@/utils/logger.ts'
 import { type Options, getOptions } from '@/utils/options.ts'
 
-const getIcons = (name = '') => {
+const getIcons = (color = '') => {
   // NOTE: Should be reusable for wxt.config.ts manifest generation...
+  const name = color === 'green' ? '' : color
   return {
     16: `/icons/${name}16.png`,
     24: `/icons/${name}24.png`,
@@ -13,21 +15,20 @@ const getIcons = (name = '') => {
 }
 
 export async function updateIcon(options?: Options) {
-  // TODO: Cleanup this logic and improve arguments...
   if (!options) options = await getOptions()
-  // console.debug('options.tempDisabled:', options.tempDisabled)
+  // debug('options.tempDisabled:', options.tempDisabled)
   const manifest = chrome.runtime.getManifest()
   // NOTE: origins defined: background/index.ts, components/PermsCheck.vue
   const hasPerms = await chrome.permissions.contains({
     origins: manifest.host_permissions,
   })
-  // console.debug('hasPerms:', hasPerms)
-  let color = '' // green
+  // debug('hasPerms:', hasPerms)
+  let color = 'green'
   if (!hasPerms) {
     color = 'red'
   } else if (options.tempDisabled) {
     color = 'yellow'
   }
-  // console.debug('color:', color || 'green')
+  debug('updateIcon - color:', color)
   await chrome.action.setIcon({ path: getIcons(color) })
 }
