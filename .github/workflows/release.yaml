@@ -134,7 +134,7 @@ jobs:
         run: |
           echo "${text}"
 
-      - name: "Translate Release Notes"
+      - name: "Translate Summary"
         id: translate
         uses: smashedr/openai-translate-action@master
         continue-on-error: true
@@ -146,6 +146,7 @@ jobs:
           languages: "es-MX,fr"
           token: ${{ secrets.OPENAI_API_KEY }}
 
+      # NOTE: GitHub turns \n into new lines inside ${{ }} which breaks JSON creation
       - name: "Debug Translation"
         continue-on-error: true
         env:
@@ -154,10 +155,20 @@ jobs:
           spanish: ${{ steps.translate.outputs.es-MX }}
           french: ${{ steps.translate.outputs.fr }}
         run: |
+          set +e
+          echo "input_tokens: ${{ steps.translate.outputs.input_tokens }}"
+          echo "output_tokens: ${{ steps.translate.outputs.output_tokens }}"
+          echo "total_tokens: ${{ steps.translate.outputs.total_tokens }}"
           echo "results: ${results}"
-          echo "items: ${items}" | jq
-          echo "es-MX: ${spanish}"
-          echo "fr: ${french}"
+          echo "${items}" | jq
+          echo "::group::spanish"
+          echo "${spanish}" | jq -Rsa .
+          echo "::endgroup::"
+          echo "${spanish}" | od -c
+          echo "::group::french"
+          echo "${french}" | jq -Rsa .
+          echo "::endgroup::"
+          echo "${french}" | od -c
 
       - name: "Generate Release Notes"
         env:

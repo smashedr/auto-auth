@@ -65,6 +65,6 @@ export function validateHostname(hostname: string): string | undefined {
     // console.log(`url.hostname: "${url.hostname}"`, url)
     return url.hostname
   } catch (e) {
-    console.log(e)
+    console.log(e) // TODO: Logging - Check if this should be a warning/error or debug
   }
 }
