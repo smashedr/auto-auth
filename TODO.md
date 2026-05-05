@@ -12,6 +12,7 @@
 
 ### Needs Investigation
 
+- Check all `TODO: Logging`
 - Cleanup Logging in [App.vue](src/entrypoints/auth/App.vue)
 - Cleanup Logging in [auth.ts](src/entrypoints/background/auth.ts)
 - Implement or Delete [HostsOffscreen.vue](src/components/HostsOffscreen.vue)
@@ -25,8 +26,9 @@
 - [x] Chinese (China) `zh_CN` - 中文（简体）
 - [x] German `de` - Deutsch
 - [x] French `fr` - Français
-- [ ] Spanish `es` - Español
+- [x] Spanish `es` - Español
 - [x] Portuguese (Brazil) `pt_BR` - Português (Brasil)
+- [x] Portuguese (Portugal) `pt_PT` - Português (Portugal)
 
 ## Before Merge
 

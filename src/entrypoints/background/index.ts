@@ -41,7 +41,7 @@ export default defineBackground(() => {
 })
 
 async function onInstalled(details: chrome.runtime.InstalledDetails) {
-  console.log('onInstalled:', details)
+  console.debug('onInstalled:', details) // TODO: Logging
 
   const options = await setDefaultOptions(defaultOptions)
   debug('options:', options)
@@ -87,7 +87,7 @@ async function onStartup() {
 }
 
 function onChanged(changes: Record<string, chrome.storage.StorageChange>) {
-  debug('background/index.ts - onChanged:', changes)
+  // debug('background/index.ts - onChanged:', changes)
   if (changes?.options) {
     const oldValue = changes.options?.oldValue as Options | undefined
     const newValue = changes.options?.newValue as Options | undefined
@@ -173,7 +173,7 @@ async function setDefaultOptions(defaultOptions: object) {
     if (options[key] === undefined) {
       changed = true
       options[key] = value
-      console.log(`Set %c${key}:`, 'color: Khaki', value)
+      console.debug(`Set %c${key}:`, 'color: Khaki', value) // TODO: Logging
     }
   }
   if (changed) {

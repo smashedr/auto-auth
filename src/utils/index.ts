@@ -18,7 +18,7 @@ export function copyToast(text: string, message: string, type = 'success') {
   navigator.clipboard
     .writeText(text)
     .then(() => showToast(message, type))
-    .catch(console.log)
+    .catch(console.log) // TODO: Logging - Check if this should be a warning/error
 }
 
 // NOTE: Temporary helper function until Hosts is updated...

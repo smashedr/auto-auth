@@ -2,6 +2,8 @@ import { i18n } from '#imports'
 import { defineContentScript } from 'wxt/utils/define-content-script'
 import { Hosts } from '@/utils/hosts.ts'
 
+// TODO: Logging
+
 let url: URL
 let tabEnabled = false
 
