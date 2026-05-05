@@ -34,7 +34,7 @@
 
 - Mobile Testing
 - Highlight New Feature
-- Cleanup All **TODO: UPDATE MERGE**
+- Cleanup All `TODO: UPDATE MERGE`
 - Update [README.md](README.md)
 - Update [wxt.config.ts](wxt.config.ts)
 - Update [app.config.ts](src/app.config.ts)

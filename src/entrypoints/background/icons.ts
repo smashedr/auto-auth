@@ -15,7 +15,6 @@ const getIcons = (color = '') => {
 }
 
 export async function updateIcon(options?: Options) {
-  // TODO: Cleanup this logic and improve arguments...
   if (!options) options = await getOptions()
   // debug('options.tempDisabled:', options.tempDisabled)
   const manifest = chrome.runtime.getManifest()
