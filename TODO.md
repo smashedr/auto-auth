@@ -64,3 +64,5 @@
   - Made it unable to edit ignored host by clicking
 - Relocate `submitHost` in [index.ts](src/utils/index.ts)
   - This can live here for now, the file is still empty...
+
+Sonar Retarded Commit
