@@ -160,6 +160,8 @@ jobs:
           echo "output_tokens: ${{ steps.translate.outputs.output_tokens }}"
           echo "total_tokens: ${{ steps.translate.outputs.total_tokens }}"
           echo "results: ${results}"
+          echo "${items}"
+          echo "----------"
           echo "${items}" | jq
           echo "::group::spanish"
           echo "${spanish}" | jq -Rsa .

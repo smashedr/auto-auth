@@ -40,7 +40,7 @@ onMounted(() => {
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5 text-truncate" id="delete-modal-label">
-              {{ i18n.t('ui.action.delete') }} <span class="text-warning">{{ hostRef }}</span>
+              {{ i18n.t('ui.action.delete') }} {{ i18n.t('ui.text.host') }}
             </h1>
             <button
               type="button"
@@ -50,9 +50,8 @@ onMounted(() => {
               tabindex="-1"
             ></button>
           </div>
-          <div class="modal-body p-2 d-flex justify-content-center align-items-baseline gap-1">
-            <span class="flex-shrink-0">Host:</span>
-            <kbd class="text-truncate" style="min-width: 0">{{ hostRef }}</kbd>
+          <div class="modal-body text-center p-2">
+            <kbd class="text-truncate fs-5" style="min-width: 0">{{ hostRef }}</kbd>
           </div>
           <div class="modal-footer p-2">
             <button type="button" class="btn btn-danger me-auto" @click.prevent="onDelete">
