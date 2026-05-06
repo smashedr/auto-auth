@@ -11,6 +11,7 @@
 - Refactor onMounted in [auth/App.vue](src/entrypoints/auth/App.vue) to catch and handle errors
 - Refactor generateIcons to replace auto-icons in [wxt.config.ts](wxt.config.ts)
 - Refactor useOptions to use provide from APP and inject from component
+- Cleanup functions in [utils/index.ts](src/utils/index.ts)
 
 ## OLD
 

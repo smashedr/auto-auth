@@ -11,14 +11,12 @@ export function debounce(fn: Function, timeout = 250) {
   }
 }
 
-// TODO: Functions that showToast or use navigator should be isolated...
-
 export function copyToast(text: string, message: string, type = 'success') {
   // console.debug('copyToast:', text)
   navigator.clipboard
     .writeText(text)
     .then(() => showToast(message, type))
-    .catch(console.log) // TODO: Logging - Check if this should be a warning/error
+    .catch(console.warn)
 }
 
 // NOTE: Temporary helper function until Hosts is updated...
