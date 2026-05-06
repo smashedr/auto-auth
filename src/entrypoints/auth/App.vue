@@ -79,9 +79,8 @@ async function ignoreHost() {
   debug('ignoreHost:', hostRef.value)
   await Hosts.set(hostRef.value, 'ignored')
   console.log('%cHost Ignored:', 'color: Gold', hrefRef.value)
-
-  // document.body.remove() // TODO: Determine why this was called previously...
-
+  // NOTE: This removes the page after the native login is shown
+  document.body.remove()
   await updateTab(hrefRef.value)
 }
 
@@ -107,7 +106,7 @@ onMounted(async () => {
   debug('urlParam:', urlParam)
   if (!urlParam) return
 
-  const url = new URL(urlParam) // TODO: Check if error handling is needed here...
+  const url = new URL(urlParam)
   debug('url:', url)
   hostRef.value = url.host
   hrefRef.value = url.href

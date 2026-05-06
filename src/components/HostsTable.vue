@@ -30,7 +30,6 @@ const hosts = useHosts()
 const deleteModal = ref<InstanceType<typeof DeleteModal> | null>(null)
 const hostModal = ref<InstanceType<typeof HostModal> | null>(null)
 
-// TODO: Provide options at the App.vue level and inject in components...
 // provide('options', options)
 // const options = inject<Ref<Options | undefined>>('options')
 

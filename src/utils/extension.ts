@@ -140,5 +140,5 @@ export function clickOpen(e: Event, close = false) {
     .then(() => {
       if (close || target.dataset.close === 'true') window.close()
     })
-    .catch(console.log) // TODO: Logging - Check if this should be a warning/error
+    .catch(console.warn)
 }
