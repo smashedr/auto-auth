@@ -1,14 +1,18 @@
 # TODO
 
-## Bugs
+## NEW
 
-### Blocking
+### Issues
 
-- :robot:
+- Add ability to ignore a host from options
+- Duplication in [popup/App.vue](src/entrypoints/popup/App.vue)/[HostsTable.vue](src/components/HostsTable.vue)
+- Refactor how width is set in [popup/App.vue](src/entrypoints/popup/App.vue)
+- Refactor importCredentials in [creds.ts](src/utils/creds.ts) to reduce complexity
+- Refactor onMounted in [auth/App.vue](src/entrypoints/auth/App.vue) to catch and handle errors
+- Refactor generateIcons to replace auto-icons in [wxt.config.ts](wxt.config.ts)
+- Refactor useOptions to use provide from APP and inject from component
 
-### Existing
-
-- Not possible to ignore a host without being at the login page
+## OLD
 
 ### Needs Investigation
 

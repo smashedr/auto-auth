@@ -18,7 +18,6 @@ import HostModal from '@/components/HostModal.vue'
 
 // console.debug('%c popup/App.vue', 'color: Lime')
 
-// TODO: Chrome: auto-width - Firefox: 360px - Mobile: 100%
 const isBrowser = isFirefox ? '360px' : null
 const width = computed(() => (isMobile ? '100%' : isBrowser))
 debug('width:', width.value)
@@ -45,7 +44,6 @@ function deleteClick(host: string) {
 // DUPLICATION: HostsTable.vue
 async function deleteHost(host: string) {
   debug('popup/App.vue - deleteHost:', host)
-  // TODO: Determine if creds need to be validated here...
   // const creds = hosts.value[host]
   // debug('creds:', creds)
   try {

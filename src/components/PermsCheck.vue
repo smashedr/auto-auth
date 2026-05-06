@@ -37,7 +37,7 @@ async function updatePerms() {
 
 async function grantPerms(event: Event) {
   debug('grantPerms:', event)
-  requestPerms().catch(console.log) // TODO: Logging - Not sure why this would throw or why to log it...
+  requestPerms().catch(console.warn)
   if (props.closeWindow) window.close()
 }
 

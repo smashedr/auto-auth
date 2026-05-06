@@ -160,31 +160,28 @@ jobs:
           echo "output_tokens: ${{ steps.translate.outputs.output_tokens }}"
           echo "total_tokens: ${{ steps.translate.outputs.total_tokens }}"
           echo "results: ${results}"
-          echo "${items}"
-          echo "----------"
+          echo "items: ${items}"
+          echo "::group::items"
           echo "${items}" | jq
+          echo "::endgroup::"
           echo "::group::spanish"
-          echo "${spanish}" | jq -Rsa .
+          echo "${spanish}"
           echo "::endgroup::"
-          echo "${spanish}" | od -c
           echo "::group::french"
-          echo "${french}" | jq -Rsa .
+          echo "${french}"
           echo "::endgroup::"
-          echo "${french}" | od -c
 
       - name: "Generate Release Notes"
         continue-on-error: true
         env:
           RELEASE_NOTES: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }}
-          spanish: ${{ steps.translate.outputs.es-MX }}
-          french: ${{ steps.translate.outputs.fr }}
         run: |
           cat > amo-metadata.json << EOF
           {"version": {"release_notes": {
             "de":    "Vollständige Versionshinweise: $RELEASE_NOTES",
             "en-US": "Full Release Notes: $RELEASE_NOTES",
-            "es-MX": "$(echo "${spanish}" | jq -Rsa .)\n\nNotas de versión completas: $RELEASE_NOTES",
-            "fr":    "$(echo "${french}" | jq -Rsa .)\n\nNotes de version complètes : $RELEASE_NOTES",
+            "es-MX": "Notas de versión completas: $RELEASE_NOTES",
+            "fr":    "\n\nNotes de version complètes : $RELEASE_NOTES",
             "ja":    "完全なリリースノート: $RELEASE_NOTES",
             "ko":    "전체 릴리스 노트: $RELEASE_NOTES",
             "pt-BR": "Notas de versão completas: $RELEASE_NOTES",
