@@ -57,9 +57,7 @@ async function processRequest(
     )
     const auth = new URL(chrome.runtime.getURL('auth.html'))
     auth.searchParams.append('url', details.url)
-    if (failed) {
-      auth.searchParams.append('fail', 'yes')
-    }
+    if (failed) auth.searchParams.append('fail', 'yes')
     chrome.tabs.update(details.tabId, { url: auth.href })
     return asyncCallback({ cancel: true })
   }

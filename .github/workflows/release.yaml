@@ -114,65 +114,7 @@ jobs:
         with:
           name: artifacts
 
-      - name: "Parse Summary"
-        id: summary
-        continue-on-error: true
-        env:
-          RELEASE_BODY: ${{ github.event.release.body }}
-        run: |
-          text=$(echo "${RELEASE_BODY}" | sed '/^#/Q')
-          echo "${text}"
-
-          echo "text<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$text" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
-
-      - name: "Debug Summary"
-        continue-on-error: true
-        env:
-          text: ${{ steps.summary.outputs.text }}
-        run: |
-          echo "${text}"
-
-      - name: "Translate Summary"
-        id: translate
-        uses: smashedr/openai-translate-action@master
-        continue-on-error: true
-        #env:
-        #  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        with:
-          text: ${{ steps.summary.outputs.text }}
-          #file: text.txt  # or a file
-          languages: "es-MX,fr"
-          token: ${{ secrets.OPENAI_API_KEY }}
-
-      # NOTE: GitHub turns \n into new lines inside ${{ }} which breaks JSON creation
-      - name: "Debug Translation"
-        continue-on-error: true
-        env:
-          items: ${{ steps.translate.outputs.items }}
-          results: ${{ steps.translate.outputs.results }}
-          spanish: ${{ steps.translate.outputs.es-MX }}
-          french: ${{ steps.translate.outputs.fr }}
-        run: |
-          set +e
-          echo "input_tokens: ${{ steps.translate.outputs.input_tokens }}"
-          echo "output_tokens: ${{ steps.translate.outputs.output_tokens }}"
-          echo "total_tokens: ${{ steps.translate.outputs.total_tokens }}"
-          echo "results: ${results}"
-          echo "items: ${items}"
-          echo "::group::items"
-          echo "${items}" | jq
-          echo "::endgroup::"
-          echo "::group::spanish"
-          echo "${spanish}"
-          echo "::endgroup::"
-          echo "::group::french"
-          echo "${french}"
-          echo "::endgroup::"
-
       - name: "Generate Release Notes"
-        continue-on-error: true
         env:
           RELEASE_NOTES: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }}
         run: |
@@ -191,7 +133,6 @@ jobs:
           EOF
 
       - name: "Validate"
-        continue-on-error: true
         run: |
           ls -lAh .
           stat "${{ env.PACKAGE_NAME }}-${{ github.event.release.tag_name }}-sources.zip"

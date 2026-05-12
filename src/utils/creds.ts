@@ -74,9 +74,7 @@ function getHost(hostname: string) {
   // debug('host:', host)
   const url = new URL(host)
   // debug('url.host:', url.host)
-  if (!url.host) {
-    throw new Error(`Invalid Hostname: ${hostname}`)
-  }
+  if (!url.host) throw new Error(`Invalid Hostname: ${hostname}`)
   return url.host
 }
 
