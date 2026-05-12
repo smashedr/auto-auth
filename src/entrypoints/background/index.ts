@@ -14,8 +14,8 @@ const banner = `%c\
  //    |\\________________
 ooo()  | ________   _   _)
  \\\\    |/        | | | |
-   \`---'         "-" |_| %c
-${config.githubUrl}`
+   \`---'         "-" |_| 
+%c${config.githubUrl}`
 
 export default defineBackground(() => {
   // console.log(`Loaded: %c${chrome.runtime.id}`, 'Color: PaleGreen')

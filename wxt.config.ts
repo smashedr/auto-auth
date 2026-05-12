@@ -55,9 +55,6 @@ export default defineConfig({
     // developmentIndicator: 'overlay',
     sizes: [96, 24], // Dfault: 128, 48, 32, 16
   },
-  // NOTE: Icons are also defined in <mata> tags for:
-  //    popup/index.html
-  //    sidepanel/index.html
 
   // https://wxt.dev/guide/essentials/config/manifest.html
   manifest: ({ browser, mode }) => {

@@ -25,13 +25,13 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.2.0",
     "bootstrap": "^5.3.8",
-    "vue": "^3.5.33"
+    "vue": "^3.5.34"
   },
   "devDependencies": {
-    "@eslint/compat": "^2.0.5",
+    "@eslint/config-helpers": "^0.6.0",
     "@eslint/js": "^10.0.1",
     "@types/bootstrap": "^5.2.10",
-    "@types/chrome": "^0.1.40",
+    "@types/chrome": "^0.1.42",
     "@types/firefox-webext-browser": "^143.0.0",
     "@wxt-dev/auto-icons": "^1.1.1",
     "@wxt-dev/i18n": "^0.2.5",
@@ -43,9 +43,9 @@
     "prettier": "^3.8.3",
     "sass": "^1.99.0",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.59.2",
+    "typescript-eslint": "^8.59.3",
     "vue-tsc": "^3.2.8",
     "web-ext": "^10.1.0",
-    "wxt": "^0.20.25"
+    "wxt": "^0.20.26"
   }
 }

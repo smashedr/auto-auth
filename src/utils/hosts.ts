@@ -57,9 +57,7 @@ export function validateHostname(hostname: string): string | undefined {
   try {
     let value = hostname
     // console.log('value1:', value)
-    if (!value.includes('://')) {
-      value = `https://${value}`
-    }
+    if (!value.includes('://')) value = `https://${value}`
     // console.log('value2:', value)
     const url = new URL(value)
     // console.log(`url.hostname: "${url.hostname}"`, url)
