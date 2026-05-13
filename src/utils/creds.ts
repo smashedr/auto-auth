@@ -30,6 +30,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
       }
     }
   } else if (format === 'multipass') {
+    // MultiPass (https://github.com/krtek4/MultiPass)
     console.log('Processing - %c MultiPass', 'color: Yellow')
     total = Object.keys(data).length
     debug('total:', total)
@@ -61,7 +62,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
       }
       try {
         if (typeof value === 'object') {
-          // AutoAuth (steffanschlein)
+          // AutoAuth (https://github.com/steffanschlein/AutoAuth)
           const { username, password } = value as any
           debug('username, password:', username, password)
           if (!username || !password) {
