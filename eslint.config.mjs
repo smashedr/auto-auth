@@ -17,6 +17,7 @@ export default defineConfig([
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      // 'no-undef': 'off',
     },
     languageOptions: {
       sourceType: 'module',
@@ -26,7 +27,7 @@ export default defineConfig([
       globals: {
         ...globals.browser,
         ...globals.webextensions,
-        RadioBackground: 'readonly',
+        RadioBackground: 'readonly', // NOTE: consider disabling no-undef
       },
     },
   },
