@@ -15,8 +15,6 @@ import AddHostButton from '@/components/AddHostButton.vue'
 import PageHeader from '@/components/PageHeader.vue'
 import UseBackground from '@/components/UseBackground.vue'
 
-// console.debug('%c options/App.vue', 'color: Lime')
-
 useTitle(i18n.t('options.title'))
 </script>
 
@@ -38,7 +36,6 @@ useTitle(i18n.t('options.title'))
           <ImportText class="flex-md-fill text-truncate" />
         </div>
 
-        <!--NOTE: Add fallthrough attributes-->
         <HostsTable />
 
         <CopySupport

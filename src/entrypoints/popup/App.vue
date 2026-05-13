@@ -16,8 +16,6 @@ import OptionsForm from '@/components/OptionsForm.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
 import HostModal from '@/components/HostModal.vue'
 
-// console.debug('%c popup/App.vue', 'color: Lime')
-
 const isBrowser = isFirefox ? '360px' : null
 const width = computed(() => (isMobile ? '100%' : isBrowser))
 debug('width:', width.value)

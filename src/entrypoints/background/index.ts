@@ -10,7 +10,7 @@ import { updateContextMenus } from './menus.ts'
 
 const config = getAppConfig()
 const banner = `%c\
-   .---.  ${config.name} v${config.version}
+   .---.  ${config.name}  v${config.version}
  //    |\\________________
 ooo()  | ________   _   _)
  \\\\    |/        | | | |
@@ -19,7 +19,7 @@ ooo()  | ________   _   _)
 
 export default defineBackground(() => {
   // console.log(`Loaded: %c${chrome.runtime.id}`, 'Color: PaleGreen')
-  console.log(`${banner}`, 'color: MediumSeaGreen', 'color: MediumSlateBlue')
+  console.log(banner, 'color: MediumSeaGreen', 'color: MediumSlateBlue')
 
   chrome.runtime.onInstalled.addListener(onInstalled)
   chrome.runtime.onStartup.addListener(onStartup)
@@ -41,7 +41,7 @@ export default defineBackground(() => {
 })
 
 async function onInstalled(details: chrome.runtime.InstalledDetails) {
-  console.debug('onInstalled:', details) // TODO: Logging
+  debug('onInstalled:', details)
 
   const options = await setDefaultOptions(defaultOptions)
   debug('options:', options)
@@ -169,11 +169,11 @@ async function setDefaultOptions(defaultOptions: object) {
   const options = await getOptions()
   let changed = false
   for (const [key, value] of Object.entries(defaultOptions)) {
-    // console.log(`${key}: default: ${value} current: ${options[key]}`)
+    // debug(`${key}: default: ${value} current: ${options[key]}`)
     if (options[key] === undefined) {
       changed = true
       options[key] = value
-      console.debug(`Set %c${key}:`, 'color: Khaki', value) // TODO: Logging
+      debug(`Set %c${key}:`, 'color: Khaki', value)
     }
   }
   if (changed) {

@@ -8,8 +8,6 @@ import PermsCheck from '@/components/PermsCheck.vue'
 import ToastAlerts from '@/components/ToastAlerts.vue'
 import PageFooter from '@/components/PageFooter.vue'
 
-// console.debug('%c permissions/App.vue', 'color: Lime')
-
 useTitle(i18n.t('permissions.title'))
 
 const manifest = chrome.runtime.getManifest()

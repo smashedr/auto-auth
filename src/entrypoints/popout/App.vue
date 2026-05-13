@@ -14,8 +14,6 @@ import AddHostButton from '@/components/AddHostButton.vue'
 import ImportText from '@/components/ImportText.vue'
 import HorizontalRule from '@/components/HorizontalRule.vue'
 
-// console.debug('%c popout/App.vue', 'color: Lime')
-
 useTitle(i18n.t('ui.action.extensionPanel'))
 
 async function windowResize() {
@@ -28,11 +26,7 @@ const debounceWindowResize = debounce(windowResize, 600)
 
 onMounted(() => {
   window.addEventListener('resize', debounceWindowResize)
-  chrome.windows.getCurrent().then((window) => {
-    chrome.storage.local.set({ lastPanelID: window.id }).then(() => {
-      // console.debug('%cSet lastPanelID:', 'color: SpringGreen', window.id)
-    })
-  })
+  chrome.windows.getCurrent().then((window) => chrome.storage.local.set({ lastPanelID: window.id }))
 })
 onUnmounted(() => window.removeEventListener('resize', debounceWindowResize))
 </script>
