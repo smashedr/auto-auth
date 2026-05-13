@@ -10,8 +10,6 @@ import HostsTable from '@/components/HostsTable.vue'
 import AddHostButton from '@/components/AddHostButton.vue'
 import ImportText from '@/components/ImportText.vue'
 import HorizontalRule from '@/components/HorizontalRule.vue'
-
-// console.debug('%c sidepanel/App.vue', 'color: Lime')
 </script>
 
 <template>
