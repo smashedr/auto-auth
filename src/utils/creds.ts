@@ -8,10 +8,13 @@ import { Hosts } from '@/utils/hosts.ts'
 export async function importCredentials(data: any) /* NOSONAR */ {
   // NOTE: Copied from VanillaJS...
   debug('importCredentials:', data)
+  if (!data) throw new Error(i18n.t('ui.text.noCredentialsImport'))
+  const format = getFormat(data)
+  debug('format:', format)
   const hosts: Record<string, string> = {}
   let count = 0
   let total
-  if (data?.credentialsArray) {
+  if (format === 'basicauth') {
     // Basic Authentication (nanfgbiblbcagfodkfeinbbhijihckml)
     console.log('Processing - %c Basic Authentication', 'color: Gold')
     total = data.credentialsArray.length
@@ -26,7 +29,29 @@ export async function importCredentials(data: any) /* NOSONAR */ {
         console.log(`%c${message}:`, 'color: Red')
       }
     }
-  } else {
+  } else if (format === 'multipass') {
+    // MultiPass (https://github.com/krtek4/MultiPass)
+    console.log('Processing - %c MultiPass', 'color: Yellow')
+    total = Object.keys(data).length
+    debug('total:', total)
+    for (const [key, value] of Object.entries(data)) {
+      debug(`key: "${key}":`, value)
+      try {
+        const { url, username, password } = value as any
+        const host = getHost(url)
+        debug('host:', host)
+        if (!username || !password) {
+          console.log(`${key}: missing username or password`)
+          continue
+        }
+        hosts[host] = `${username}:${password}`
+        count += 1
+      } catch (e) {
+        const message = e instanceof Error ? e.message : i18n.t('import.errorUnknown')
+        console.log(`%c${message}:`, 'color: Red')
+      }
+    }
+  } else if (format === 'autoauth') {
     console.log('Processing - %c AutoAuth/Native', 'color: SpringGreen')
     total = Object.keys(data).length
     for (const [key, value] of Object.entries(data)) {
@@ -37,7 +62,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
       }
       try {
         if (typeof value === 'object') {
-          // AutoAuth (steffanschlein)
+          // AutoAuth (https://github.com/steffanschlein/AutoAuth)
           const { username, password } = value as any
           debug('username, password:', username, password)
           if (!username || !password) {
@@ -45,6 +70,7 @@ export async function importCredentials(data: any) /* NOSONAR */ {
             continue
           }
           hosts[key] = `${username}:${password}`
+          count += 1
         } else if (typeof value === 'string') {
           // Auto Auth (this extension)
           // const [username, password] = value.split(':', 1)
@@ -54,8 +80,8 @@ export async function importCredentials(data: any) /* NOSONAR */ {
             continue
           }
           hosts[key] = value
+          count += 1
         }
-        count += 1
       } catch (e) {
         const message = e instanceof Error ? e.message : i18n.t('import.errorUnknown')
         console.log(`${key}: %c${message}`, 'color: Red')
@@ -65,7 +91,20 @@ export async function importCredentials(data: any) /* NOSONAR */ {
   debug('hosts:', hosts)
   await Hosts.update(hosts)
   const message = `${i18n.t('ui.action.importUpdate')} ${count}/${total} ${i18n.t('ui.text.hosts')}.`
-  showToast(message, count ? 'success' : 'warning')
+  showToast(message, count ? 'success' : 'warning') // TODO: Move showToast to the UI
+}
+
+function getFormat(data: any) {
+  if (data?.credentialsArray) {
+    return 'basicauth'
+  }
+  const firstValue = Object.values(data)[0]
+  if (typeof firstValue === 'object' && firstValue !== null) {
+    return 'multipass'
+  } else if (typeof firstValue === 'string') {
+    return 'autoauth'
+  }
+  throw new Error('Unknown Credentials Format') // TODO: TRANSLATE
 }
 
 function getHost(hostname: string) {
