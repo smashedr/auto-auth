@@ -62,6 +62,7 @@ ui:
     showHidePassword: Afficher/Masquer le mot de passe
     extensionDisabled: Extension temporairement désactivée
     unsavedChanges: Modifications non enregistrées détectées.
+    unknownFormat: Format d'identifiants inconnu
 
     hostUrlInvalid: Nom d'hôte ou URL invalide
     hostnameExists: Le nom d'hôte existe déjà. Veuillez d'abord modifier ou supprimer

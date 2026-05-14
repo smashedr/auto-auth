@@ -62,6 +62,7 @@ ui:
     showHidePassword: Показать/скрыть пароль
     extensionDisabled: Расширение временно отключено
     unsavedChanges: Обнаружены несохраненные изменения.
+    unknownFormat: Неизвестный формат учётных данных
 
     hostUrlInvalid: Недействительное имя хоста или URL
     hostnameExists: Имя хоста уже существует. Сначала отредактируйте или удалите

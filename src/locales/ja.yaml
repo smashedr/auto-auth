@@ -62,6 +62,7 @@ ui:
     showHidePassword: パスワードの表示/非表示
     extensionDisabled: 拡張機能が一時的に無効化されています
     unsavedChanges: 未保存の変更が検出されました。
+    unknownFormat: 不明な認証情報の形式
 
     hostUrlInvalid: 無効なホスト名またはURL
     hostnameExists: ホスト名はすでに存在します。先に編集または削除してください

@@ -62,6 +62,7 @@ ui:
     showHidePassword: 显示/隐藏密码
     extensionDisabled: 扩展已临时禁用
     unsavedChanges: 检测到未保存的更改。
+    unknownFormat: 未知凭据格式
 
     hostUrlInvalid: 无效的主机名或 URL
     hostnameExists: 主机名已存在，请先编辑或删除
