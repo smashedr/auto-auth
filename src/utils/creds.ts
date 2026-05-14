@@ -104,7 +104,7 @@ function getFormat(data: any) {
   } else if (typeof firstValue === 'string') {
     return 'autoauth'
   }
-  throw new Error('Unknown Credentials Format') // TODO: TRANSLATE
+  throw new Error(i18n.t('ui.text.unknownFormat'))
 }
 
 function getHost(hostname: string) {

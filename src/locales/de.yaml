@@ -62,6 +62,7 @@ ui:
     showHidePassword: Passwort anzeigen/verbergen
     extensionDisabled: Erweiterung vorübergehend deaktiviert
     unsavedChanges: Nicht gespeicherte Änderungen erkannt.
+    unknownFormat: Unbekanntes Anmeldedaten-Format
 
     hostUrlInvalid: Ungültiger Hostname oder URL
     hostnameExists: Hostname bereits vorhanden. Bitte zuerst bearbeiten oder löschen

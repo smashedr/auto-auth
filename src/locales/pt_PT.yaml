@@ -62,6 +62,7 @@ ui:
     showHidePassword: Mostrar/Ocultar Palavra-passe
     extensionDisabled: Extensão Temporariamente Desativada
     unsavedChanges: Alterações Não Guardadas Detetadas.
+    unknownFormat: Formato de credenciais desconhecido
 
     hostUrlInvalid: Nome do Host ou URL Inválido
     hostnameExists: Nome do Host Já Existe. Edite ou Elimine Primeiro

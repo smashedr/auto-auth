@@ -26,7 +26,6 @@ Logging items not cleaned up during refactoring.
 
 - Mobile Testing
 - Highlight New Feature
-- Cleanup All `TODO: TRANSLATE`
 - Cleanup All `TODO: UPDATE MERGE`
 - Rename [README2.md](README2.md) to [README.md](README.md)
 - Update [wxt.config.ts](wxt.config.ts)
