@@ -55,3 +55,11 @@ Instructions are on the GitHub README.
 
 - Permissions: `contextMenus`, `storage`, `webRequest`, `webRequestAuthProvider`
 - Host permissions: `*://*/*`
+
+## Changes/New Features in v1.0.0
+
+- The Credentials Table and Options are now available in the Side Panel and Extension Panel UI.
+- The Credentials Table supports inline editing by clicking on a cell (can be disabled in Options).
+- The Credentials Table allows showing/hiding the password and username columns and their values.
+- The Credentials Table row size can be set to Large.
+- New migration added from MultiPass.
