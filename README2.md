@@ -66,12 +66,12 @@ Then enter the username `user` and password `pass`.
 All **Chromium** Based Browsers can install the extension from
 the [Chrome Web Store](https://chromewebstore.google.com/detail/auto-auth/gpoiggobidhogpmmlakahiaaegibnogm).
 
-<details open><summary>📷 View Mozilla Firefox Android QR Code</summary>
+<details open><summary>📷 Mozilla Firefox Android QR Code</summary>
 
 [![QR Code Firefox](https://raw.githubusercontent.com/smashedr/repo-images/refs/heads/master/auto-auth/qr-code-firefox.png)](https://addons.mozilla.org/addon/auto-auth)
 
 </details>
-<details><summary>📷 View Mozilla Firefox Android QR Code</summary>
+<details><summary>📷 Google Chrome Web Store QR Code</summary>
 
 [![QR Code Chrome](https://raw.githubusercontent.com/smashedr/repo-images/refs/heads/master/auto-auth/qr-code-chrome.png)](https://chromewebstore.google.com/detail/gpoiggobidhogpmmlakahiaaegibnogm)
 
