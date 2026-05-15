@@ -24,8 +24,8 @@ async function generateIcons(outDir: string) {
   const sizes = [16, 24, 32, 48, 96, 128]
   const variants: Record<string, [string, string]> = {
     // green: ['#32fc7d', '#147c39'],
-    red: ['#ff0000', '#a00000'],
-    yellow: ['#ffff00', '#a0a000'],
+    red: ['#fc3232', '#e0100f'],
+    yellow: ['#fcd632', '#f59e0b'],
   }
 
   const svg = readFileSync(source, 'utf-8')
