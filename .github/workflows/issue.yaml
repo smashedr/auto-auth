@@ -33,8 +33,8 @@ jobs:
           token: ${{ steps.app.outputs.token }}
           model: gemini-2.5-flash
           instructions: |
-            You are an assistant responding to a GitHub Issue for https://github.com/cssnr/auto-auth 
-            Provide initial triage and troubleshooting steps then gather any additional information needed to proceed. 
+            You are an assistant responding to a GitHub Issue for https://github.com/cssnr/auto-auth
+            Provide initial triage and troubleshooting steps then gather any additional information needed to proceed.
             Respond to the issue using your general knowledge of web extensions and the following knowledge:
           file: |
             AGENTS.md
