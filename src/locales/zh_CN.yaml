@@ -197,6 +197,9 @@ perms:
     text: 移除主机权限
     tip: 您将无法再分析新图片
   info: 更多权限信息
+  moreInfo: 更多信息请参阅
+  mdn: MDN 文档
+  chrome: Chrome 文档
 
 theme:
   # components/ThemeSwitch.vue

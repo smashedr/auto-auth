@@ -72,9 +72,3 @@ const allSwitches = [
   <BackToTop />
   <UseBackground />
 </template>
-
-<!--<style scoped>-->
-<!--#options-wrapper {-->
-<!--  max-width: 767px;-->
-<!--}-->
-<!--</style>-->

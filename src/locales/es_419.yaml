@@ -197,6 +197,9 @@ perms:
     text: Eliminar Permisos de Host
     tip: Ya no podrá analizar nuevas imágenes
   info: Más Información sobre Permisos
+  moreInfo: Para más información, consulte la
+  mdn: Documentación de MDN
+  chrome: Documentación de Chrome
 
 theme:
   # components/ThemeSwitch.vue

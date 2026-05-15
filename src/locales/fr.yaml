@@ -197,6 +197,9 @@ perms:
     text: Supprimer les autorisations d'hôte
     tip: Vous ne pourrez plus analyser de nouvelles images
   info: Plus d'informations sur les autorisations
+  moreInfo: Pour plus d'informations, consultez la
+  mdn: Documentation MDN
+  chrome: Documentation Chrome
 
 theme:
   # components/ThemeSwitch.vue

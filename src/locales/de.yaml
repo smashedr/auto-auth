@@ -197,6 +197,9 @@ perms:
     text: Host-Berechtigungen entfernen
     tip: Sie können keine neuen Bilder mehr analysieren
   info: Weitere Informationen zu Berechtigungen
+  moreInfo: Weitere Informationen finden Sie in der
+  mdn: MDN-Dokumentation
+  chrome: Chrome-Dokumentation
 
 theme:
   # components/ThemeSwitch.vue

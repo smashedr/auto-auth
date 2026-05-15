@@ -197,6 +197,9 @@ perms:
     text: ホスト権限を削除
     tip: 新しい画像を分析できなくなります
   info: 権限に関する詳細情報
+  moreInfo: 詳細については、
+  mdn: MDNドキュメント
+  chrome: Chromeドキュメント
 
 theme:
   # components/ThemeSwitch.vue
