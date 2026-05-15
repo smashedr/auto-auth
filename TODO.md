@@ -31,3 +31,4 @@ Logging items not cleaned up during refactoring.
 - Update [wxt.config.ts](wxt.config.ts)
 - Update [app.config.ts](src/app.config.ts)
 - Update [release.yaml](.github/workflows/release.yaml)
+- Update [issue.yaml](.github/workflows/issue.yaml)
