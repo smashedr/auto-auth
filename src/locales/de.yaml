@@ -197,6 +197,9 @@ perms:
     text: Host-Berechtigungen entfernen
     tip: Sie können keine neuen Bilder mehr analysieren
   info: Weitere Informationen zu Berechtigungen
+  moreInfo: Weitere Informationen finden Sie in der
+  mdn: MDN-Dokumentation
+  chrome: Chrome-Dokumentation
 
 theme:
   # components/ThemeSwitch.vue
@@ -227,3 +230,6 @@ option:
     confirmDelete:
       label: Bestätigung beim Löschen anzeigen
       tip: Bestätigungsdialog beim Löschen von Einträgen anzeigen.
+    fullWidthOptions:
+      label: Optionsseite in voller Breite
+      tip: Optionsseite in voller Breite anzeigen.

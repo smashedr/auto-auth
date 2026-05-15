@@ -197,6 +197,9 @@ perms:
     text: 移除主机权限
     tip: 您将无法再分析新图片
   info: 更多权限信息
+  moreInfo: 更多信息请参阅
+  mdn: MDN 文档
+  chrome: Chrome 文档
 
 theme:
   # components/ThemeSwitch.vue
@@ -227,3 +230,6 @@ option:
     confirmDelete:
       label: 删除时显示确认提示
       tip: 删除项目时显示确认对话框。
+    fullWidthOptions:
+      label: 全宽选项页面
+      tip: 以全宽显示选项页面。

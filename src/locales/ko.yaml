@@ -197,6 +197,9 @@ perms:
     text: 호스트 권한 제거
     tip: 더 이상 새 이미지를 분석할 수 없습니다
   info: 권한에 대한 추가 정보
+  moreInfo: 자세한 내용은 다음을 참조하세요.
+  mdn: MDN 문서
+  chrome: Chrome 문서
 
 theme:
   # components/ThemeSwitch.vue
@@ -227,3 +230,6 @@ option:
     confirmDelete:
       label: 삭제 시 확인 표시
       tip: 항목 삭제 시 확인 대화 상자를 표시합니다.
+    fullWidthOptions:
+      label: 전체 너비 옵션 페이지
+      tip: 옵션 페이지를 전체 너비로 표시합니다.

@@ -36,7 +36,7 @@
     "@wxt-dev/auto-icons": "^1.1.1",
     "@wxt-dev/i18n": "^0.2.5",
     "@wxt-dev/module-vue": "^1.0.3",
-    "eslint": "^10.3.0",
+    "eslint": "^10.4.0",
     "eslint-plugin-vue": "^10.9.1",
     "globals": "^17.6.0",
     "nodemon": "^3.1.14",

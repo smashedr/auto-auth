@@ -197,6 +197,9 @@ perms:
     text: Remove Host Permissions
     tip: You will no longer be able to analyze new images
   info: More Information on Permissions
+  moreInfo: For more information see the
+  mdn: MDN Documentation
+  chrome: Chrome Documentation
 
 theme:
   # components/ThemeSwitch.vue
@@ -227,3 +230,6 @@ option:
     confirmDelete:
       label: Show Confirmation on Delete
       tip: Show confirmation dialog when deleting items.
+    fullWidthOptions:
+      label: Full Width Options Page
+      tip: Show Options Page in Full Width.

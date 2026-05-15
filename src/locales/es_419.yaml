@@ -197,6 +197,9 @@ perms:
     text: Eliminar Permisos de Host
     tip: Ya no podrá analizar nuevas imágenes
   info: Más Información sobre Permisos
+  moreInfo: Para más información, consulte la
+  mdn: Documentación de MDN
+  chrome: Documentación de Chrome
 
 theme:
   # components/ThemeSwitch.vue
@@ -227,3 +230,6 @@ option:
     confirmDelete:
       label: Mostrar Confirmación al Eliminar
       tip: Mostrar diálogo de confirmación al eliminar elementos.
+    fullWidthOptions:
+      label: Página de Opciones a Pantalla Completa
+      tip: Mostrar la página de opciones a pantalla completa.

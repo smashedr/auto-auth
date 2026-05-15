@@ -5,7 +5,6 @@ import { isFirefox, isMobile } from '@/utils/system.ts'
 import { debug } from '@/utils/logger.ts'
 import { submitHost } from '@/utils/index.ts'
 import { parseCreds } from '@/utils/creds.ts'
-import { openOptions } from '@/utils/extension.ts'
 import { showToast } from '@/composables/useToast.ts'
 import { useOptions } from '@/composables/useOptions.ts'
 import { Hosts } from '@/utils/hosts.ts'
@@ -15,6 +14,7 @@ import PermsCheck from '@/components/PermsCheck.vue'
 import OptionsForm from '@/components/OptionsForm.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
 import HostModal from '@/components/HostModal.vue'
+import OpenOptionsBtn from '@/components/OpenOptionsBtn.vue'
 
 const isBrowser = isFirefox ? '360px' : null
 const width = computed(() => (isMobile ? '100%' : isBrowser))
@@ -119,9 +119,7 @@ onMounted(async () => {
 
       <OptionsForm :close-window="true" :compact="true" :show="['switches']" class="px-1" />
 
-      <a class="btn btn-outline-info w-100" href="/options.html" @click.prevent="openOptions(true)">
-        <i class="fa-solid fa-sliders me-2"></i> {{ i18n.t('popup.moreOptions') }}</a
-      >
+      <OpenOptionsBtn :close-window="true">{{ i18n.t('popup.moreOptions') }}</OpenOptionsBtn>
     </div>
 
     <DeleteModal ref="deleteModal" @delete="deleteHost" />
