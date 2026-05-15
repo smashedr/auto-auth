@@ -15,8 +15,6 @@ import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
 import UseBackground from '@/components/UseBackground.vue'
 import PageFooter from '@/components/PageFooter.vue'
 
-// TODO: Logging
-
 const options = useOptions()
 
 const userRef = ref('')
@@ -61,14 +59,14 @@ async function submitAuth(event: Event) {
 
   if (saveCreds.value) {
     await Hosts.set(hostRef.value, `${userRef.value}:${passRef.value}`)
-    console.log('%cCredentials Saved.', 'color: LimeGreen', `Loading: ${hrefRef.value}`)
+    debug('%cCredentials Saved.', 'color: LimeGreen', `Loading: ${hrefRef.value}`)
   } else {
     const session = await getSession()
     debug('session:', session)
     session[hostRef.value] = `${userRef.value}:${passRef.value}`
     debug('session:', session)
     await chrome.storage.session.set({ session })
-    console.log('%cCredentials Saved for Session Only.', 'color: SpringGreen', `Loading: ${hrefRef.value}`)
+    debug('%cCredentials Saved for Session Only.', 'color: SpringGreen', `Loading: ${hrefRef.value}`)
   }
   await updateTab(hrefRef.value)
   isProcessing.value = false
@@ -77,7 +75,7 @@ async function submitAuth(event: Event) {
 async function ignoreHost() {
   debug('ignoreHost:', hostRef.value)
   await Hosts.set(hostRef.value, 'ignored')
-  console.log('%cHost Ignored:', 'color: Gold', hrefRef.value)
+  debug('%cHost Ignored:', 'color: Gold', hrefRef.value)
   // NOTE: This removes the page after the native login is shown
   document.body.remove()
   await updateTab(hrefRef.value)
