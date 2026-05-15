@@ -11,7 +11,7 @@ UI is Bootstrap 5.3 and FontAwesome.
 - Manifest generated from `wxt.config.ts`
 - Entrypoint specific options in `src/entrypoints/<name>/index.html`
 - Content script specific options in `src/entrypoints/content(.<name>)/index.ts`
-- Locales are in `src/locales` using `@wxt-dev/i18n/module` in `yaml`
+- Locales are in `src/locales` and use `@wxt-dev/i18n/module` in `yaml` format
 
 ## Style & Conventions
 

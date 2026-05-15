@@ -72,12 +72,14 @@ the [Chrome Web Store](https://chromewebstore.google.com/detail/auto-auth/gpoigg
 
 - Save Logins for HTTP Basic Authentication
 - Automatically Login with Saved Credentials
-- Option to Ignore Specific Hosts
-- Notification on Invalid Credentials
-- View, Delete and Edit Saved Credentials
+- Option to Ignore Hosts and Save for Session
+- View, Delete and Edit Credentials from the UI
+- Includes Options, Side Panel, Popup and Panel
+- Custom Column Visibility with Click-to-Edit
 - Option to Ignore Proxy Authentication
 - Option to Temporarily Disable
 - Ability to Import/Export Credentials
+- Supports Migrations from Other Extensions
 - Toolbar Status for Enabled Hosts
 - Icon Colors for Extension Status
 
