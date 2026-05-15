@@ -66,7 +66,16 @@ Then enter the username `user` and password `pass`.
 All **Chromium** Based Browsers can install the extension from
 the [Chrome Web Store](https://chromewebstore.google.com/detail/auto-auth/gpoiggobidhogpmmlakahiaaegibnogm).
 
-[![QR Code GitHub](https://raw.githubusercontent.com/smashedr/repo-images/refs/heads/master/auto-auth/qr-firefox.png)](https://addons.mozilla.org/addon/auto-auth)
+<details open><summary>📷 View Mozilla Firefox Android QR Code</summary>
+
+[![QR Code Firefox](https://raw.githubusercontent.com/smashedr/repo-images/refs/heads/master/auto-auth/qr-code-firefox.png)](https://addons.mozilla.org/addon/auto-auth)
+
+</details>
+<details><summary>📷 View Mozilla Firefox Android QR Code</summary>
+
+[![QR Code Chrome](https://raw.githubusercontent.com/smashedr/repo-images/refs/heads/master/auto-auth/qr-code-chrome.png)](https://chromewebstore.google.com/detail/gpoiggobidhogpmmlakahiaaegibnogm)
+
+</details>
 
 ## Features
 
@@ -145,8 +154,8 @@ Firefox/Chrome Migration from [krtek4/MultiPass](https://github.com/krtek4/Multi
 
 1. Open the MultiPass Options
 2. Click: `Download credentials as JSON file.`
-3. Go to the Options Page (for this extension) and click `Import Text`
-4. Paste the copied text into the textarea and click `Import`
+3. Open the Auto Auth Options and click `Import File`
+4. Select the file from exported in Step #2
 
 ### AutoAuth
 
