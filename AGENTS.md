@@ -1,9 +1,10 @@
-# Auto Auth — Agent Guide
+# Agent Guide
 
-Web Extension to allow automatic HTTP Basic Authentication.
-For Chrome + Firefox + Firefox Android all using MV3
-WXT Framework with TypeScript + Vue3.
-UI is Bootstrap 5.3 and FontAwesome.
+Auto Auth is a Web Extension to allow automatic HTTP Basic Authentication.
+
+- Chrome + Firefox + Firefox Android all using MV3
+- WXT Framework with TypeScript + Vue3
+- Bootstrap 5.3 and FontAwesome
 
 ## Application Structure
 

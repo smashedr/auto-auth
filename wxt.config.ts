@@ -23,9 +23,9 @@ async function generateIcons(outDir: string) {
   const source = 'src/assets/icon.svg'
   const sizes = [16, 24, 32, 48, 96, 128]
   const variants: Record<string, [string, string]> = {
-    // green: ['#32fc7d', '#147c39'],
+    green: ['#32fc7d', '#089147'],
     red: ['#fc3232', '#e0100f'],
-    yellow: ['#fcd632', '#f59e0b'],
+    yellow: ['#fcd632', '#d4a800'],
   }
 
   const svg = readFileSync(source, 'utf-8')
