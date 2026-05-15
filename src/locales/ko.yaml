@@ -227,3 +227,6 @@ option:
     confirmDelete:
       label: 삭제 시 확인 표시
       tip: 항목 삭제 시 확인 대화 상자를 표시합니다.
+    fullWidthOptions:
+      label: 전체 너비 옵션 페이지
+      tip: 옵션 페이지를 전체 너비로 표시합니다.

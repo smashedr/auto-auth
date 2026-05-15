@@ -13,6 +13,7 @@ import ToastAlerts from '@/components/ToastAlerts.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import OptionsOffscreen from '@/components/OptionsOffscreen.vue'
 import UseBackground from '@/components/UseBackground.vue'
+import PageFooter from '@/components/PageFooter.vue'
 
 // TODO: Logging
 
@@ -314,22 +315,23 @@ onMounted(async () => {
 
         <hr class="my-2 my-md-3" />
 
-        <div class="text-center my-1">
-          <a
-            class="link-body-emphasis text-decoration-none d-inline-block"
-            href="/options.html"
-            @click.prevent="openOptions()"
-            >{{ i18n.t('ctx.openOptions') }}</a
-          >
-          <span class="mx-2 mx-md-3">&bull;</span>
-          <a
-            class="link-body-emphasis text-decoration-none d-inline-block"
-            target="_blank"
-            rel="noopener"
-            :href="`${config.githubUrl}?tab=readme-ov-file#support`"
-            >{{ i18n.t('auth.getSupport') }}</a
-          >
-        </div>
+        <PageFooter />
+        <!--<div class="text-center my-1">-->
+        <!--  <a-->
+        <!--    class="link-body-emphasis text-decoration-none d-inline-block"-->
+        <!--    href="/options.html"-->
+        <!--    @click.prevent="openOptions()"-->
+        <!--    >{{ i18n.t('ctx.openOptions') }}</a-->
+        <!--  >-->
+        <!--  <span class="mx-2 mx-md-3">&bull;</span>-->
+        <!--  <a-->
+        <!--    class="link-body-emphasis text-decoration-none d-inline-block"-->
+        <!--    target="_blank"-->
+        <!--    rel="noopener"-->
+        <!--    :href="`${config.githubUrl}?tab=readme-ov-file#support`"-->
+        <!--    >{{ i18n.t('auth.getSupport') }}</a-->
+        <!--  >-->
+        <!--</div>-->
       </div>
     </div>
   </main>

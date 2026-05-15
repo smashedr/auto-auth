@@ -227,3 +227,6 @@ option:
     confirmDelete:
       label: Mostrar Confirmação ao Eliminar
       tip: Mostrar diálogo de confirmação ao eliminar itens.
+    fullWidthOptions:
+      label: Página de Opções em Largura Total
+      tip: Mostrar página de opções em largura total.

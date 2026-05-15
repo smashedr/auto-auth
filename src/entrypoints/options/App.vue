@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { i18n } from '#imports'
+import { computed } from 'vue'
 import { useTitle } from '@/composables/useTitle.ts'
+import { useOptions } from '@/composables/useOptions.ts'
 import BackToTop from '@/components/BackToTop.vue'
 import PermsCheck from '@/components/PermsCheck.vue'
 import ToastAlerts from '@/components/ToastAlerts.vue'
@@ -16,19 +18,33 @@ import PageHeader from '@/components/PageHeader.vue'
 import UseBackground from '@/components/UseBackground.vue'
 
 useTitle(i18n.t('options.title'))
+
+const options = useOptions()
+
+const optionsStyle = computed(() => (options.value.fullWidthOptions ? null : 'max-width: 767px;'))
+
+const allSwitches = [
+  'tempDisabled',
+  'ignoreProxy',
+  'defaultSave',
+  'confirmDelete',
+  'contextMenu',
+  'showUpdate',
+  'fullWidthOptions',
+]
 </script>
 
 <template>
   <div class="d-flex align-items-center justify-content-center h-100 w-100 p-1 p-md-3">
     <div class="m-auto pb-4 w-100">
-      <div id="options-wrapper" class="glass-outline rounded rounded-3 w-100 m-auto p-2 p-md-3">
+      <div id="options-wrapper" class="glass-outline rounded rounded-3 w-100 m-auto p-2 p-md-3" :style="optionsStyle">
         <PageHeader />
 
         <KeyboardShortcuts />
 
         <HorizontalRule class="my-2">{{ i18n.t('options.extension') }}</HorizontalRule>
         <PermsCheck :show-info="true" :show-remove="false" class="my-3" />
-        <OptionsForm />
+        <OptionsForm :switches="allSwitches" />
 
         <HorizontalRule class="my-2">{{ i18n.t('options.savedCredentials') }}</HorizontalRule>
         <div class="d-grid gap-2 d-md-flex my-3">
@@ -57,8 +73,8 @@ useTitle(i18n.t('options.title'))
   <UseBackground />
 </template>
 
-<style scoped>
-#options-wrapper {
-  max-width: 767px;
-}
-</style>
+<!--<style scoped>-->
+<!--#options-wrapper {-->
+<!--  max-width: 767px;-->
+<!--}-->
+<!--</style>-->

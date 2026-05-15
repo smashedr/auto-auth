@@ -8,6 +8,7 @@ export const defaultOptions = {
   ignoreProxy: false,
   defaultSave: true,
   confirmDelete: true,
+  fullWidthOptions: false,
 
   largeTable: false,
   clickEdit: true,

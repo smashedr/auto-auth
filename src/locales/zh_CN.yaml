@@ -227,3 +227,6 @@ option:
     confirmDelete:
       label: 删除时显示确认提示
       tip: 删除项目时显示确认对话框。
+    fullWidthOptions:
+      label: 全宽选项页面
+      tip: 以全宽显示选项页面。

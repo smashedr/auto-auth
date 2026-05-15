@@ -227,3 +227,6 @@ option:
     confirmDelete:
       label: 削除時に確認を表示
       tip: 項目削除時に確認ダイアログを表示します。
+    fullWidthOptions:
+      label: 全幅オプションページ
+      tip: オプションページを全幅で表示します。

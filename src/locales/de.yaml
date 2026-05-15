@@ -227,3 +227,6 @@ option:
     confirmDelete:
       label: Bestätigung beim Löschen anzeigen
       tip: Bestätigungsdialog beim Löschen von Einträgen anzeigen.
+    fullWidthOptions:
+      label: Optionsseite in voller Breite
+      tip: Optionsseite in voller Breite anzeigen.

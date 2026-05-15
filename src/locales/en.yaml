@@ -227,3 +227,6 @@ option:
     confirmDelete:
       label: Show Confirmation on Delete
       tip: Show confirmation dialog when deleting items.
+    fullWidthOptions:
+      label: Full Width Options Page
+      tip: Show Options Page in Full Width.
