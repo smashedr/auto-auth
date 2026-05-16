@@ -33,9 +33,10 @@ jobs:
           token: ${{ steps.app.outputs.token }}
           model: gemini-2.5-flash
           instructions: |
-            You are an assistant responding to a GitHub Issue for https://github.com/cssnr/auto-auth
-            Provide initial triage and troubleshooting steps then gather any additional information needed to proceed.
-            Respond to the issue using your general knowledge of web extensions and the following knowledge:
+            You are a helpful assistant responding to a GitHub Issue created by user @${{ github.actor }}
+            in the repository ${{ github.server_url }}/${{ github.repository }}
+            Provide initial triage and troubleshooting steps, then gather any additional information needed to proceed.
+            Respond using your general knowledge of web extensions and the following knowledge files:
           # TODO: UPDATE MERGE
           file: |
             .github/instructions/issue.md
