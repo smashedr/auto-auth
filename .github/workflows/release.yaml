@@ -82,14 +82,14 @@ jobs:
           jq . chrome-mv3/manifest.json
           echo "::endgroup::"
 
-      #- name: "Web Store Publish"
-      #  uses: cssnr/webstore-publish-action@v1
-      #  with:
-      #    extension_id: ${{ env.CHROME_ID }}
-      #    publisher_id: ${{env.PUBLISHER_ID}}
-      #    json_data: ${{ secrets.WEBSTORE_JSON }}
-      #    zip_file: "${{ env.PACKAGE_NAME }}-${{ github.event.release.tag_name }}-chrome.zip"
-      #    submit: false
+      - name: "Web Store Publish"
+        uses: cssnr/webstore-publish-action@v1
+        with:
+          extension_id: ${{ env.CHROME_ID }}
+          publisher_id: ${{env.PUBLISHER_ID}}
+          json_data: ${{ secrets.WEBSTORE_JSON }}
+          zip_file: "${{ env.PACKAGE_NAME }}-${{ github.event.release.tag_name }}-chrome.zip"
+          submit: false
 
       # NOTE: This only submits for review! Need automation to upload signed release...
 
@@ -150,19 +150,19 @@ jobs:
       # NOTE: This installs web-ext using npx
       # NOTE: The web-ext sign command uploads and submits for review
 
-      #- name: "Mozilla AMO Publish"
-      #  # https://extensionworkshop.com/documentation/develop/web-ext-command-reference/#web-ext-sign
-      #  env:
-      #    FIREFOX_API_KEY: ${{ secrets.FIREFOX_API_KEY }}
-      #    FIREFOX_API_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
-      #  run: |
-      #    npx web-ext sign --no-input \
-      #      --api-key="${FIREFOX_API_KEY}" \
-      #      --api-secret="${FIREFOX_API_SECRET}" \
-      #      --channel=listed --approval-timeout=0 \
-      #      --source-dir="firefox-mv3" \
-      #      --amo-metadata="amo-metadata.json" \
-      #      --upload-source-code="${{ env.PACKAGE_NAME }}-${{ github.event.release.tag_name }}-sources.zip"
+      - name: "Mozilla AMO Publish"
+        # https://extensionworkshop.com/documentation/develop/web-ext-command-reference/#web-ext-sign
+        env:
+          FIREFOX_API_KEY: ${{ secrets.FIREFOX_API_KEY }}
+          FIREFOX_API_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
+        run: |
+          npx web-ext sign --no-input \
+            --api-key="${FIREFOX_API_KEY}" \
+            --api-secret="${FIREFOX_API_SECRET}" \
+            --channel=listed --approval-timeout=0 \
+            --source-dir="firefox-mv3" \
+            --amo-metadata="amo-metadata.json" \
+            --upload-source-code="${{ env.PACKAGE_NAME }}-${{ github.event.release.tag_name }}-sources.zip"
 
       # NOTE: This only submits for review! Need automation to upload signed release...
       # NOTE: Firefox allows signing listed addons with unlisted channel for beta...
