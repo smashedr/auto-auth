@@ -8,7 +8,7 @@
 [![GitHub Locales](https://img.shields.io/github/directory-file-count/cssnr/auto-auth/src/locales?type=file&extension=yaml&logo=libretranslate&label=locales)](https://github.com/cssnr/auto-auth/tree/master/src/locales)
 [![Deployment Chrome](https://img.shields.io/github/deployments/cssnr/auto-auth/chrome?logo=googlechrome&logoColor=white&label=chrome)](https://github.com/cssnr/auto-auth/deployments/chrome)
 [![Deployment Mozilla](https://img.shields.io/github/deployments/cssnr/auto-auth/mozilla?logo=firefox&logoColor=white&label=mozilla)](https://github.com/cssnr/auto-auth/deployments/mozilla)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_auto-auth&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=cssnr_auto-auth)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_auto-auth&metric=alert_status)](https://sonarcloud.io/summary/overall?id=cssnr_auto-auth)
 [![Workflow Build](https://img.shields.io/github/actions/workflow/status/cssnr/auto-auth/build.yaml?logo=norton&logoColor=white&label=build)](https://github.com/cssnr/auto-auth/actions/workflows/build.yaml)
 [![Workflow Lint](https://img.shields.io/github/actions/workflow/status/cssnr/auto-auth/lint.yaml?logo=norton&logoColor=white&label=lint)](https://github.com/cssnr/auto-auth/actions/workflows/lint.yaml)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/cssnr/auto-auth?logo=listenhub&label=updated)](https://github.com/cssnr/auto-auth/pulse)
@@ -53,15 +53,15 @@ Then enter the username `user` and password `pass`.
 
 ## Install
 
-- [Google Chrome Web Store](https://chromewebstore.google.com/detail/auto-auth/gpoiggobidhogpmmlakahiaaegibnogm)
+- [Google Chrome Web Store](https://chromewebstore.google.com/detail/gpoiggobidhogpmmlakahiaaegibnogm)
 - [Mozilla Firefox Add-ons](https://addons.mozilla.org/addon/auto-auth)
 
-[![Chrome](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/chrome_48.png)](https://chromewebstore.google.com/detail/auto-auth/gpoiggobidhogpmmlakahiaaegibnogm)
-[![Firefox](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/firefox_48.png)](https://addons.mozilla.org/addon/auto-auth)
-[![Edge](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/edge_48.png)](https://chromewebstore.google.com/detail/auto-auth/gpoiggobidhogpmmlakahiaaegibnogm)
-[![Brave](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/brave_48.png)](https://chromewebstore.google.com/detail/auto-auth/gpoiggobidhogpmmlakahiaaegibnogm)
-[![Opera](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/opera_48.png)](https://chromewebstore.google.com/detail/auto-auth/gpoiggobidhogpmmlakahiaaegibnogm)
-[![Chromium](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/chromium_48.png)](https://chromewebstore.google.com/detail/auto-auth/gpoiggobidhogpmmlakahiaaegibnogm)
+[![Chrome](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/chrome/chrome_48x48.png)](https://chromewebstore.google.com/detail/gpoiggobidhogpmmlakahiaaegibnogm)
+[![Firefox](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/firefox/firefox_48x48.png)](https://addons.mozilla.org/addon/auto-auth)
+[![Edge](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/edge/edge_48x48.png)](https://chromewebstore.google.com/detail/gpoiggobidhogpmmlakahiaaegibnogm)
+[![Brave](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/brave/brave_48x48.png)](https://chromewebstore.google.com/detail/gpoiggobidhogpmmlakahiaaegibnogm)
+[![Opera](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/opera/opera_48x48.png)](https://chromewebstore.google.com/detail/gpoiggobidhogpmmlakahiaaegibnogm)
+[![Chromium](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/chromium/chromium_48x48.png)](https://chromewebstore.google.com/detail/gpoiggobidhogpmmlakahiaaegibnogm)
 
 All **Chromium** Based Browsers can install the extension from
 the [Chrome Web Store](https://chromewebstore.google.com/detail/auto-auth/gpoiggobidhogpmmlakahiaaegibnogm).
@@ -242,7 +242,7 @@ and [additional](https://cssnr.com/) open source projects.
 [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/cssnr)
 
 Additionally, you can give a 5-star rating
-on [Google](https://chromewebstore.google.com/detail/auto-auth/gpoiggobidhogpmmlakahiaaegibnogm)
+on [Google](https://chromewebstore.google.com/detail/gpoiggobidhogpmmlakahiaaegibnogm)
 or [Mozilla](https://addons.mozilla.org/addon/auto-auth) and star this project on GitHub.
 
 Other Web Extensions I have created and published:
